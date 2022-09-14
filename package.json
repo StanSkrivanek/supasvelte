@@ -1,0 +1,42 @@
+{
+	"name": "supasvelte",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"@editorjs/image": "^2.6.2",
+		"@editorjs/link": "^2.4.1",
+		"@editorjs/link-autocomplete": "^0.0.0",
+		"@editorjs/marker": "^1.2.2",
+		"@editorjs/quote": "^2.4.0",
+		"@editorjs/simple-image": "^1.4.1",
+		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/kit": "next",
+		"editorjs-change-case": "^0.0.3",
+		"eslint": "^8.16.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"prettier": "^2.6.2",
+		"prettier-plugin-svelte": "^2.7.0",
+		"svelte": "3.50.1",
+		"vite": "^3.1.0"
+	},
+	"type": "module",
+	"dependencies": {
+		"@editorjs/attaches": "^1.2.3",
+		"@editorjs/editorjs": "^2.25.0",
+		"@editorjs/header": "^2.6.2",
+		"@editorjs/nested-list": "^1.0.2",
+		"@editorjs/paragraph": "^2.8.0",
+		"@editorjs/table": "^2.0.4",
+		"@editorjs/underline": "^1.0.0",
+		"@supabase/supabase-js": "2.0.0-rc.10",
+		"svelte-editorjs": "^0.1.0"
+	}
+}
