@@ -12,7 +12,7 @@
 
 	async function deleteCourse(e) {
 		const elm = e.target.parentElement;
-		const elmId = e.target.parentElement.id;
+		const elmId = elm.id;
 		await supabase.from('courses').delete().match({ id: elmId });
 		objAry = objAry.filter((item) => item.id !== elmId);
 		elm.remove();
