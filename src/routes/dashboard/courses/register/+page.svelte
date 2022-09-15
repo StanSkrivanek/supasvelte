@@ -1,7 +1,4 @@
 <script>
-	// ----------------------
-	// REGISTER COURSE BACKUP
-	// ----------------------
 	import {
   afterNavigate,
   beforeNavigate,
@@ -14,8 +11,8 @@
 } from '$app/navigation'
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import Editor from '$components/editor/Editor.svelte';
+	
 	let rteOutput;
-
 	let values = {
 		organization: '',
 		title: '',
@@ -25,6 +22,7 @@
 	};
 
 	async function dataSubmit() {
+		// save data in db table `courses`
 		const { data: courses, error } = await supabase.from('courses').insert({
 			organization: values.organization,
 			course_title: values.title,
@@ -43,10 +41,8 @@
 	</div>
 	<section class="dash-page-header-btn__w">
 		<div class="btn-form-xxl">
-			<!-- <a href="/register/+page.svelte"> -->
 			<h2>Register a new course</h2>
 			<p>register new course to database</p>
-			<!-- </a> -->
 		</div>
 	</section>
 	<section>
@@ -81,11 +77,8 @@
 			/>
 			<!-- EDITOR -->
 			<label for="content">Course content</label>
-			<!-- <div id="editorjs" class="editor" /> -->
 			<Editor bind:rteOutput />
 			<button>Add Course</button>
-
-			<!-- Submit will redirect to courses list -->
 		</form>
 	</section>
 </article>

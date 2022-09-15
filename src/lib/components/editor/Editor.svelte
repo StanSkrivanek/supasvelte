@@ -1,11 +1,8 @@
 <script>
 	// ----------------------
-	// REGISTER COURSE BACKUP
+	// EDITOR JS 
 	// ----------------------
 
-	import { supabase } from '$lib/supabase/supabaseClient';
-	// import Editor from '$components/editor/Editor.svelte';
-	//-----
 	import EditorJS from '@editorjs/editorjs';
 	import Header from '@editorjs/header';
 	import SimpleImage from '@editorjs/simple-image';
@@ -101,6 +98,7 @@
 		// 	console.log('Editor.js is ready to work!');
 		// }
 	});
+	// define key/value pairs in page where this component is used
 	export let values = {};
 	// $: values = editor;
 	export async function rteOutput() {
