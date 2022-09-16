@@ -9,18 +9,22 @@
 		prefetch,
 		prefetchRoutes
 	} from '$app/navigation';
+
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import Update from '$components/editor/Update.svelte';
 	// access store data
-	import { courseDetails } from '$lib/stores/store.js';
 
-	// console.log('STORE-courseDetails', $courseDetails.data[0]);
+	//   get data from localStorage
+	// TODO: how to simplify it to create courseDetailsData only once as it has been done in components/editor/Update component
+	const courseDetailsData = JSON.parse(localStorage.getItem('courseDetails'));
+	// console.log('courseDetailsData', courseDetailsData.data[0]);
+	// assign data from localStorage
+	let dbRowData = courseDetailsData.data[0];
+	// 	console.log('🚀 ~ file: +page.svelte ~ line 20 ~ dbRowData', dbRowData);
 
-	let dbRowData = $courseDetails.data[0];
-	console.log('🚀 ~ file: +page.svelte ~ line 20 ~ dbRowData', dbRowData);
+	let elmId = dbRowData.id;
 
-	let elmId = $courseDetails.data[0].id;
-
+	// rteOutput in components/editor/Update.svelte getting data from localStorage
 	let rteOutput;
 
 	let values = {
@@ -31,8 +35,7 @@
 		content: null
 	};
 
-
- // prefetch input fields with data from store
+	// prefetch input fields with data from store
 	values.organization = dbRowData.organization;
 	values.title = dbRowData.course_title;
 	values.type = dbRowData.crs_type;
@@ -40,13 +43,18 @@
 
 	async function dataSubmit() {
 		// update data in db table `courses`
-		await supabase.from('courses').update({
-			organization: values.organization,
-			course_title: values.title,
-			crs_type: values.type,
-			excerpt: values.excerpt,
-			content: await rteOutput()
-		}).eq('id', elmId);
+		await supabase
+			.from('courses')
+			.update({
+				organization: values.organization,
+				course_title: values.title,
+				crs_type: values.type,
+				excerpt: values.excerpt,
+				content: await rteOutput()
+			})
+			.eq('id', elmId);
+		// remove data from localStorage
+		localStorage.removeItem('courseDetails');
 		// redirect to dashboard Courses
 		goto('/dashboard/courses');
 	}
@@ -58,12 +66,12 @@
 	</div>
 	<section class="dash-page-header-btn__w">
 		<div class="btn-form-xxl">
-			<h2>Register a new course</h2>
-			<p>register new course to database</p>
+			<h2>Update course</h2>
+			<p>update course in database</p>
 		</div>
 	</section>
 	<section>
-		<form on:submit|preventDefault={dataSubmit} action="/dashboard/courses/update" method="POST">
+		<form on:submit|preventDefault={dataSubmit} method="POST">
 			<label for="title">Course Title</label>
 			<input
 				type="text"
@@ -93,7 +101,7 @@
 				bind:value={values.excerpt}
 				placeholder="type your content here"
 			/>
-		
+
 			<label for="content">Course content</label>
 			<Update bind:rteOutput />
 			<button>Update</button>

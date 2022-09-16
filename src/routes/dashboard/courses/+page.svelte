@@ -21,8 +21,10 @@
 	async function currentCourseForm(e) {
 		const elm = e.target.parentElement;
 		const elmId = elm.id;
-		// add row data to store
+		// get data from db table `courses` where id = elmId
 		$courseDetails = await supabase.from('courses').select('*').match({ id: elmId });
+		// store course RTE data as string in localStorage
+		localStorage.setItem('courseDetails', JSON.stringify($courseDetails));
 		// redirect to update page
 		goto('/dashboard/courses/update');
 	
