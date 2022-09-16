@@ -18,7 +18,7 @@
 	import ChangeCase from 'editorjs-change-case';
 	// import data from store (fetched from db with `edit` btn on courses page)
 	import { courseDetails } from '$lib/stores/store.js';
-const storeData = $courseDetails.data[0].description;
+	const storeData = $courseDetails.data[0].content;
 	const editor = new EditorJS({
 		holder: 'editor-update',
 		placeholder: 'Type your content here',
@@ -98,18 +98,17 @@ const storeData = $courseDetails.data[0].description;
 		// data: {},
 		onReady: () => {
 			console.log('Editor.js is ready to work!');
-			editor.render(storeData)
+			editor.render(storeData);
 		}
 	});
 
 	// define key/value pairs in page where this component is used
 	export let values = {};
-	
+
 	export async function rteOutput() {
-	let output = editor.save();
+		let output = editor.save();
 		return (values.content = await output);
 	}
-
 </script>
 
 <div id="editor-update" class="editor" />

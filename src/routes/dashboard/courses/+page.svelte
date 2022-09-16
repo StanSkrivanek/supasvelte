@@ -19,7 +19,7 @@
 		elm.remove();
 	}
 
-	async function updateCourse(e) {
+	async function currentCourseForm(e) {
 		const elm = e.target.parentElement;
 		const elmId = elm.id;
 		// add row data to store
@@ -52,9 +52,9 @@
 			<div class="courses-db-list" id={item.id}>
 				<p>{item.id}</p>
 				<h1>{item.course_title}</h1>
-				<p>{item.organization}</p>
 				<p>{item.crs_type}</p>
-				<button class="info" on:click={updateCourse}>Edit</button>
+				<p>{item.organization}</p>
+				<button class="info" on:click={currentCourseForm}>Edit</button>
 				<!-- load data for course by ID -->
 				<button class="danger" on:click={deleteCourse}>Delete</button>
 				<!-- delete data by ID -->

@@ -2,7 +2,7 @@
 	// ----------------------
 	// REGISTER COURSE BACKUP
 	// ----------------------
-	
+
 	import { supabase } from '$lib/supabase/supabaseClient';
 	// import Editor from '$components/editor/Editor.svelte';
 	//-----
@@ -115,7 +115,7 @@
 			course_title: values.title,
 			crs_type: values.type,
 			excerpt: values.excerpt,
-			description: await rteContent
+			content: await rteContent
 		});
 	}
 	async function rteOutput() {
@@ -130,10 +130,8 @@
 	</div>
 	<section class="dash-page-header-btn__w">
 		<div class="btn-form-xxl">
-		
 			<h2>Register a new course</h2>
 			<p>register new course to database</p>
-	
 		</div>
 	</section>
 	<section>

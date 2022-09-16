@@ -16,7 +16,6 @@
 
 	let rteOutput;
 
-
 	let values = {
 		organization: '',
 		title: '',
@@ -25,7 +24,6 @@
 		content: null
 	};
 
-
 	async function dataSubmit() {
 		// save data in db table `courses`
 		await supabase.from('courses').insert({
@@ -33,7 +31,7 @@
 			course_title: values.title,
 			crs_type: values.type,
 			excerpt: values.excerpt,
-			description: await rteOutput()
+			content: await rteOutput()
 		});
 		// redirect to dashboard Courses
 		goto('/dashboard/courses');

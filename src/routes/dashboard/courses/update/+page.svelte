@@ -17,14 +17,11 @@
 	// console.log('STORE-courseDetails', $courseDetails.data[0]);
 
 	let dbRowData = $courseDetails.data[0];
-	console.log("🚀 ~ file: +page.svelte ~ line 20 ~ dbRowData", dbRowData)
-	
+	console.log('🚀 ~ file: +page.svelte ~ line 20 ~ dbRowData', dbRowData);
+
 	let elmId = $courseDetails.data[0].id;
 
 	let rteOutput;
-	// let dataPayload;
-	// let fn = [rteOutput, dataPayload];
-	// console.log('payloadDt', payloadDt);
 
 	let values = {
 		organization: '',
@@ -38,15 +35,19 @@
 
 	// TODO: add new UPDATE PAGE to update the course ???
 
+	values.organization = dbRowData.organization;
+	values.title = dbRowData.course_title;
+	values.type = dbRowData.crs_type;
+	values.excerpt = dbRowData.excerpt;
 
 	async function dataSubmit() {
 		// save data in db table `courses`
-		await supabase.from('courses').update({
-			organization: dbRowData.organization,
-			course_title: dbRowData.title,
-			crs_type: dbRowData.type,
-			excerpt: dbRowData.excerpt,
-			description: await rteOutput()
+		await supabase.from('courses').insert({
+			organization: values.organization,
+			course_title: values.title,
+			crs_type: values.type,
+			excerpt: values.excerpt,
+			content: await rteOutput()
 		});
 		// redirect to dashboard Courses
 		goto('/dashboard/courses');
@@ -64,15 +65,7 @@
 		</div>
 	</section>
 	<section>
-		<form on:submit|preventDefault={dataSubmit} action="/register" method="POST">
-			<label for="title">Organization</label>
-			<input
-				type="text"
-				name="organization"
-				id="organization"
-				bind:value={values.organization}
-				placeholder="organization name"
-			/>
+		<form on:submit|preventDefault={dataSubmit} action="" method="POST">
 			<label for="title">Course Title</label>
 			<input
 				type="text"
@@ -83,6 +76,15 @@
 			/>
 			<label for="title">Course Type</label>
 			<input type="text" name="type" id="type" bind:value={values.type} placeholder="Course type" />
+
+			<label for="title">Organization</label>
+			<input
+				type="text"
+				name="organization"
+				id="organization"
+				bind:value={values.organization}
+				placeholder="organization name"
+			/>
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max320 characters)</span></label
 			>
@@ -95,7 +97,7 @@
 			/>
 			<!-- EDITOR -->
 			<label for="content">Course content</label>
-			<Update bind:rteOutput/>
+			<Update bind:rteOutput />
 			<button>Update</button>
 		</form>
 	</section>

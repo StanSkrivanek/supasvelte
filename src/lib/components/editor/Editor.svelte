@@ -17,7 +17,6 @@
 	import Underline from '@editorjs/underline';
 	import ChangeCase from 'editorjs-change-case';
 
-
 	const editor = new EditorJS({
 		holder: 'editor-create',
 		placeholder: 'Type your content here',
@@ -99,7 +98,7 @@
 		// 	console.log('Editor.js is ready to work!');
 		// }
 	});
-	// console.log('DESC', $courseDetails.data[0].description);
+	// console.log('DESC', $courseDetails.data[0].content);
 
 	// define key/value pairs in page where this component is used
 	export let values = {};
@@ -107,10 +106,9 @@
 	export async function rteOutput() {
 		let output = editor.save();
 		return (values.content = await output);
-		// let payload = editor.render(await $courseDetails.data[0].description);
+		// let payload = editor.render(await $courseDetails.data[0].content);
 		// return (values.content = await payload);
 	}
-
 </script>
 
 <div id="editor-create" class="editor" />
