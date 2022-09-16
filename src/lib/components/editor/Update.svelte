@@ -98,6 +98,7 @@
 		// data: {},
 		onReady: () => {
 			console.log('Editor.js is ready to work!');
+			// render data from db to UPDATE form
 			editor.render(storeData);
 		}
 	});

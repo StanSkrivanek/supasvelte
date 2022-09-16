@@ -4,7 +4,6 @@
 	import { courseDetails } from '$lib/stores/store.js';
 
 	export let data;
-	// console.log(data);
 	let objAry;
 
 	Object.keys(data).forEach((key) => {
@@ -24,14 +23,11 @@
 		const elmId = elm.id;
 		// add row data to store
 		$courseDetails = await supabase.from('courses').select('*').match({ id: elmId });
-		// $courseDetails = dbData;
+		// redirect to update page
 		goto('/dashboard/courses/update');
-		// 	console.log(elm, dbData);
+	
 	}
 
-	// function cleareStore() {
-	// 	$courseDetails = null;
-	// }
 </script>
 
 <article>

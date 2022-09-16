@@ -30,25 +30,23 @@
 		excerpt: '',
 		content: null
 	};
-	// console.log('courseDetail Store', $courseDetails);
-	// TODO: add a check for the courseDetails store and update current Item at this moment it creates a new item but also add ne will brake page
 
-	// TODO: add new UPDATE PAGE to update the course ???
 
+ // prefetch input fields with data from store
 	values.organization = dbRowData.organization;
 	values.title = dbRowData.course_title;
 	values.type = dbRowData.crs_type;
 	values.excerpt = dbRowData.excerpt;
 
 	async function dataSubmit() {
-		// save data in db table `courses`
-		await supabase.from('courses').insert({
+		// update data in db table `courses`
+		await supabase.from('courses').update({
 			organization: values.organization,
 			course_title: values.title,
 			crs_type: values.type,
 			excerpt: values.excerpt,
 			content: await rteOutput()
-		});
+		}).eq('id', elmId);
 		// redirect to dashboard Courses
 		goto('/dashboard/courses');
 	}
@@ -65,7 +63,7 @@
 		</div>
 	</section>
 	<section>
-		<form on:submit|preventDefault={dataSubmit} action="" method="POST">
+		<form on:submit|preventDefault={dataSubmit} action="/dashboard/courses/update" method="POST">
 			<label for="title">Course Title</label>
 			<input
 				type="text"
@@ -95,7 +93,7 @@
 				bind:value={values.excerpt}
 				placeholder="type your content here"
 			/>
-			<!-- EDITOR -->
+		
 			<label for="content">Course content</label>
 			<Update bind:rteOutput />
 			<button>Update</button>
