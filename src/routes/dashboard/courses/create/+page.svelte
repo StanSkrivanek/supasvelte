@@ -1,18 +1,22 @@
 <script>
 	import {
-  afterNavigate,
-  beforeNavigate,
-  disableScrollHandling,
-  goto,
-  invalidate,
-  invalidateAll,
-  prefetch,
-  prefetchRoutes
-} from '$app/navigation'
+		afterNavigate,
+		beforeNavigate,
+		disableScrollHandling,
+		goto,
+		invalidate,
+		invalidateAll,
+		prefetch,
+		prefetchRoutes
+	} from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import Editor from '$components/editor/Editor.svelte';
-	
+	// access store data
+	import { courseDetails } from '$lib/stores/store.js';
+
 	let rteOutput;
+
+
 	let values = {
 		organization: '',
 		title: '',
@@ -21,9 +25,10 @@
 		content: null
 	};
 
+
 	async function dataSubmit() {
 		// save data in db table `courses`
-		const { data: courses, error } = await supabase.from('courses').insert({
+		await supabase.from('courses').insert({
 			organization: values.organization,
 			course_title: values.title,
 			crs_type: values.type,
@@ -46,7 +51,7 @@
 		</div>
 	</section>
 	<section>
-		<form on:submit|preventDefault={dataSubmit} action="" method="POST">
+		<form on:submit|preventDefault={dataSubmit} action="/register" method="POST">
 			<label for="title">Organization</label>
 			<input
 				type="text"

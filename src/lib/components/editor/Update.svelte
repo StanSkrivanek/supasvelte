@@ -16,10 +16,11 @@
 	import LinkTool from '@editorjs/link';
 	import Underline from '@editorjs/underline';
 	import ChangeCase from 'editorjs-change-case';
-
-
+	// import data from store (fetched from db with `edit` btn on courses page)
+	import { courseDetails } from '$lib/stores/store.js';
+const storeData = $courseDetails.data[0].description;
 	const editor = new EditorJS({
-		holder: 'editor-create',
+		holder: 'editor-update',
 		placeholder: 'Type your content here',
 		tools: {
 			header: {
@@ -93,27 +94,28 @@
 					locale: 'tr' // or ['tr', 'TR', 'tr-TR']
 				}
 			}
-		}
+		},
 		// data: {},
-		// onReady: () => {
-		// 	console.log('Editor.js is ready to work!');
-		// }
+		onReady: () => {
+			console.log('Editor.js is ready to work!');
+			editor.render(storeData)
+		}
 	});
-	// console.log('DESC', $courseDetails.data[0].description);
 
 	// define key/value pairs in page where this component is used
 	export let values = {};
 	// $: values = editor;
 	export async function rteOutput() {
-		let output = editor.save();
+	let output = editor.save();
 		return (values.content = await output);
-		// let payload = editor.render(await $courseDetails.data[0].description);
-		// return (values.content = await payload);
 	}
-
+	// export async function dataPayload() {
+	// 	let payload = editor.render(await $courseDetails.data[0].description);
+	// 	return (values.content = await payload);
+	// }
 </script>
 
-<div id="editor-create" class="editor" />
+<div id="editor-update" class="editor" />
 
 <style>
 	.editor {

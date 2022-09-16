@@ -1,5 +1,7 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
+	import { courseDetails } from '$lib/stores/store.js';
 
 	export let data;
 	// console.log(data);
@@ -8,7 +10,6 @@
 	Object.keys(data).forEach((key) => {
 		objAry = data[key];
 	});
-	// console.log(objAry);
 
 	async function deleteCourse(e) {
 		const elm = e.target.parentElement;
@@ -17,6 +18,20 @@
 		objAry = objAry.filter((item) => item.id !== elmId);
 		elm.remove();
 	}
+
+	async function updateCourse(e) {
+		const elm = e.target.parentElement;
+		const elmId = elm.id;
+		// add row data to store
+		$courseDetails = await supabase.from('courses').select('*').match({ id: elmId });
+		// $courseDetails = dbData;
+		goto('/dashboard/courses/update');
+		// 	console.log(elm, dbData);
+	}
+
+	// function cleareStore() {
+	// 	$courseDetails = null;
+	// }
 </script>
 
 <article>
@@ -25,7 +40,7 @@
 	</div>
 	<section class="dash-page-header-btn__w">
 		<div class="btn-form-xxl">
-			<a href="/dashboard/courses/register">
+			<a href="/dashboard/courses/create" >
 				<h2>Add New +</h2>
 			</a>
 		</div>
@@ -33,15 +48,13 @@
 	<section>
 		<h3>list of courses</h3>
 
-		<!-- <pre>{JSON.stringify(data.courses, null, 2)}</pre> -->
-
 		{#each objAry as item (item.id)}
 			<div class="courses-db-list" id={item.id}>
 				<p>{item.id}</p>
 				<h1>{item.course_title}</h1>
 				<p>{item.organization}</p>
 				<p>{item.crs_type}</p>
-				<button class="info">Edit</button>
+				<button class="info" on:click={updateCourse}>Edit</button>
 				<!-- load data for course by ID -->
 				<button class="danger" on:click={deleteCourse}>Delete</button>
 				<!-- delete data by ID -->

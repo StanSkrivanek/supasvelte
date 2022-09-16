@@ -130,10 +130,10 @@
 	</div>
 	<section class="dash-page-header-btn__w">
 		<div class="btn-form-xxl">
-			<!-- <a href="/register/+page.svelte"> -->
+		
 			<h2>Register a new course</h2>
 			<p>register new course to database</p>
-			<!-- </a> -->
+	
 		</div>
 	</section>
 	<section>
