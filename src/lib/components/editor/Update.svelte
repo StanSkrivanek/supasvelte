@@ -104,15 +104,12 @@ const storeData = $courseDetails.data[0].description;
 
 	// define key/value pairs in page where this component is used
 	export let values = {};
-	// $: values = editor;
+	
 	export async function rteOutput() {
 	let output = editor.save();
 		return (values.content = await output);
 	}
-	// export async function dataPayload() {
-	// 	let payload = editor.render(await $courseDetails.data[0].description);
-	// 	return (values.content = await payload);
-	// }
+
 </script>
 
 <div id="editor-update" class="editor" />

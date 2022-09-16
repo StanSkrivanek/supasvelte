@@ -16,8 +16,10 @@
 
 	// console.log('STORE-courseDetails', $courseDetails.data[0]);
 
-	// let dbRowData = $courseDetails.data[0];
-	// let elmId = $courseDetails.data[0].id;
+	let dbRowData = $courseDetails.data[0];
+	console.log("🚀 ~ file: +page.svelte ~ line 20 ~ dbRowData", dbRowData)
+	
+	let elmId = $courseDetails.data[0].id;
 
 	let rteOutput;
 	// let dataPayload;
@@ -39,11 +41,11 @@
 
 	async function dataSubmit() {
 		// save data in db table `courses`
-		await supabase.from('courses').insert({
-			organization: values.organization,
-			course_title: values.title,
-			crs_type: values.type,
-			excerpt: values.excerpt,
+		await supabase.from('courses').update({
+			organization: dbRowData.organization,
+			course_title: dbRowData.title,
+			crs_type: dbRowData.type,
+			excerpt: dbRowData.excerpt,
 			description: await rteOutput()
 		});
 		// redirect to dashboard Courses
@@ -94,7 +96,7 @@
 			<!-- EDITOR -->
 			<label for="content">Course content</label>
 			<Update bind:rteOutput/>
-			<button>Add Course</button>
+			<button>Update</button>
 		</form>
 	</section>
 </article>
