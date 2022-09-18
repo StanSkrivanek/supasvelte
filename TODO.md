@@ -7,11 +7,11 @@
 `dashboard/courses`
 **issues note:**
 
-- When course is saved it moves to bottom of list.
 - [x] `sort` by `id` function in `courses.svelte` page
+- When course is saved it moves to bottom of list.
 
-- when page leave without saving, the local storage is not cleared
 - [ ] `clear` local storage function in `courses.svelte` page
+- when we leave page `update course` without saving data, the local storage is not cleared
 
 **improvements**
 - [ ] filter and sort ability by `id` `status`, `type`, `title` `organisation`  in `courses.svelte` page

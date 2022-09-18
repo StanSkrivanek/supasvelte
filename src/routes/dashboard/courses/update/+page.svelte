@@ -53,11 +53,11 @@
 				content: await rteOutput()
 			})
 			.eq('id', elmId);
-		// remove data from localStorage
-		localStorage.removeItem('courseDetails');
-		// redirect to dashboard Courses
 		goto('/dashboard/courses');
 	}
+
+	// Clear the local storage
+	beforeNavigate(() => localStorage.removeItem('courseDetails'));
 </script>
 
 <article>
