@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { courseDetails } from '$lib/stores/store.js';
+	import { sortById } from '$lib/utils/helperFunctions.js';
 
 	export let data;
 	let objAry;
@@ -9,7 +10,9 @@
 	Object.keys(data).forEach((key) => {
 		objAry = data[key];
 	});
+	console.log('🚀 ~ file: +page.svelte ~ line 8 ~ objAry', objAry);
 
+	// console.log("🚀 ~ file: +page.svelte ~ line 8 ~ objAry", objAry)
 	async function deleteCourse(e) {
 		const elm = e.target.parentElement;
 		const elmId = elm.id;
@@ -27,9 +30,9 @@
 		localStorage.setItem('courseDetails', JSON.stringify($courseDetails));
 		// redirect to update page
 		goto('/dashboard/courses/update');
-	
 	}
-
+	// sort data by ID
+	let sorted = sortById(objAry, 'asc');
 </script>
 
 <article>
@@ -38,7 +41,7 @@
 	</div>
 	<section class="dash-page-header-btn__w">
 		<div class="btn-form-xxl">
-			<a href="/dashboard/courses/create" >
+			<a href="/dashboard/courses/create">
 				<h2>Add New +</h2>
 			</a>
 		</div>
@@ -46,7 +49,7 @@
 	<section>
 		<h3>list of courses</h3>
 
-		{#each objAry as item (item.id)}
+		{#each sorted as item (item.id)}
 			<div class="courses-db-list" id={item.id}>
 				<p>{item.id}</p>
 				<h1>{item.course_title}</h1>
