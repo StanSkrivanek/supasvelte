@@ -10,7 +10,7 @@
 - [x] `sort` by `id` function in `courses.svelte` page
 - When course is saved it moves to bottom of list.
 
-- [ ] `clear` local storage function in `courses.svelte` page
+- [x] `clear` local storage function in `courses.svelte` page
 - when we leave page `update course` without saving data, the local storage is not cleared
 
 **improvements**
