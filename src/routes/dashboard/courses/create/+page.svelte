@@ -11,12 +11,10 @@
 	} from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import Editor from '$components/editor/Editor.svelte';
-	// access store data
-	import { courseDetails } from '$lib/stores/store.js';
 
 	let rteOutput;
 
-	let values = {
+	$: values = {
 		organization: '',
 		title: '',
 		type: '',
@@ -50,6 +48,8 @@
 	</section>
 	<section>
 		<form on:submit|preventDefault={dataSubmit} action="/register" method="POST">
+
+
 			<label for="title">Organization</label>
 			<input
 				type="text"

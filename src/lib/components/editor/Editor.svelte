@@ -106,8 +106,6 @@
 	export async function rteOutput() {
 		let output = editor.save();
 		return (values.content = await output);
-		// let payload = editor.render(await $courseDetails.data[0].content);
-		// return (values.content = await payload);
 	}
 </script>
 

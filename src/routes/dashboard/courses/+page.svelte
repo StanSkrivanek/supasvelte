@@ -2,7 +2,7 @@
 	import { goto, afterNavigate } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { courseDetails } from '$lib/stores/store.js';
-	import { sortById } from '$lib/utils/helperFunctions.js';
+	import { sortById } from '$lib/utils/helpers.js';
 
 	export let data;
 	let objAry;
@@ -10,7 +10,7 @@
 	Object.keys(data).forEach((key) => {
 		objAry = data[key];
 	});
-	console.log('🚀 ~ file: +page.svelte ~ line 8 ~ objAry', objAry);
+	// console.log('🚀 ~ file: +page.svelte ~ line 8 ~ objAry', objAry);
 
 	// console.log("🚀 ~ file: +page.svelte ~ line 8 ~ objAry", objAry)
 	async function deleteCourse(e) {

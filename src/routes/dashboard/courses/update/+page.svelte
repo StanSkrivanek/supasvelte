@@ -12,12 +12,10 @@
 
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import Update from '$components/editor/Update.svelte';
-	// access store data
 
 	//   get data from localStorage
-	// TODO: how to simplify it to create courseDetailsData only once as it has been done in components/editor/Update component
 	const courseDetailsData = JSON.parse(localStorage.getItem('courseDetails'));
-	// console.log('courseDetailsData', courseDetailsData.data[0]);
+
 	// assign data from localStorage
 	let dbRowData = courseDetailsData.data[0];
 	// 	console.log('🚀 ~ file: +page.svelte ~ line 20 ~ dbRowData', dbRowData);
