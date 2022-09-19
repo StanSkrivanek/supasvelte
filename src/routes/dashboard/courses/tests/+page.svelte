@@ -22,6 +22,7 @@
 			tb_col={'course_type'}
 			placeholder="fuzzy search"
 		/>
+
 	</section>
 	<!-- provide table name and column name to get data [col - rows] into array -->
 </article>

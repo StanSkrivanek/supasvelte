@@ -1,14 +1,10 @@
 <script>
-	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { dbTableOpt } from '$lib/stores/store.js';
 	// export let placeholder = '';
 	export let db_table = '';
 	export let tb_col = '';
 	let responseData = [];
-
-	$: selectedOption = 'please select type';
-	let isActive = false;
 
 	// load data from DB table
 	async function getDbTableData(db_table) {
@@ -21,38 +17,17 @@
 		// assign data to `dbTableOpt` store
 		responseData = $dbTableOpt = data.map((item) => item[tb_col]);
 	});
-	// STYLED SELECT COMPONENT
-	function showOptions() {
-		isActive = !isActive;
-		console.log(isActive);
-
-		if (isActive) {
-			console.log('show');
-		} else {
-			console.log('hide');
-		}
-	}
-	function handleList(evt) {
-		selectedOption = evt.target.getAttribute('rel');
-		showOptions();
-	}
+	// console.log("DATA",data);
 </script>
 
-<!-- example: http://jsfiddle.net/BB3JK/47/ -->
-<label for="type-select">Course type:</label>
 <div class="custom-select">
-	<select name="type" id="type-select" class="is-hidden">
+	<!-- <label for="type-select">Course type:</label> -->
+	<select name="type" id="type-select" class="select">
 		<option value="hide" disabled selected hidden>Choose here</option>//
 		{#each responseData as opt}
 			<option value={opt}>{opt}</option>
 		{/each}
 	</select>
-	<div class="styled-select" on:click|preventDefault={showOptions}>{selectedOption}</div>
-	<ul class="options" class:is-hidden={!isActive}>
-		{#each responseData as opt}
-			<li rel={opt} on:click|preventDefault={handleList}>{opt}</li>
-		{/each}
-	</ul>
 	<span class="custom-arrow" />
 </div>
 
@@ -62,6 +37,7 @@
 	*::after {
 		box-sizing: border-box;
 	}
+
 	select {
 		/* reset */
 		appearance: none;
@@ -70,7 +46,7 @@
 		background-color: transparent;
 		border: none;
 		padding: 0;
-		margin: 0;
+		/* margin: 0; */
 		width: 100%;
 		font-family: inherit;
 		font-size: inherit;
@@ -83,12 +59,12 @@
 		padding: 0.8rem 1rem;
 		background-color: #4d5061;
 		color: #fff;
-
+		/* visibility: hidden; */
 	}
-	select::after {
-		background: black;
-		color: white;
-	}
+select::after{
+background: black;
+color: white;
+}
 	.custom-select {
 		position: relative;
 		display: block;
@@ -137,55 +113,5 @@
 		border-color: #fff transparent transparent transparent;
 		transform: rotate(180deg);
 		top: 35%;
-	}
-
-	.is-hidden {
-		visibility: hidden;
-	}
-	.styled-select {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		padding: 0.6rem 1rem;
-		border: 1px solid #ccc;
-	}
-	/* .styled-select:after {
-		content: '';
-		width: 0;
-		height: 0;
-		border: 5px solid transparent;
-		border-color: black transparent transparent transparent;
-		position: absolute;
-		top: 9px;
-		right: 6px; 
-	} */
-	.styled-select:active {
-		background-color: #eee;
-	}
-	.options {
-		position: absolute;
-		top: 100%;
-		right: 0;
-		left: 0;
-		z-index: 999;
-		margin: 0 0;
-		padding: 0;
-		list-style: none;
-		border: 1px solid #ccc;
-		background-color: white;
-		-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-		-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-	}
-	.options li {
-		padding: 4px 16px;
-		cursor: pointer;
-		
-	}
-	.options li:hover {
-		background-color: #1b0e30;
-		color: #fff;
 	}
 </style>
