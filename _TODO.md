@@ -22,8 +22,8 @@
 **issues note:**
 none for now
 **improvements**
-
-- [ ] `fuzzy search` functionality to `type` and `organisation` input field to be able find type faster and add new if non existent
+- [ ] update course type in DB from Select option
+-  [ ] ~~`fuzzy search` functionality to `type` and `organisation` input field to be able find type faster and add new if non existent~~
 
 **Main updates**
 - [ ] JSON to HTML conversion to generate HTML fro EditorJS.

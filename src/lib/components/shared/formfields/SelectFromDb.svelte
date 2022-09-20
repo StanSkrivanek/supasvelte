@@ -1,5 +1,4 @@
 <script>
-	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { dbTableOpt } from '$lib/stores/store.js';
 	// DB
@@ -7,8 +6,9 @@
 	export let tb_col = '';
 	let responseData = [];
 	// SELECT
-	$: selectedListOption = 'please select type';
-	let selected = false;
+	export let selectedListOption = 'please select type';
+	// export let selectedOpt = ""
+
 	let isActive = false;
 
 	// DB
@@ -27,16 +27,17 @@
 	// SELECT
 	function showOptions() {
 		isActive = !isActive;
-		if (isActive) {
-			console.log('show');
-		} else {
-			console.log('hide');
-		}
+		// if (isActive) {
+		// 	console.log('show');
+		// } else {
+		// 	console.log('hide');
+		// }
 	}
 
 	function handleList(evt) {
 		selectedListOption = evt.target.getAttribute('rel');
 		upadeOriginSelect();
+		console.log('selectedListOption: ', selectedListOption);
 		isActive = false;
 	}
 
@@ -48,11 +49,11 @@
 				opt.selected = true;
 			}
 		});
-		console.log(originOpts);
+		// console.log('originOpts: ', selectedListOption);
 	}
 </script>
 
-<label for="type-select">Course type:</label>
+<label for="type-select">Course Type:</label>
 <div class="custom-select">
 	<select name="type" id="type-select" class="is-hidden">
 		{#each responseData as opt}

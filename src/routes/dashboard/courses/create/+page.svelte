@@ -14,7 +14,7 @@
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 
 	let rteOutput;
-
+	// let selectedListOption;
 	$: values = {
 		organization: '',
 		title: '',
@@ -65,10 +65,14 @@
 				bind:value={values.title}
 				placeholder="Course title"
 			/>
-			<label for="title">Course Type</label>
-			<input type="text" name="type" id="type" bind:value={values.type} placeholder="Course type" />
+			<!-- <label for="title">Course Type</label>
+			<input type="text" name="type" id="type" bind:value={values.type} placeholder="Course type" /> -->
 
-			<SelectFromDb db_table={'tb_crs_types'} tb_col={'course_type'} placeholder="fuzzy search" />
+			<SelectFromDb
+				db_table={'tb_crs_types'}
+				tb_col={'course_type'}
+				bind:selectedListOption={values.type}
+			/>
 
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max320 characters)</span></label

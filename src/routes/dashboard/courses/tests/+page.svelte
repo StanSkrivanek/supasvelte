@@ -2,17 +2,6 @@
 
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 
-	// import { fuzzy } from '$lib/stores/store.js';
-	// import { fn_FuzzySearch } from '$lib/utils/helpers.js';
-	// $: values = {
-	// 	organization: '',
-	// 	title: '',
-	// 	type: '',
-	// 	excerpt: '',
-	// 	content: null
-	// };
-
-	// $: fz();
 </script>
 
 <article>

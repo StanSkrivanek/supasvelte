@@ -12,7 +12,7 @@
 
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import Update from '$components/editor/Update.svelte';
-
+	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	//   get data from localStorage
 	const courseDetailsData = JSON.parse(localStorage.getItem('courseDetails'));
 
@@ -78,8 +78,11 @@
 				bind:value={values.title}
 				placeholder="Course title"
 			/>
-			<label for="title">Course Type</label>
-			<input type="text" name="type" id="type" bind:value={values.type} placeholder="Course type" />
+			<SelectFromDb
+				db_table={'tb_crs_types'}
+				tb_col={'course_type'}
+				bind:selectedListOption={values.type}
+			/>
 
 			<label for="title">Organization</label>
 			<input

@@ -17,8 +17,9 @@
 	import Underline from '@editorjs/underline';
 	import ChangeCase from 'editorjs-change-case';
 	// import data from store (fetched from db with `edit` btn on courses page)
-	import { courseDetails } from '$lib/stores/store.js';
-	//   get data from localStorage
+	// import { courseDetails } from '$lib/stores/store.js';
+
+	// get data from localStorage
 	// TODO: how to simplify it to create courseDetailsData only once as it has been done in courses/update page
 	const courseDetailsData = JSON.parse(localStorage.getItem('courseDetails'));
 	const storeData = courseDetailsData.data[0].content;
