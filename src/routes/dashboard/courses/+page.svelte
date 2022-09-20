@@ -1,5 +1,5 @@
 <script>
-	import { goto, afterNavigate } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { courseDetails } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
