@@ -14,7 +14,8 @@
 - when we leave page `update course` without saving data, the local storage is not cleared
 
 **improvements**
-- [ ] filter and sort ability by `id` `status`, `type`, `title` `organisation`  in `courses.svelte` page
+
+- [ ] filter and sort ability by `id` `status`, `type`, `title` `organisation` in `courses.svelte` page
 
 ---
 
@@ -22,16 +23,12 @@
 **issues note:**
 none for now
 **improvements**
-- [ ] update course type in DB from Select option
--  [ ] ~~`fuzzy search` functionality to `type` and `organisation` input field to be able find type faster and add new if non existent~~
 
-**Main updates**
+- [x] update course type in DB from Select option
+- [ ] ~~`fuzzy search` functionality to `type` and `organisation` input field to be able find type faster and add new if non existent~~
+
+**NEXT**
+
+- [ ] Add modal for delete course
 - [ ] JSON to HTML conversion to generate HTML fro EditorJS.
 - [ ] Pass this HTML into page component to be rendered.
-  
-
-
-
-
-
-
