@@ -11,6 +11,7 @@
 	} from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import Editor from '$components/editor/Editor.svelte';
+	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 
 	let rteOutput;
 
@@ -48,8 +49,6 @@
 	</section>
 	<section>
 		<form on:submit|preventDefault={dataSubmit} action="/register" method="POST">
-
-
 			<label for="title">Organization</label>
 			<input
 				type="text"
@@ -68,6 +67,9 @@
 			/>
 			<label for="title">Course Type</label>
 			<input type="text" name="type" id="type" bind:value={values.type} placeholder="Course type" />
+
+			<SelectFromDb db_table={'tb_crs_types'} tb_col={'course_type'} placeholder="fuzzy search" />
+
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max320 characters)</span></label
 			>

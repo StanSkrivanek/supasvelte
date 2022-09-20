@@ -2,14 +2,16 @@
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { dbTableOpt } from '$lib/stores/store.js';
-	// export let placeholder = '';
+	// DB
 	export let db_table = '';
 	export let tb_col = '';
 	let responseData = [];
-
-	$: selectedOption = 'please select type';
+	// SELECT
+	$: selectedListOption = 'please select type';
+	let selected = false;
 	let isActive = false;
 
+	// DB
 	// load data from DB table
 	async function getDbTableData(db_table) {
 		let { data, error } = await supabase.from(db_table).select('*');
@@ -21,33 +23,43 @@
 		// assign data to `dbTableOpt` store
 		responseData = $dbTableOpt = data.map((item) => item[tb_col]);
 	});
-	// STYLED SELECT COMPONENT
+
+	// SELECT
 	function showOptions() {
 		isActive = !isActive;
-		console.log(isActive);
-
 		if (isActive) {
 			console.log('show');
 		} else {
 			console.log('hide');
 		}
 	}
+
 	function handleList(evt) {
-		selectedOption = evt.target.getAttribute('rel');
-		showOptions();
+		selectedListOption = evt.target.getAttribute('rel');
+		upadeOriginSelect();
+		isActive = false;
+	}
+
+	// update select option in original select
+	function upadeOriginSelect() {
+		let originOpts = document.querySelectorAll('#type-select option');
+		originOpts.forEach((opt) => {
+			if (opt.value === selectedListOption) {
+				opt.selected = true;
+			}
+		});
+		console.log(originOpts);
 	}
 </script>
 
-<!-- example: http://jsfiddle.net/BB3JK/47/ -->
 <label for="type-select">Course type:</label>
 <div class="custom-select">
 	<select name="type" id="type-select" class="is-hidden">
-		<option value="hide" disabled selected hidden>Choose here</option>//
 		{#each responseData as opt}
 			<option value={opt}>{opt}</option>
 		{/each}
 	</select>
-	<div class="styled-select" on:click|preventDefault={showOptions}>{selectedOption}</div>
+	<div class="styled-select" on:click|preventDefault={showOptions}>{selectedListOption}</div>
 	<ul class="options" class:is-hidden={!isActive}>
 		{#each responseData as opt}
 			<li rel={opt} on:click|preventDefault={handleList}>{opt}</li>
@@ -56,6 +68,14 @@
 	<span class="custom-arrow" />
 </div>
 
+<!-- TEST UPDATE ORIGIN SELECT OPTION -->
+
+<!-- <select name="type" id="type-select" class="">
+	<option value="hide" disabled selected hidden>Choose here</option>
+	{#each responseData as opt}
+		<option value={opt}>{opt}</option>
+	{/each}
+</select> -->
 <style>
 	*,
 	*::before,
@@ -80,10 +100,9 @@
 	}
 
 	select {
-		padding: 0.8rem 1rem;
+		padding: 0.5rem;
 		background-color: #4d5061;
 		color: #fff;
-
 	}
 	select::after {
 		background: black;
@@ -93,6 +112,7 @@
 		position: relative;
 		display: block;
 		width: 50%;
+		margin-bottom: 1rem;
 	}
 
 	.custom-arrow {
@@ -148,19 +168,9 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
-		padding: 0.6rem 1rem;
+		padding: 0.4rem;
 		border: 1px solid #ccc;
 	}
-	/* .styled-select:after {
-		content: '';
-		width: 0;
-		height: 0;
-		border: 5px solid transparent;
-		border-color: black transparent transparent transparent;
-		position: absolute;
-		top: 9px;
-		right: 6px; 
-	} */
 	.styled-select:active {
 		background-color: #eee;
 	}
@@ -182,7 +192,6 @@
 	.options li {
 		padding: 4px 16px;
 		cursor: pointer;
-		
 	}
 	.options li:hover {
 		background-color: #1b0e30;
