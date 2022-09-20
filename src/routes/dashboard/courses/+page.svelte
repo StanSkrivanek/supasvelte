@@ -3,6 +3,8 @@
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { courseDetails } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
+	import Modal from '$lib/components/shared/modals/Modal.svelte';
+	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 
 	export let data;
 	let objAry;
@@ -14,6 +16,7 @@
 
 	// console.log("🚀 ~ file: +page.svelte ~ line 8 ~ objAry", objAry)
 	async function deleteCourse(e) {
+		// OPEN MODAL TO CONFIRM DELETE
 		const elm = e.target.parentElement;
 		const elmId = elm.id;
 		await supabase.from('courses').delete().match({ id: elmId });
@@ -33,7 +36,6 @@
 	}
 	// sort data by ID
 	let sorted = sortById(objAry, 'asc');
-
 </script>
 
 <article>
@@ -64,6 +66,15 @@
 		{/each}
 	</section>
 </article>
+
+<Modal>
+	<DeleteConfirm />
+	<!-- <div >
+		<p>
+			you ere about to delete this course. this action cannot be undone.
+		</p>
+	</div> -->
+</Modal>
 
 <style>
 	.dash-header {
