@@ -1,7 +1,5 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-
-	//Events dispatched from child components can be listened to in their parent.
 	const dispatch = createEventDispatcher();
 </script>
 

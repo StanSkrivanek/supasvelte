@@ -8,20 +8,29 @@
 
 	export let data;
 	let objAry;
+	let showModal = false;
+	let cId = 0;
+	let target = null;
 
 	Object.keys(data).forEach((key) => {
 		objAry = data[key];
 	});
-	// console.log('🚀 ~ file: +page.svelte ~ line 8 ~ objAry', objAry);
 
-	// console.log("🚀 ~ file: +page.svelte ~ line 8 ~ objAry", objAry)
-	async function deleteCourse(e) {
-		// OPEN MODAL TO CONFIRM DELETE
-		const elm = e.target.parentElement;
-		const elmId = elm.id;
-		await supabase.from('courses').delete().match({ id: elmId });
-		objAry = objAry.filter((item) => item.id !== elmId);
-		elm.remove();
+	function toggleModal() {
+		showModal = !showModal;
+	}
+	// find course id to be late used for delete from modal
+	function findCourse(e) {
+		toggleModal();
+		target = e.target.parentElement;
+		cId = target.id;
+		console.log('🚀 ~ file: +page.svelte ~ line 26 ~ findCourse ~ cId', cId);
+	}
+	// apply delete from modal
+	async function deleteCourse() {
+		await supabase.from('courses').delete().match({ id: cId });
+		objAry = objAry.filter((item) => item.id !== cId);
+		target.remove();
 	}
 
 	async function currentCourseForm(e) {
@@ -34,9 +43,23 @@
 		// redirect to update page
 		goto('/dashboard/courses/update');
 	}
-	// sort data by ID
+	// sort courses by ID
 	let sorted = sortById(objAry, 'asc');
 </script>
+
+{#if showModal}
+	<Modal on:cancel={toggleModal}>
+		<DeleteConfirm
+			on:cancel={() => {
+				toggleModal();
+			}}
+			on:delete={() => {
+				toggleModal();
+				deleteCourse();
+			}}
+		/>
+	</Modal>
+{/if}
 
 <article>
 	<div class="dash-header">
@@ -60,21 +83,12 @@
 				<p>{item.organization}</p>
 				<button class="info" on:click={currentCourseForm}>Edit</button>
 				<!-- load data for course by ID -->
-				<button class="danger" on:click={deleteCourse}>Delete</button>
+				<button class="danger" on:click={findCourse}>Delete</button>
 				<!-- delete data by ID -->
 			</div>
 		{/each}
 	</section>
 </article>
-
-<Modal>
-	<DeleteConfirm />
-	<!-- <div >
-		<p>
-			you ere about to delete this course. this action cannot be undone.
-		</p>
-	</div> -->
-</Modal>
 
 <style>
 	.dash-header {

@@ -1,47 +1,15 @@
-<script lang="ts">
-	let isOpen = true;
-	function open() {
-		isOpen = true;
-	}
-	function close() {
-		isOpen = false;
-	}
+<script>
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
 </script>
 
-...
+<div class="modal">
+	<div class="backdrop" on:click={() => dispatch('cancel')}/>
 
-<slot name="trigger" {open}>
-	<!-- fallback trigger to open the modal -->
-	<button on:click={open}>Open</button>
-</slot>
-
-{#if isOpen}
-	<div class="modal">
-		<div class="backdrop" on:click={close} />
-
-		<div class="content-wrapper">
-			<slot><!-- optional fallback --></slot>
-			<!-- <slot name="header"> -->
-			<!-- fallback -->
-			<!-- <div>
-          <h1>Deleting</h1>
-        </div> -->
-			<!-- </slot> -->
-
-			<!-- <div class="content"> -->
-			<!-- <slot name="content" /> -->
-			<!-- </div> -->
-
-			<!-- <slot name="footer" {close}> -->
-			<!-- fallback -->
-			<!-- <div>
-          <h1>DELETING</h1>
-          <button on:click={close}>close</button>
-        </div> -->
-			<!-- </slot> -->
-		</div>
+	<div class="content-wrapper">
+		<slot><!-- optional fallback --></slot>
 	</div>
-{/if}
+</div>
 
 <style>
 	div.modal {
@@ -58,7 +26,7 @@
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(14, 9, 19, 0.6);
+		background-color: rgba(14, 9, 19, 0.4);
 	}
 	div.content-wrapper {
 		z-index: 10;
