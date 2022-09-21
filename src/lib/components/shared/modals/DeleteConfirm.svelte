@@ -36,18 +36,5 @@
   button:first-child {
     margin-right: 0.5rem;
   }
-	button {
-		padding: 0.5rem 1rem;
-		border: none;
-		border-radius: 0.25rem;
-		background-color: #1b0e30;
-		color: #fff;
-		cursor: pointer;
-	}
-	.danger {
-		background-color: tomato;
-	}
-	.info {
-		background-color: #5155c7;
-	}
+
 </style>
