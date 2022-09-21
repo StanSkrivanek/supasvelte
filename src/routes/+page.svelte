@@ -6,7 +6,9 @@
 	// 	venues_details = data[key];
 	// });
 </script>
-
+<svelte:head>
+  <link rel="stylesheet" href="/global.css" />
+</svelte:head>
 <h1>HOME</h1>
 
 

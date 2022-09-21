@@ -3,7 +3,7 @@
 	import { sortById } from '$lib/utils/helpers.js';
 
 	import Tag from '$lib/components/shared/ui/Tag.svelte';
-
+	import Button from '$lib/components/shared/ui/Button.svelte';
 
 	export let data;
 
@@ -24,14 +24,18 @@
 		<div class="card" id={course.id}>
 			<div class="card_header">
 				<h2>{course.title}</h2>
-				<Tag bgColor="primary">{course.type}</Tag>
+				<Tag bgColor="info">{course.type}</Tag>
 				<p>{course.organization}</p>
 			</div>
 			<div class="card_content">
 				<p>{course.excerpt}</p>
 			</div>
 			<div class="card_footer">
-				<button class="info" on:click={() => goto(`/courses/${course.id}`)}>show more</button>
+				<Button
+					btColor="error"
+					caption="show more"
+					on:click={() => goto(`/courses/${course.id}`)}
+				/>
 			</div>
 		</div>
 	{/each}

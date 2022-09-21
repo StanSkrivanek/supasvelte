@@ -19,7 +19,7 @@
 </span>
 
 <!-- 
-API
+TODO: Tag API
 ----------------
 closable	- Whether the Tag can be closed | boolean | false
 closeIcon	- Custom close icon	| string | 'close' | node
@@ -32,7 +32,7 @@ onChange	- Callback executed when Tag is checked/unchecked |(checked) => void | 
 -->
 <style>
 	.badge {
-		font-size: 0.7rem;
+		font-size: 0.6rem;
 		text-transform: uppercase;
 		letter-spacing: 0.05rem;
 		padding: 0.25rem 0.5rem;
@@ -40,8 +40,30 @@ onChange	- Callback executed when Tag is checked/unchecked |(checked) => void | 
 		background-color: #03cdcd;
 		color: #fff;
 	}
+  /* TODO: add appropriate colors */
+  .dark {
+    background-color: var(--col-purple-dark);
+    color: #fff;
+  }
 	.primary {
-		background: lightcoral;
-		/* color: var(--col-white) */
+		background: var(--col-active);
+		color: var(--col-white);
 	}
+  .info{
+    background-color: var(--col-info-2);
+    color: var(--col-purple-dark);
+  }
+	.error {
+		background: var(--col-danger);
+		color: white;
+	}
+	.success {
+		background: var(--col-success);
+		color: var(--col-text-main);
+	}
+	.disabled {
+		background: var(--col-disabled);
+		color: var(--col-text-sec);
+	}
+
 </style>
