@@ -1,29 +1,37 @@
 <script>
 	import { goto } from '$app/navigation';
+	import { sortById } from '$lib/utils/helpers.js';
+
+	import Tag from '$lib/components/shared/ui/Tag.svelte';
+
 
 	export let data;
+
 	let objAry;
 	Object.keys(data).forEach((key) => {
 		objAry = data[key];
 	});
-	// console.log("🚀 ~ file: +page.svelte ~ line 6 ~ objAry", objAry)
+
+	// sort courses by ID  temporarry solution
+	//TODO: SORT BY: time createdAt
+	let sortedCourse = sortById(objAry, 'asc');
 </script>
 
 <h1>All courses</h1>
 
 <div class="courses">
-	{#each objAry as item (item.id)}
-		<div class="card" id={item.id}>
+	{#each sortedCourse as course (course.id)}
+		<div class="card" id={course.id}>
 			<div class="card_header">
-				<h2>{item.title}</h2>
-				<p>{item.type}</p>
-				<p>{item.organization}</p>
+				<h2>{course.title}</h2>
+				<Tag bgColor="primary">{course.type}</Tag>
+				<p>{course.organization}</p>
 			</div>
 			<div class="card_content">
-				<p>{item.excerpt}</p>
+				<p>{course.excerpt}</p>
 			</div>
 			<div class="card_footer">
-				<button class="info" on:click={() => goto(`/courses/${item.id}`)}>show more</button>
+				<button class="info" on:click={() => goto(`/courses/${course.id}`)}>show more</button>
 			</div>
 		</div>
 	{/each}
@@ -43,7 +51,6 @@
 	}
 	.card_header {
 		margin-bottom: 1rem;
-
 	}
 	.card_content {
 		/* padding: 1rem; */
