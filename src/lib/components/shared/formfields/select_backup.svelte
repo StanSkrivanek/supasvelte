@@ -21,7 +21,7 @@
 </script>
 
 <div class="custom-select">
-	<!-- <label for="type-select">Course type:</label> -->
+
 	<select name="type" id="type-select" class="select">
 		<option value="hide" disabled selected hidden>Choose here</option>//
 		{#each responseData as opt}

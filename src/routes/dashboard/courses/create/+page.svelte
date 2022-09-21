@@ -1,21 +1,11 @@
 <script>
-	import {
-		afterNavigate,
-		beforeNavigate,
-		disableScrollHandling,
-		goto,
-		invalidate,
-		invalidateAll,
-		prefetch,
-		prefetchRoutes
-	} from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import Editor from '$components/editor/Editor.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 
 	let rteOutput;
-	// let selectedListOption;
-	$: values = {
+	let values = {
 		organization: '',
 		title: '',
 		type: '',
@@ -27,12 +17,13 @@
 		// save data in db table `courses`
 		await supabase.from('courses').insert({
 			organization: values.organization,
-			course_title: values.title,
-			crs_type: values.type,
+			title: values.title,
+			type: values.type,
 			excerpt: values.excerpt,
 			content: await rteOutput()
 		});
 		// redirect to dashboard Courses
+		// console.log(values.title);
 		goto('/dashboard/courses');
 	}
 </script>
@@ -65,13 +56,11 @@
 				bind:value={values.title}
 				placeholder="Course title"
 			/>
-			<!-- <label for="title">Course Type</label>
-			<input type="text" name="type" id="type" bind:value={values.type} placeholder="Course type" /> -->
 
 			<SelectFromDb
 				db_table={'tb_crs_types'}
 				tb_col={'course_type'}
-				bind:selectedListOption={values.type}
+				bind:selectedListOption={values.type }
 			/>
 
 			<label for="excerpt"

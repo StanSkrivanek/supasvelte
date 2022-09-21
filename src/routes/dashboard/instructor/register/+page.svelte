@@ -112,8 +112,8 @@
 		const rteContent = rteOutput();
 		const { data: courses, error } = await supabase.from('courses').insert({
 			organization: values.organization,
-			course_title: values.title,
-			crs_type: values.type,
+			title: values.title,
+			type: values.type,
 			excerpt: values.excerpt,
 			content: await rteContent
 		});

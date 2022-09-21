@@ -78,8 +78,8 @@
 		{#each sorted as item (item.id)}
 			<div class="courses-db-list" id={item.id}>
 				<p>{item.id}</p>
-				<h1>{item.course_title}</h1>
-				<p>{item.crs_type}</p>
+				<h1>{item.title}</h1>
+				<p>{item.type}</p>
 				<p>{item.organization}</p>
 				<button class="info" on:click={currentCourseForm}>Edit</button>
 				<!-- load data for course by ID -->

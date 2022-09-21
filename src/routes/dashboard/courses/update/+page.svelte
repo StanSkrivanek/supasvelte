@@ -1,19 +1,9 @@
 <script>
-	import {
-		afterNavigate,
-		beforeNavigate,
-		disableScrollHandling,
-		goto,
-		invalidate,
-		invalidateAll,
-		prefetch,
-		prefetchRoutes
-	} from '$app/navigation';
-
 	import { supabase } from '$lib/supabase/supabaseClient';
+	import { beforeNavigate, goto } from '$app/navigation';
 	import Update from '$components/editor/Update.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
-	//   get data from localStorage
+	// get data from localStorage
 	const courseDetailsData = JSON.parse(localStorage.getItem('courseDetails'));
 
 	// assign data from localStorage
@@ -35,8 +25,8 @@
 
 	// prefetch input fields with data from store
 	values.organization = dbRowData.organization;
-	values.title = dbRowData.course_title;
-	values.type = dbRowData.crs_type;
+	values.title = dbRowData.title;
+	values.type = dbRowData.type;
 	values.excerpt = dbRowData.excerpt;
 
 	async function dataSubmit() {
@@ -45,8 +35,8 @@
 			.from('courses')
 			.update({
 				organization: values.organization,
-				course_title: values.title,
-				crs_type: values.type,
+				title: values.title,
+				type: values.type,
 				excerpt: values.excerpt,
 				content: await rteOutput()
 			})
@@ -55,7 +45,7 @@
 	}
 
 	// Clear the local storage
-	beforeNavigate(() => localStorage.removeItem('courseDetails'));
+	// beforeNavigate(() => localStorage.removeItem('courseDetails'));
 </script>
 
 <article>

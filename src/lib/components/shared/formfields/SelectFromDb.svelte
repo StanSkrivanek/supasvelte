@@ -6,9 +6,11 @@
 	export let tb_col = '';
 	let responseData = [];
 	// SELECT
-let selectedListOption = 'please select type';
+	export let selectedListOption = '';
+	// export let selectedOpt = ""
 
 	let isActive = false;
+
 	// DB
 	// load data from DB table
 	async function getDbTableData(db_table) {
@@ -35,7 +37,7 @@ let selectedListOption = 'please select type';
 	function handleList(evt) {
 		selectedListOption = evt.target.getAttribute('rel');
 		upadeOriginSelect();
-		console.log('selectedListOption: ', selectedListOption);
+		// console.log('selectedListOption: ', selectedListOption);
 		isActive = false;
 	}
 
@@ -58,7 +60,7 @@ let selectedListOption = 'please select type';
 			<option value={opt}>{opt}</option>
 		{/each}
 	</select>
-	<div class="styled-select" on:click|preventDefault={showOptions}>{selectedListOption}</div>
+	<div class="styled-select" on:click|preventDefault={showOptions}>{selectedListOption || 'please select type'}</div>
 	<ul class="options" class:is-hidden={!isActive}>
 		{#each responseData as opt}
 			<li rel={opt} on:click|preventDefault={handleList}>{opt}</li>
