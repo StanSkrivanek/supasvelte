@@ -2,8 +2,6 @@
 
 ---
 
-## **17 Sept 2022**
-
 `dashboard/courses`
 **issues note:**
 
@@ -12,6 +10,9 @@
 
 - [x] `clear` local storage function in `courses.svelte` page
 - when we leave page `update course` without saving data, the local storage is not cleared
+
+- [x] Add modal for deleting course confirmation
+- when delete button is presses show modal with confirmation message and buttons
 
 **improvements**
 
@@ -29,6 +30,5 @@ none for now
 
 **NEXT**
 
-- [ ] Add modal for delete course
 - [ ] JSON to HTML conversion to generate HTML fro EditorJS.
 - [ ] Pass this HTML into page component to be rendered.

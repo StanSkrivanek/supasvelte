@@ -6,11 +6,9 @@
 	export let tb_col = '';
 	let responseData = [];
 	// SELECT
-	export let selectedListOption = 'please select type';
-	// export let selectedOpt = ""
+let selectedListOption = 'please select type';
 
 	let isActive = false;
-
 	// DB
 	// load data from DB table
 	async function getDbTableData(db_table) {
