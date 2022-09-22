@@ -1,11 +1,11 @@
 <script>
 	export let bgColor = null;
+	export let size = 'default';
+	export let variant = 'default';
 	// export let size = '';
 	// export let tag = 'div';
-	// export let type = 'default';
 	// export let value = null;
 	// export let icon = null;
-	// export let variant = 'default';
 	// export let closable = false;
 	// export let closeIcon = 'close';
 	// export let onClose = (e) => {};
@@ -14,7 +14,7 @@
 </script>
 
 <!-- should be <span> as it is inline elm -->
-<span class="badge {bgColor}">
+<span class="badge {bgColor} {variant} {size}">
 	<slot />
 </span>
 
@@ -36,23 +36,24 @@ onChange	- Callback executed when Tag is checked/unchecked |(checked) => void | 
 		text-transform: uppercase;
 		letter-spacing: 0.05rem;
 		padding: 0.25rem 0.5rem;
+		border: none;
 		border-radius: 0.25rem;
 		background-color: #03cdcd;
 		color: #fff;
 	}
-  /* TODO: add appropriate colors */
-  .dark {
-    background-color: var(--col-purple-dark);
-    color: #fff;
-  }
+	/* TODO: add appropriate colors */
+	.dark {
+		background-color: var(--col-purple-dark);
+		color: #fff;
+	}
 	.primary {
 		background: var(--col-active);
 		color: var(--col-white);
 	}
-  .info{
-    background-color: var(--col-info-2);
-    color: var(--col-purple-dark);
-  }
+	.info {
+		background-color: var(--col-info-2);
+		color: var(--col-purple-dark);
+	}
 	.error {
 		background: var(--col-danger);
 		color: white;
@@ -65,5 +66,12 @@ onChange	- Callback executed when Tag is checked/unchecked |(checked) => void | 
 		background: var(--col-disabled);
 		color: var(--col-text-sec);
 	}
-
+	/* .large {
+		font-size: 0.8rem;
+		padding: 0.5rem 1.4rem;
+	}
+	.small {
+		font-size: 0.6rem;
+		padding: 0.25rem 0.5rem;
+	} */
 </style>
