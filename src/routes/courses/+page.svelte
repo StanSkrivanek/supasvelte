@@ -1,16 +1,14 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { sortById } from '$lib/utils/helpers.js';
+	import { getData } from '$lib/utils/helpers.js';
 
 	import Tag from '$lib/components/shared/ui/Tag.svelte';
 	import Button from '$lib/components/shared/ui/Button.svelte';
 
 	export let data;
 
-	let objAry;
-	Object.keys(data).forEach((key) => {
-		objAry = data[key];
-	});
+	let objAry = getData(data);
 
 	// sort courses by ID  temporarry solution
 	//TODO: SORT BY: time createdAt
@@ -21,6 +19,7 @@
 
 <div class="courses">
 	{#each sortedCourse as course (course.id)}
+		<!-- {console.log(course)} -->
 		<div class="card" id={course.id}>
 			<div class="card_header">
 				<h2>{course.title}</h2>
@@ -31,11 +30,7 @@
 				<p>{course.excerpt}</p>
 			</div>
 			<div class="card_footer">
-				<Button
-					btColor="error"
-					caption="show more"
-					on:click={() => goto(`/courses/${course.id}`)}
-				/>
+				<Button btColor="error" caption="by ID" on:click={() => goto(`/courses/${course.id}`)} />
 			</div>
 		</div>
 	{/each}

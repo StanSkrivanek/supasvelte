@@ -1,20 +1,18 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
+	import {getData} from '$lib/utils/helpers.js';
 	import { courseDetails } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 
 	export let data;
-	let objAry;
+	let objAry = getData(data);
 	let showModal = false;
 	let cId = 0;
 	let target = null;
 
-	Object.keys(data).forEach((key) => {
-		objAry = data[key];
-	});
 
 	function toggleModal() {
 		showModal = !showModal;
