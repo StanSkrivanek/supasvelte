@@ -9,6 +9,7 @@ export function getData(data) {
 		return data[item];
 	}
 }
+
 // --------------------------------------------------
 // Path: src/lib/utils/helperFunctions.js
 // `ObjAry` is an array of rows from a supabase table
