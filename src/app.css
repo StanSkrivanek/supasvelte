@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Kalam&family=Source+Code+Pro:wght@400;700&family=Source+Sans+Pro:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
 
 :root {
-  --col-text-main: #2c3e50;
-  --col-text-sec: #99a3ba;
-  --col-text-placeholder: #cbd1dc;
-  --col-bg-gray: #cdd9ed;;
-  --col-bg-sec: #eef4ff;
-  --col-disabled: #f1f1f1;
-  --col-info: #00bcd4;
-  --col-info-2: #2ae1e1;
-  --col-success: #8fffb4;
-  --col-warning: #ffc107;
-  --col-danger: #ff5a5f;
-  --col-active: #678efe;
-  --col-white: #fff;
+	--col-text-main: #2c3e50;
+	--col-text-sec: #99a3ba;
+	--col-text-placeholder: #cbd1dc;
+	--col-bg-gray: #cdd9ed;
+	--col-bg-sec: #eef4ff;
+	--col-disabled: #f1f1f1;
+	--col-info: #00bcd4;
+	--col-info-2: #2ae1e1;
+	--col-success: #8fffb4;
+	--col-warning: #ffc107;
+	--col-danger: #ff5a5f;
+	--col-active: #678efe;
+	--col-white: #fff;
 	--col-purple-dark: #1b0e30;
 }
 *,
@@ -30,8 +30,11 @@ body {
 	line-height: 1.5;
 	color: rgb(14, 9, 19);
 }
-a{
+a {
 	text-decoration: none;
 	color: rgb(14, 9, 19);
 }
-
+/* EditorJS styles */
+.codex-editor__redactor {
+	padding-bottom: 2.4rem !important;
+}

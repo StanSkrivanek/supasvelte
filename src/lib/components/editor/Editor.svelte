@@ -2,7 +2,7 @@
 	// ----------------------
 	// EDITOR JS
 	// ----------------------
-
+	// ---------------------------------------------------------------- PLUGINS
 	import EditorJS from '@editorjs/editorjs';
 	import Header from '@editorjs/header';
 	import SimpleImage from '@editorjs/simple-image';
@@ -16,7 +16,9 @@
 	import LinkTool from '@editorjs/link';
 	import Underline from '@editorjs/underline';
 	import ChangeCase from 'editorjs-change-case';
+	// ---------------------------------------------------------------- PLUGINS
 
+	// ---------------------------------------------------------------- EDITOR
 	const editor = new EditorJS({
 		holder: 'editor-create',
 		placeholder: 'Type your content here',
@@ -98,11 +100,12 @@
 		// 	console.log('Editor.js is ready to work!');
 		// }
 	});
-	// console.log('DESC', $courseDetails.data[0].content);
+	// ---------------------------------------------------------------- EDITOR
 
+	// ---------------------------------------------------------------- SUPPORTIVE -fn-
 	// define key/value pairs in page where this component is used
 	export let values = {};
-	// $: values = editor;
+
 	export async function rteOutput() {
 		let output = editor.save();
 		return (values.content = await output);
@@ -117,5 +120,6 @@
 		border-radius: 0.25rem;
 		margin-bottom: 1rem;
 		background-color: rgb(253, 251, 255);
+		padding-bottom:0;
 	}
 </style>

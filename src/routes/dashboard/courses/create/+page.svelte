@@ -4,7 +4,9 @@
 	import Editor from '$components/editor/Editor.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 
+	// rteOutput() and values are passed to the Editor component
 	let rteOutput;
+	// valueas are passed to the SelectFromDb component and processed in rteOutput()
 	let values = {
 		organization: '',
 		title: '',
@@ -75,7 +77,9 @@
 			/>
 			<!-- EDITOR -->
 			<label for="content">Course content</label>
+
 			<Editor bind:rteOutput />
+			
 			<button>Add Course</button>
 		</form>
 	</section>

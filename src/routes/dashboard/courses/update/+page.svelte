@@ -120,7 +120,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		max-width: 44rem;
+		max-width: 45rem;
 	}
 	label span {
 		font-size: 0.75rem;
@@ -128,6 +128,7 @@
 	}
 	input,
 	textarea {
+		font-size: 0.9rem;
 		margin-bottom: 1rem;
 		padding: 0.5rem;
 		border: none;
