@@ -30,5 +30,9 @@ none for now
 
 **NEXT**
 
-- [ ] JSON to HTML conversion to generate HTML fro EditorJS.
-- [ ] Pass this HTML into page component to be rendered.
+ - find suitable RTE for Sveltekit
+  - opt1: [cl-editor](https://github.com/nenadpnc/cl-editor) 
+  - opt2: [tailwind-editor](https://github.com/fouita/tailwind-editor)
+  - execCommands: [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
+  - cdp: [execCommands browser Support](https://codepen.io/stan65/pen/OJZxYNv)
+
