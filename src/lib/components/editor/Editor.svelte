@@ -115,11 +115,11 @@
 <div id="editor-create" class="editor" />
 
 <style>
-	.editor {
+	/* .editor {
 		border-right: 4px solid rgb(229, 228, 228);
 		border-radius: 0.25rem;
 		margin-bottom: 1rem;
 		background-color: rgb(253, 251, 255);
 		padding-bottom:0;
-	}
+	} */
 </style>
