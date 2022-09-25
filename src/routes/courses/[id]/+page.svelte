@@ -124,13 +124,14 @@
 	<div class="hero-title">
 		<p>{objAry.organization}</p>
 		<h2>{objAry.title}</h2>
-		<Tag bgColor="info">{objAry.type}</Tag>
+		<Tag bgColor="dark">{objAry.type}</Tag>
 	</div>
 </div>
 
 <div class="wrapper">
 	<aside>cardon side</aside>
 	<main>
+		<h2>Course Overview</h2>
 		<div id="editor-ro" class="editor__w" />
 		<button>Button</button>
 	</main>
@@ -146,7 +147,7 @@
 		grid-row-gap: 0;
 		grid-template-areas: '. hero-title .';
 		grid-template-columns: 0.25fr 1fr 0.25fr;
-		background-image: var(--img-overlay-gradient-main)
+		background-image: var(--img-overlay-gradient-main);
 	}
 	.hero-title {
 		grid-area: hero-title;
@@ -165,6 +166,12 @@
 		font-size: 1.6rem;
 		line-height: 1;
 		font-weight: 400;
+	}
+	aside {
+		padding: 1rem;
+	}
+	main {
+		padding: 1rem 2rem;
 	}
 	/* .hero-title span{
 		font-size: 1.5rem;

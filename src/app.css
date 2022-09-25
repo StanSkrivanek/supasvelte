@@ -29,6 +29,7 @@
 	--col-info: #00bcd4;
 	--col-info-2: #2ae1e1;
 	--col-success: #8fffb4;
+	--col-lightgreen: #63db8f;
 	--col-warning: #ffc107;
 	--col-danger: #ff5a5f;
 	--col-active: #678efe;
@@ -61,12 +62,11 @@ a {
 }
 
 /* EditorJS styles */
-.editor__w {
-	padding: 0 2rem;
-}
+
 .codex-editor__redactor {
 	padding-bottom: 2rem !important;
 }
+
 .ce-block__content {
 	margin: 0;
 }

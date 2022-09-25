@@ -40,7 +40,8 @@ onChange	- Callback executed when Tag is checked/unchecked |(checked) => void | 
 		padding: 0.25rem 0.5rem;
 		border: none;
 		border-radius: 0.25rem;
-		background-color: #03cdcd;
+		background-color: var(--col-info-2);
+		/* background-color: #03cdcd; */
 		color: #fff;
 	}
 	/* TODO: add appropriate colors */
