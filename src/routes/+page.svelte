@@ -7,7 +7,7 @@
 	// });
 </script>
 <svelte:head>
-  <link rel="stylesheet" href="/global.css" />
+  <!-- <link rel="stylesheet" href="/global.css" /> -->
 </svelte:head>
 <h1>HOME</h1>
 

@@ -32,6 +32,8 @@ onChange	- Callback executed when Tag is checked/unchecked |(checked) => void | 
 -->
 <style>
 	.badge {
+		/* display:inline-block;
+		max-width: 100%; */
 		font-size: 0.6rem;
 		text-transform: uppercase;
 		letter-spacing: 0.05rem;

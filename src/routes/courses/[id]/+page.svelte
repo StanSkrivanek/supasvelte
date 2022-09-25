@@ -119,13 +119,76 @@
 	// }
 </script>
 
-<p>Course detail</p>
+<!-- <p>Course detail</p> -->
+<div class="course-detail--head">
+	<div class="hero-title">
+		<p>{objAry.organization}</p>
+		<h2>{objAry.title}</h2>
+		<Tag bgColor="info">{objAry.type}</Tag>
+	</div>
+</div>
 
-<h2>{objAry.title}</h2>
-<Tag bgColor="info">{objAry.type}</Tag>
-<p>{objAry.organization}</p>
-<p>{objAry.excerpt}</p>
-<div id="editor-ro" />
+<div class="wrapper">
+	<aside>cardon side</aside>
+	<main>
+		<div id="editor-ro" class="editor__w" />
+		<button>Button</button>
+	</main>
+</div>
 
 <style>
+	.course-detail--head {
+		position: relative;
+		display: grid;
+		min-height: 30em;
+		grid-auto-columns: 1fr;
+		grid-column-gap: 0;
+		grid-row-gap: 0;
+		grid-template-areas: '. hero-title .';
+		grid-template-columns: 0.25fr 1fr 0.25fr;
+		background-image: var(--img-overlay-gradient-main)
+	}
+	.hero-title {
+		grid-area: hero-title;
+		place-self: center;
+		color: #fff;
+	}
+	.hero-title h2 {
+		font-size: 4.5em;
+		line-height: 1;
+		font-weight: 400;
+		margin-bottom: 1.5rem;
+		/* margin-top: -0.5rem; */
+	}
+
+	.hero-title p {
+		font-size: 1.6rem;
+		line-height: 1;
+		font-weight: 400;
+	}
+	/* .hero-title span{
+		font-size: 1.5rem;
+		line-height:1;
+		font-weight: 400;
+	} */
+	/* .hero-main:medium {
+  margin-bottom: 40px;
+}
+
+.hero-main:tiny {
+  margin-bottom: 24px;
+  grid-template-areas: "hero-text";
+  grid-template-columns: 1fr;
+} */
+
+	.wrapper {
+		display: grid;
+		grid-template-columns: 1fr 3fr;
+	}
+	aside {
+		background: lightblue;
+	}
+	main {
+		background: lightgreen;
+	}
 </style>

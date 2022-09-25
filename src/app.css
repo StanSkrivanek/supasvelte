@@ -1,4 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Kalam&family=Source+Code+Pro:wght@400;700&family=Source+Sans+Pro:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Kalam&family=Source+Code+Pro:wght@400;700&family=Source+Sans+Pro:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap'); */
+
+@font-face {
+	font-family: 'MainLight';
+	src: url('/fonts/HKNova-LightR.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'MainExtraLight';
+	src: url('/fonts/HKNova-ExtraLightR.woff') format('woff');
+}
+@font-face {
+	font-family: 'MainRegular';
+	src: url('./fonts/HKNova-RegularR.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'MainBold';
+	src: url('/fonts/HKNova-BoldR.woff') format('woff');
+}
 
 :root {
 	--col-text-main: #2c3e50;
@@ -15,6 +34,7 @@
 	--col-active: #678efe;
 	--col-white: #fff;
 	--col-purple-dark: #1b0e30;
+	--img-overlay-gradient-main:linear-gradient(to bottom, hsla(220, 65%, 25%, 0.479), #5a5a71);
 }
 *,
 *::before,
@@ -25,16 +45,28 @@
 }
 
 body {
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'MainLight', sans-serif;
 	font-size: 16px;
-	line-height: 1.5;
+	line-height: 1;
 	color: rgb(14, 9, 19);
+}
+
+h1,
+h2 {
+	font-family: 'MainBold', sans-serif;
 }
 a {
 	text-decoration: none;
 	color: rgb(14, 9, 19);
 }
+
 /* EditorJS styles */
+.editor__w {
+	padding: 0 2rem;
+}
 .codex-editor__redactor {
-	padding-bottom: 2.4rem !important;
+	padding-bottom: 2rem !important;
+}
+.ce-block__content {
+	margin: 0;
 }
