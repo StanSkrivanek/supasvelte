@@ -1,3 +1,32 @@
+<script>
+	import { onMount } from 'svelte';
+	onMount(() => {
+		const [...sbCard] = document.querySelectorAll('.sbc-card');
+		// console.log('🚀 ~ file: OpenCourse.svelte ~ line 3 ~ sbCard', sbCard);
+
+		sbCard.forEach((el) => {
+			const sbcMid = el.querySelector('.sbc-mid__c');
+			console.log('🚀 ~ file: OpenCourse.svelte ~ line 9 ~ sbCard.forEach ~ sbcMid', sbcMid);
+			const cta = el.querySelector('.sbc-cta-text');
+			console.log('🚀 ~ file: OpenCourse.svelte ~ line 11 ~ sbCard.forEach ~ cta', cta);
+
+			let sbcMidHeight = sbcMid.clientHeight;
+
+			const isCollapsed = (sbcMid.style.height = `0px`);
+			const isVisible = (sbcMid.style.height = `${sbcMidHeight}px`);
+			sbcMid.style.height = `${isCollapsed}`;
+
+			cta.addEventListener('click', () => {
+				cta.innerText != 'show details'
+					? (cta.innerText = 'show details')
+					: (cta.innerText = 'hide details');
+				sbcMid.style.height =
+					sbcMid.style.height != `${isCollapsed}` ? `${isCollapsed}` : `${isVisible}`;
+			});
+		});
+	});
+</script>
+
 <div class="sbc-card">
 	<div class="sbc-top__c">
 		<div class="sbc-section--top">
@@ -11,83 +40,83 @@
 				<div class="sbc-info-data">10:30 AM</div>
 			</div>
 		</div>
-		<div class="sbc-mid__c">
-			<div class="sbc-section--mid">
-				<div class="address__w">
-					<div class="sbc-venue__c">
-						<p class="sbc-info-label">Address</p>
-						<p class="sbc-info-data">Venue Name</p>
-						<p class="sbc-info-data">Address 1</p>
-						<p class="sbc-info-data">Address 2</p>
-						<p class="sbc-info-data">P51 PF10</p>
-						<p class="sbc-info-label">Phone</p>
-						<p class="sbc-info-data">+353 22 42439</p>
-					</div>
-					<div class="sbc-info"><img src="https://via.placeholder.com/140" alt="Trainer" /></div>
+	</div>
+	<div class="sbc-mid__c">
+		<div class="sbc-section--mid">
+			<div class="address__w">
+				<div class="sbc-venue__c">
+					<p class="sbc-info-label">Address</p>
+					<p class="sbc-info-data">Venue Name</p>
+					<p class="sbc-info-data">Address 1</p>
+					<p class="sbc-info-data">Address 2</p>
+					<p class="sbc-info-data">P51 PF10</p>
+					<p class="sbc-info-label">Phone</p>
+					<p class="sbc-info-data">+353 22 42439</p>
 				</div>
-			</div>
-			<div class="card--divider">
-				<p>course details</p>
-			</div>
-			<div class="sbc-course-details">
-				<div class="detail__w">
-					<p class="sbc-info-label">starts</p>
-					<p class="sbc-info-data">Jun 1, 2022</p>
-				</div>
-				<div class="detail__w">
-					<p class="sbc-info-label">ends</p>
-					<p class="sbc-info-data">Sep 1, 2022</p>
-				</div>
-				<div class="detail__w">
-					<p class="sbc-info-label">Group</p>
-					<p class="sbc-info-data">Group 1</p>
-				</div>
-				<div class="detail__w">
-					<p class="sbc-info-label">Week day</p>
-					<p class="sbc-info-data">Tuesday</p>
-				</div>
-				<div class="detail__w">
-					<p class="sbc-info-label">from</p>
-					<p class="sbc-info-data">10:30am</p>
-				</div>
-				<div class="detail__w">
-					<p class="sbc-info-label">to</p>
-					<p class="sbc-info-data">12:00pm</p>
-				</div>
-				<div class="detail__w">
-					<p class="sbc-info-label">costs</p>
-					<p class="sbc-info-data">€120</p>
-				</div>
-				<div class="detail__w">
-					<p class="sbc-info-label">Funded by</p>
-					<p class="sbc-info-data">Oranization Name</p>
-				</div>
-			</div>
-			<div class="card--divider">
-				<p>Trainers</p>
-			</div>
-			<div class="trainers__c">
-				<div class="trainer__w">
-					<img src="https://via.placeholder.com/48" alt="Trainer" />
-					<p class="sbc-info-data">Trainers Name</p>
-				</div>
-				<div class="trainer__w">
-					<img src="https://via.placeholder.com/48" alt="Trainer" />
-					<p class="sbc-info-data">Trainers Name</p>
-				</div>
-			</div>
-      	<div class="card--divider">
-				<p>Apply now</p>
-			</div>
-			<div class="sbc-download">
-				<button>Download Form</button>
+				<div class="sbc-info"><img src="https://via.placeholder.com/140" alt="Trainer" /></div>
 			</div>
 		</div>
-		<div class="sbc-footer__c">
-			<p class="sbc-info-label">Application Close</p>
-			<p class="sbc-info-data">Jun 3, 2024</p>
-			<button>SHOW/HIDE</button>
+		<div class="card--divider">
+			<p>course details</p>
 		</div>
+		<div class="sbc-course-details">
+			<div class="detail__w">
+				<p class="sbc-info-label">starts</p>
+				<p class="sbc-info-data">Jun 1, 2022</p>
+			</div>
+			<div class="detail__w">
+				<p class="sbc-info-label">ends</p>
+				<p class="sbc-info-data">Sep 1, 2022</p>
+			</div>
+			<div class="detail__w">
+				<p class="sbc-info-label">Group</p>
+				<p class="sbc-info-data">Group 1</p>
+			</div>
+			<div class="detail__w">
+				<p class="sbc-info-label">Week day</p>
+				<p class="sbc-info-data">Tuesday</p>
+			</div>
+			<div class="detail__w">
+				<p class="sbc-info-label">from</p>
+				<p class="sbc-info-data">10:30am</p>
+			</div>
+			<div class="detail__w">
+				<p class="sbc-info-label">to</p>
+				<p class="sbc-info-data">12:00pm</p>
+			</div>
+			<div class="detail__w">
+				<p class="sbc-info-label">costs</p>
+				<p class="sbc-info-data">€120</p>
+			</div>
+			<div class="detail__w">
+				<p class="sbc-info-label">Funded by</p>
+				<p class="sbc-info-data">Oranization Name</p>
+			</div>
+		</div>
+		<div class="card--divider">
+			<p>Trainers</p>
+		</div>
+		<div class="trainers__c">
+			<div class="trainer__w">
+				<img src="https://via.placeholder.com/48" alt="Trainer" />
+				<p class="sbc-info-data">Trainers Name</p>
+			</div>
+			<div class="trainer__w">
+				<img src="https://via.placeholder.com/48" alt="Trainer" />
+				<p class="sbc-info-data">Trainers Name</p>
+			</div>
+		</div>
+		<div class="card--divider">
+			<p>Apply now</p>
+		</div>
+		<div class="sbc-download">
+			<button>Download Form</button>
+		</div>
+	</div>
+	<div class="sbc-footer__c">
+		<p class="sbc-info-label">Application Close</p>
+		<p class="sbc-info-data">Jun 3, 2024</p>
+		<button class="sbc-cta-text">show details</button>
 	</div>
 </div>
 
@@ -98,20 +127,19 @@
 		border-radius: 0.25rem;
 		color: var(--col);
 		background: var(--col-bg-color);
-    border: 1px solid var(--col-bg-gray);
+		border: 1px solid var(--col-bg-gray);
+    overflow: hidden;
 	}
 	.sbc-section--top {
 		display: flex;
 		justify-content: space-between;
 		font-family: 'MainSemiBold';
 		color: var(--col-text-main-darkpurple);
-		border-bottom: 2px solid var(--col-bg-color);
 		padding: 0.5rem;
+	}
+	.sbc-venue__c p:nth-child(5) {
 		margin-bottom: 0.5rem;
 	}
-  .sbc-venue__c p:nth-child(5){
-    margin-bottom: 0.5rem;
-  }
 	.sbc-venue {
 		flex: 1 0 50%;
 		margin-bottom: 0.25rem;
@@ -138,7 +166,7 @@
 	.sbc-info-data {
 		margin-bottom: 0.25rem;
 		font-size: 0.9rem;
-    color: #676c77
+		color: #676c77;
 	}
 	.card--divider {
 		border-top: 2px solid var(--col-bg-color);
@@ -150,6 +178,7 @@
 	/* MID */
 	.sbc-mid__c {
 		padding-bottom: 1rem 0;
+    overflow: hidden;
 	}
 	.address__w {
 		display: flex;
@@ -158,15 +187,14 @@
 	.sbc-section--mid {
 		padding: 0 0.5rem;
 		margin-bottom: 0.5rem;
+	
 	}
 	.sbc-course-details {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-    padding: 0 0.5rem;
+		padding: 0 0.5rem;
 	}
 	.detail__w {
-		/* display: flex; */
-		/* justify-content: space-between; */
 		margin-bottom: 0.25rem;
 	}
 
@@ -174,7 +202,7 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 0.5rem;
-    padding: 0 0.5rem;
+		padding: 0 0.5rem;
 		margin-bottom: 1rem;
 	}
 	.trainer__w {
