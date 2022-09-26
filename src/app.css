@@ -11,7 +11,7 @@
 }
 @font-face {
 	font-family: 'MainRegular';
-	src: url('./fonts/HKNova-RegularR.woff') format('woff');
+	src: url('/fonts/HKNova-RegularR.woff') format('woff');
 }
 
 @font-face {
