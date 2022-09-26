@@ -15,15 +15,18 @@
 }
 
 @font-face {
-	font-family: 'MainBold';
-	src: url('/fonts/HKNova-BoldR.woff') format('woff');
+	font-family: 'MainSemiBold';
+	src: url('/fonts/HKNova-SemiBoldR.woff') format('woff');
 }
 
 :root {
 	--col-text-main: #2c3e50;
+	--col-text-main-darkpurple: #423151;
+	--col-text-lighter: #5a5a71;
 	--col-text-sec: #99a3ba;
 	--col-text-placeholder: #cbd1dc;
 	--col-bg-gray: #cdd9ed;
+	--col-bg-light: #faf0f0;
 	--col-bg-sec: #eef4ff;
 	--col-disabled: #f1f1f1;
 	--col-info: #00bcd4;
@@ -35,7 +38,7 @@
 	--col-active: #678efe;
 	--col-white: #fff;
 	--col-purple-dark: #1b0e30;
-	--img-overlay-gradient-main:linear-gradient(to bottom, hsla(220, 65%, 25%, 0.479), #5a5a71);
+	--img-overlay-gradient-main: linear-gradient(to bottom, hsla(220, 65%, 25%, 0.479), #5a5a71);
 }
 *,
 *::before,
@@ -46,15 +49,19 @@
 }
 
 body {
-	font-family: 'MainLight', sans-serif;
+	font-family: 'MainRegular', sans-serif;
 	font-size: 16px;
 	line-height: 1;
-	color: rgb(14, 9, 19);
+	color: var(--col-text-main);
+	background-color: #fff6f6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 h1,
 h2 {
-	font-family: 'MainBold', sans-serif;
+	font-family: 'MainSemiBold', sans-serif;
+	color: var(--col-text-main-darkpurple)
 }
 a {
 	text-decoration: none;

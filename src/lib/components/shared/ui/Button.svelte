@@ -32,6 +32,10 @@
     box-shadow: none;
     cursor: not-allowed;
   }
+.dark{
+  background: var(--col-purple-dark);
+  color: var(--col-white);
+}
   .primary {
     background:var(--col-active);
     color: var(--col-white)
