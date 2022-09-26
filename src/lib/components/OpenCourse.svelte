@@ -76,6 +76,9 @@
 					<p class="sbc-info-data">Trainers Name</p>
 				</div>
 			</div>
+      	<div class="card--divider">
+				<p>Apply now</p>
+			</div>
 			<div class="sbc-download">
 				<button>Download Form</button>
 			</div>
@@ -93,18 +96,22 @@
 		padding: 1rem;
 		margin-bottom: 1rem;
 		border-radius: 0.25rem;
-		color: var(--col-white);
-		background: var(--img-overlay-gradient-main);
+		color: var(--col);
+		background: var(--col-bg-color);
+    border: 1px solid var(--col-bg-gray);
 	}
 	.sbc-section--top {
 		display: flex;
 		justify-content: space-between;
 		font-family: 'MainSemiBold';
-		color: var(--col-white);
-		border-bottom: 1px solid #99a3ba;
+		color: var(--col-text-main-darkpurple);
+		border-bottom: 2px solid var(--col-bg-color);
 		padding: 0.5rem;
 		margin-bottom: 0.5rem;
 	}
+  .sbc-venue__c p:nth-child(5){
+    margin-bottom: 0.5rem;
+  }
 	.sbc-venue {
 		flex: 1 0 50%;
 		margin-bottom: 0.25rem;
@@ -122,7 +129,7 @@
 		font-family: 'MainRegular';
 	}
 	.sbc-info-label {
-		font-family: 'MainRegular';
+		font-family: 'MainSemiBold';
 		font-size: 1rem;
 		text-transform: uppercase;
 		margin-bottom: 0.4rem;
@@ -131,14 +138,14 @@
 	.sbc-info-data {
 		margin-bottom: 0.25rem;
 		font-size: 0.9rem;
+    color: #676c77
 	}
 	.card--divider {
-		border-top: 1px solid #99a3ba;
+		border-top: 2px solid var(--col-bg-color);
 		padding: 0.5rem;
 		margin-bottom: 0.5rem;
-
 		text-transform: uppercase;
-		color: var(--col-purple-dark);
+		color: var(--col-danger);
 	}
 	/* MID */
 	.sbc-mid__c {
@@ -155,6 +162,7 @@
 	.sbc-course-details {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
+    padding: 0 0.5rem;
 	}
 	.detail__w {
 		/* display: flex; */
@@ -166,6 +174,7 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 0.5rem;
+    padding: 0 0.5rem;
 		margin-bottom: 1rem;
 	}
 	.trainer__w {
@@ -186,19 +195,19 @@
 	.sbc-footer__c {
 		text-align: center;
 		padding: 0.5rem;
-		border-top: 1px solid #99a3ba;
+		border-top: 2px solid var(--col-bg-color);
 	}
-.sbc-footer__c .sbc-info-data{
-  margin-bottom: 1rem;
-}
+	.sbc-footer__c .sbc-info-data {
+		margin-bottom: 1rem;
+	}
 	button {
 		text-transform: uppercase;
 		border: none;
-		border: 1px solid var(--col-bg-gray);
+		border: 1px solid var(--col-active);
 		background: transparent;
 		padding: 0.5rem 1rem;
-		color: var(--col-bg-gray);
-		border-radius: 4px;
+		color: var(--col-active);
+		border-radius: 2px;
 		letter-spacing: 0.05rem;
 		cursor: pointer;
 		text-decoration: none;

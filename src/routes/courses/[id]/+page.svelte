@@ -1,6 +1,6 @@
 <script>
 	import { getData } from '$lib/utils/helpers.js';
-import OpenCourse from '$lib/components/OpenCourse.svelte';
+	import OpenCourse from '$lib/components/OpenCourse.svelte';
 
 	export let data;
 	let objAry = getData(data);
@@ -138,11 +138,10 @@ import OpenCourse from '$lib/components/OpenCourse.svelte';
 <style>
 	.hero {
 		display: grid;
-		grid-template-columns: 0.25fr 1fr 0.25fr;
+		grid-template-columns: 0.25fr minmax(1fr, 1440px) 0.25fr;
 		grid-template-areas: '. content .';
 		background: #f5f5f5;
 		padding: 1rem;
-		border-radius: 0.5rem;
 		margin-bottom: 1rem;
 		min-height: 30rem;
 		color: var(--col-white);
@@ -167,25 +166,24 @@ import OpenCourse from '$lib/components/OpenCourse.svelte';
 		grid-area: content;
 		place-self: center;
 	}
-.main-content__w{
-	display: grid;
-	grid-template-columns: minmax(300px, 1fr) 2fr;
-	grid-template-areas: 'aside content';
-	max-width: 1440px;
-	margin: 0 auto;
-}
-aside{
-	grid-area: aside;
-	padding: 1rem;
-}
+	.main-content__w {
+		display: grid;
+		grid-template-columns: minmax(300px, 1fr) 2fr;
+		grid-template-areas: 'aside content';
+		max-width: 1440px;
+		margin: 0 auto;
+	}
+	aside {
+		grid-area: aside;
+		padding: 1rem;
+	}
 
-main{
-	grid-area: content;
-	padding: 1rem;
-}
-.article-main-header{
-	font-size: 2rem;
-	margin-bottom: 1rem;
-}
-
+	main {
+		grid-area: content;
+		padding: 1rem;
+	}
+	.article-main-header {
+		font-size: 2rem;
+		margin-bottom: 1rem;
+	}
 </style>
