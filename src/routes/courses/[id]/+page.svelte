@@ -1,10 +1,10 @@
 <script>
-	import { getData} from '$lib/utils/helpers.js';
+	import { getData } from '$lib/utils/helpers.js';
 	import Tag from '$lib/components/shared/ui/Tag.svelte';
 
 	export let data;
 	let objAry = getData(data);
-	console.log("🚀 ~ file: +page.svelte ~ line 7 ~ objAry", objAry)
+	console.log('🚀 ~ file: +page.svelte ~ line 7 ~ objAry', objAry);
 
 	// ----------------------
 	// EDITOR JS
@@ -117,17 +117,73 @@
 	// 	let output = editor.save();
 	// 	return (values.content = await output);
 	// }
-
 </script>
 
-<p>Course detail</p>
-
-<h2>{objAry.title}</h2>
-<Tag bgColor="info" >{objAry.type}</Tag>
-<p>{objAry.organization}</p>
-<p>{objAry.excerpt}</p>
-<div id="editor-ro"></div>
-
+<div class="hero">
+	<div class="hero-conetnt__w">
+		<p>{objAry.type}</p>
+		<h2>{objAry.title}</h2>
+	</div>
+</div>
+<div class="main-content__w">
+	<aside>OPEN COURSES CARD</aside>
+	<main>
+		<p class="article-main-header">Course overview</p>
+		<div id="editor-ro" />
+	</main>
+</div>
 
 <style>
+	.hero {
+		display: grid;
+		grid-template-columns: 0.25fr 1fr 0.25fr;
+		grid-template-areas: '. content .';
+		background: #f5f5f5;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		margin-bottom: 1rem;
+		min-height: 30rem;
+		color: var(--col-white);
+		background: var(--img-overlay-gradient-main);
+	}
+	.hero h2 {
+		font-size: 4.5rem;
+		color: var(--col-white);
+	}
+	.hero h2::after {
+		content: '';
+		display: block;
+		width: 5rem;
+		height: 0.5rem;
+		background: var(--col-warning);
+		margin-top: 0.8rem;
+	}
+	.hero p {
+		font-size: 1.3rem;
+	}
+	.hero-conetnt__w {
+		grid-area: content;
+		place-self: center;
+	}
+.main-content__w{
+	display: grid;
+	grid-template-columns: minmax(300px, 1fr) 2fr;
+	grid-template-areas: 'aside content';
+	max-width: 1440px;
+	margin: 0 auto;
+}
+aside{
+	grid-area: aside;
+	padding: 1rem;
+}
+
+main{
+	grid-area: content;
+	padding: 1rem;
+}
+.article-main-header{
+	font-size: 2rem;
+	margin-bottom: 1rem;
+}
+
 </style>

@@ -28,7 +28,11 @@
 			<div class="card_content">
 				<p class="card_excerpt">{course.excerpt}</p>
 				<div class="card_footer">
-					<Button btColor="dark" caption="More Info" on:click={() => goto(`/courses/${course.id}`)} />
+					<Button
+						btColor="dark"
+						caption="More Info"
+						on:click={() => goto(`/courses/${course.id}`)}
+					/>
 				</div>
 			</div>
 		</div>
@@ -51,14 +55,12 @@
 		height: 100%;
 		color: var(--col-text-lighter);
 		background-color: var(--col-bg-light);
-
 	}
 	.card_header {
-	
 		margin-bottom: 1rem;
 		grid-column-start: 1;
 	}
-	.top-sub-title{
+	.top-sub-title {
 		font-size: 0.9rem;
 		margin-bottom: 0.5rem;
 	}
@@ -67,12 +69,11 @@
 		display: block;
 		width: 50px;
 		height: 8px;
-
 		background-color: var(--col-warning);
 		margin-top: 0.7rem;
 	}
 	.card_header h2 {
-			position:relative;
+		position: relative;
 		font-size: 2rem;
 		margin-bottom: 0.5rem;
 	}
@@ -85,11 +86,9 @@
 	.card_excerpt {
 		margin-bottom: 1rem;
 		line-height: 1.4;
-
 	}
 	.card_footer {
 		/* grid-area: footer; */
 		text-align: right;
 	}
-
 </style>
