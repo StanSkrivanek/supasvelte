@@ -78,7 +78,7 @@
 			<!-- EDITOR -->
 			<label for="content">Course content</label>
 
-			<Editor bind:rteOutput />
+			<Editor padding={80} bind:rteOutput />
 			
 			<button>Add Course</button>
 		</form>
@@ -86,6 +86,7 @@
 </article>
 
 <style>
+
 	.dash-page-header-btn__w {
 		border-bottom: #ccc 1px solid;
 	}

@@ -22,7 +22,7 @@
 		<li><CourseIcn /><a href="/dashboard/courses">Courses</a></li>
 		<li><VenueIcn /><a href="/dashboard/venue">Venues</a></li>
 		<li><OrganizationIcn /><a href="/dashboard/organization">Organizations</a></li>
-		<li><InstructorIcn /><a href="/dashboard/instructor">Instructors</a></li>
+		<li><InstructorIcn /><a href="/dashboard/instructors">Instructors</a></li>
 		<li class="nav-divider" />
 		<li><SettingsIcn /><a href="/dashboard/settings"> Page Settings</a></li>
 	</ul>
@@ -49,10 +49,11 @@
 	}
 	ul li a {
 		display: block;
-		font-size: 1rem;
+		font-size: 0.8rem;
+		letter-spacing: 0.05rem;
 		text-decoration: none;
 		color: #fff;
-		opacity: 0.5;
+		opacity: 0.7;
 		padding-left: 0.5rem;
 	}
 

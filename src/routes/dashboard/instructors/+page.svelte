@@ -9,6 +9,7 @@
 
 	export let data;
 	let objAry = getData(data);
+	console.log("🚀 ~ file: +page.svelte ~ line 12 ~ objAry", objAry)
 	let showModal = false;
 	let cId = 0;
 	let target = null;
@@ -25,7 +26,7 @@
 	}
 	// apply delete from modal
 	async function deleteCourse() {
-		await supabase.from('courses').delete().match({ id: cId });
+		await supabase.from('instructors').delete().match({ id: cId });
 		objAry = objAry.filter((item) => item.id !== cId);
 		target.remove();
 	}
@@ -33,14 +34,14 @@
 	async function currentCourseForm(e) {
 		const elm = e.target.parentElement;
 		const elmId = elm.id;
-		// get data from db table `courses` where id = elmId
-		$courseDetails = await supabase.from('courses').select('*').match({ id: elmId });
+		// get data from db table `instructors` where id = elmId
+		$courseDetails = await supabase.from('instructors').select('*').match({ id: elmId });
 		// store course RTE data as string in localStorage
 		localStorage.setItem('courseDetails', JSON.stringify($courseDetails));
 		// redirect to update page
-		goto('/dashboard/courses/update');
+		goto('/dashboard/instructors/update');
 	}
-	// sort courses by ID
+	// sort instructors by ID
 	let sorted = sortById(objAry, 'asc');
 </script>
 
@@ -60,24 +61,25 @@
 
 <article>
 	<div class="dash-header">
-		<h1>Courses DB</h1>
+		<h1>Instructors DB</h1>
 	</div>
 	<section class="dash-page-header-btn__w">
 		<div class="btn-form-xxl">
-			<a href="/dashboard/courses/create">
+			<a href="/dashboard/instructors/create">
 				<h2>Add New +</h2>
 			</a>
 		</div>
 	</section>
 	<section>
-		<h3>list of courses</h3>
+		<h3>list of instructors</h3>
 
 		{#each sorted as item (item.id)}
-			<div class="courses-db-list" id={item.id}>
+			<div class="instructors-db-list" id={item.id}>
 				<p>{item.id}</p>
-				<h1>{item.title}</h1>
-				<p>{item.type}</p>
-				<p>{item.organization}</p>
+				<h1>{item.name}</h1>
+				<p>{item.phone}</p>
+				<p>{item.email}</p>
+				<img href={item.image_url} alt={item.name}/>
 				<button class="info" on:click={currentCourseForm}>Edit</button>
 				<!-- load data for course by ID -->
 				<button class="danger" on:click={findCourse}>Delete</button>
@@ -100,7 +102,7 @@
 		text-align: end;
 	}
 
-	.courses-db-list {
+	.instructors-db-list {
 		display: grid;
 		grid-template-columns: 0.25fr 2fr 1fr 1fr 0.5fr 0.5fr;
 		align-items: center;
