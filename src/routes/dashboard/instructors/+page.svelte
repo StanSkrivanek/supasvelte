@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { getData } from '$lib/utils/helpers.js';
-	import { courseDetails } from '$lib/stores/store.js';
+	import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
@@ -12,34 +12,34 @@
 	console.log('🚀 ~ file: +page.svelte ~ line 12 ~ objAry', objAry);
 	let showModal = false;
 	let cId = 0;
-	let target = null;
+	let itemTarget = null;
 
 	function toggleModal() {
 		showModal = !showModal;
 	}
 	// find course id to be late used for delete from modal
-	function findCourse(e) {
+	function openDeleteConfirmModal(e) {
 		toggleModal();
-		target = e.target.parentElement;
-		cId = target.id;
-		console.log('🚀 ~ file: +page.svelte ~ line 26 ~ findCourse ~ cId', cId);
+		itemTarget = e.target.closest('.db-item');
+		cId = itemTarget.id;
 	}
 	// apply delete from modal
 	async function deleteItemById() {
 		await supabase.from('instructors').delete().match({ id: cId });
+		//TODO: can I remove item from DOM without  by calling supabase again to get all data and re-render the page ??
 		objAry = objAry.filter((item) => item.id !== cId);
-		target.remove();
+		itemTarget.remove();
 	}
 
 	async function findItemById(e) {
-		const elm = e.target.parentElement;
-		const elmId = elm.id;
+		// const elm = e.target.closest('.db-item').getAttribute('id');
+		const elmId = e.target.closest('.db-item').id
 		// get data from db table `instructors` where id = elmId
-		$courseDetails = await supabase.from('instructors').select('*').match({ id: elmId });
+		$itemData = await supabase.from('instructors').select('*').match({ id: elmId });
 		// store course RTE data as string in localStorage
-		localStorage.setItem('courseDetails', JSON.stringify($courseDetails));
+		localStorage.setItem('itemData', JSON.stringify($itemData));
 		// redirect to update page
-		goto('/dashboard/instructors/update');
+		goto('/dashboard/instructors/edit');
 	}
 	// sort instructors by ID
 	let sorted = sortById(objAry, 'asc');
@@ -77,6 +77,7 @@
 				<div class="db-item" id={item.id}>
 					<div class="db-item__header">
 						<div class="col">
+							<p class="txt">{item.id}</p>
 							<p class="title">{item.name}</p>
 							<p class="txt" >{item.email}</p>
 							<p class="txt">{item.phone}</p>
@@ -89,7 +90,7 @@
 					<div class="btns__c">
 						<button class="info" on:click={findItemById}>Edit</button>
 						<!-- load data for course by ID -->
-						<button class="danger" on:click={findCourse}>Delete</button>
+						<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
 						<!-- delete data by ID -->
 					</div>
 				</div>
@@ -150,24 +151,5 @@
 	}
 	section:last-child {
 		border-bottom: none;
-	}
-	button {
-		padding: 0.5rem;
-		border: none;
-		border-radius: 0.25rem;
-		background-color: #1b0e30;
-		color: #fff;
-		cursor: pointer;
-		min-width: 80px;
-		text-transform: uppercase;
-	}
-	.btns__c {
-		text-align: end;
-	}
-	.danger {
-		background-color: tomato;
-	}
-	.info {
-		background-color: #5155c7;
 	}
 </style>

@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { getData } from '$lib/utils/helpers.js';
-	import { courseDetails } from '$lib/stores/store.js';
+	import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
@@ -17,28 +17,28 @@
 		showModal = !showModal;
 	}
 	// find course id to be late used for delete from modal
-	function findCourse(e) {
+	function openDeleteConfirmModal(e) {
 		toggleModal();
 		target = e.target.parentElement;
 		cId = target.id;
-		console.log('🚀 ~ file: +page.svelte ~ line 26 ~ findCourse ~ cId', cId);
+		console.log('🚀 ~ file: +page.svelte ~ line 26 ~ openDeleteConfirmModal ~ cId', cId);
 	}
 	// apply delete from modal
-	async function deleteCourse() {
+	async function deleteItemById() {
 		await supabase.from('courses').delete().match({ id: cId });
 		objAry = objAry.filter((item) => item.id !== cId);
 		target.remove();
 	}
 
-	async function currentCourseForm(e) {
+	async function findItemById(e) {
 		const elm = e.target.parentElement;
 		const elmId = elm.id;
 		// get data from db table `courses` where id = elmId
-		$courseDetails = await supabase.from('courses').select('*').match({ id: elmId });
+		$itemData = await supabase.from('courses').select('*').match({ id: elmId });
 		// store course RTE data as string in localStorage
-		localStorage.setItem('courseDetails', JSON.stringify($courseDetails));
+		localStorage.setItem('itemData', JSON.stringify($itemData));
 		// redirect to update page
-		goto('/dashboard/courses/update');
+		goto('/dashboard/courses/edit');
 	}
 	// sort courses by ID
 	let sorted = sortById(objAry, 'asc');
@@ -52,7 +52,7 @@
 			}}
 			on:delete={() => {
 				toggleModal();
-				deleteCourse();
+				deleteItemById();
 			}}
 		/>
 	</Modal>
@@ -79,9 +79,9 @@
 				<h1>{item.title}</h1>
 				<p>{item.type}</p>
 				<p>{item.organization}</p>
-				<button class="info" on:click={currentCourseForm}>Edit</button>
+				<button class="info" on:click={findItemById}>Edit</button>
 				<!-- load data for course by ID -->
-				<button class="danger" on:click={findCourse}>Delete</button>
+				<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
 				<!-- delete data by ID -->
 			</div>
 		{/each}

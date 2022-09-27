@@ -127,11 +127,11 @@
 		border-radius: 0.25rem;
 	}
 
-	button {
+	/* button {
 		padding: 0.5rem;
 		border: none;
 		border-radius: 0.25rem;
 		background-color: #1b0e30;
 		color: #fff;
-	}
+	} */
 </style>

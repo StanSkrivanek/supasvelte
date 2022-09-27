@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
-const courseDetails = writable(null);
+const itemData = writable(null);
 const fuzzy = writable(null);
 const dbTableOpt = writable(null);
 
-export { courseDetails, fuzzy, dbTableOpt };
+export { itemData, fuzzy, dbTableOpt };

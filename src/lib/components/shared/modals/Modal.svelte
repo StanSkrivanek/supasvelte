@@ -36,8 +36,6 @@
 		overflow: hidden;
 		padding: 1rem;
 	}
-	/* div.content {
-    max-height: 50vh;
-    overflow: auto;
-  } */
+
+
 </style>
