@@ -179,6 +179,7 @@
 	.sbc-mid__c {
 		padding-bottom: 1rem 0;
     overflow: hidden;
+		transition: height 0.5s ease;
 	}
 	.address__w {
 		display: flex;
