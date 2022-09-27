@@ -70,7 +70,8 @@
 		</div>
 	</section>
 	<section>
-		<h3>list of courses</h3>
+	
+		
 
 		{#each sorted as item (item.id)}
 			<div class="courses-db-list" id={item.id}>

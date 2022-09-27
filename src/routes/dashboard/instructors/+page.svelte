@@ -9,7 +9,7 @@
 
 	export let data;
 	let objAry = getData(data);
-	console.log("🚀 ~ file: +page.svelte ~ line 12 ~ objAry", objAry)
+	console.log('🚀 ~ file: +page.svelte ~ line 12 ~ objAry', objAry);
 	let showModal = false;
 	let cId = 0;
 	let target = null;
@@ -25,13 +25,13 @@
 		console.log('🚀 ~ file: +page.svelte ~ line 26 ~ findCourse ~ cId', cId);
 	}
 	// apply delete from modal
-	async function deleteCourse() {
+	async function deleteItemById() {
 		await supabase.from('instructors').delete().match({ id: cId });
 		objAry = objAry.filter((item) => item.id !== cId);
 		target.remove();
 	}
 
-	async function currentCourseForm(e) {
+	async function findItemById(e) {
 		const elm = e.target.parentElement;
 		const elmId = elm.id;
 		// get data from db table `instructors` where id = elmId
@@ -53,7 +53,7 @@
 			}}
 			on:delete={() => {
 				toggleModal();
-				deleteCourse();
+				deleteItemById();
 			}}
 		/>
 	</Modal>
@@ -72,20 +72,29 @@
 	</section>
 	<section>
 		<h3>list of instructors</h3>
-
-		{#each sorted as item (item.id)}
-			<div class="instructors-db-list" id={item.id}>
-				<p>{item.id}</p>
-				<h1>{item.name}</h1>
-				<p>{item.phone}</p>
-				<p>{item.email}</p>
-				<img href={item.image_url} alt={item.name}/>
-				<button class="info" on:click={currentCourseForm}>Edit</button>
-				<!-- load data for course by ID -->
-				<button class="danger" on:click={findCourse}>Delete</button>
-				<!-- delete data by ID -->
-			</div>
-		{/each}
+		<div class="db-list">
+			{#each sorted as item (item.id)}
+				<div class="db-item" id={item.id}>
+					<div class="db-item__header">
+						<div class="col">
+							<p class="title">{item.name}</p>
+							<p class="txt" >{item.email}</p>
+							<p class="txt">{item.phone}</p>
+						</div>
+						<div class="col">
+							<img href={item.image_url} alt={item.name} />
+						</div>
+					</div>
+					<!-- <p>{item.bio}</p> -->
+					<div class="btns__c">
+						<button class="info" on:click={findItemById}>Edit</button>
+						<!-- load data for course by ID -->
+						<button class="danger" on:click={findCourse}>Delete</button>
+						<!-- delete data by ID -->
+					</div>
+				</div>
+			{/each}
+		</div>
 	</section>
 </article>
 
@@ -101,17 +110,40 @@
 	.dash-page-header-btn__w {
 		text-align: end;
 	}
-
-	.instructors-db-list {
+	.db-list {
 		display: grid;
-		grid-template-columns: 0.25fr 2fr 1fr 1fr 0.5fr 0.5fr;
-		align-items: center;
-		gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-gap: 1rem;
+		padding: 1rem;
+	}
+	.db-item {
 		border: #ccc 1px solid;
 		padding: 1rem;
 		border-radius: 0.25rem;
 		margin-bottom: 0.25rem;
 	}
+	.db-item__header {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+	.col .title{
+		font-size: 1.2rem;
+		font-weight: 600;
+		margin-bottom: 1rem;
+	}
+	.col .txt{
+		font-size: 0.8rem;
+		margin-bottom: 0.5rem;
+	}
+	.col img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
 	section {
 		padding: 1rem;
 		border-bottom: 1px solid #d8d8d8;
@@ -123,10 +155,14 @@
 		padding: 0.5rem;
 		border: none;
 		border-radius: 0.25rem;
-
 		background-color: #1b0e30;
 		color: #fff;
 		cursor: pointer;
+		min-width: 80px;
+		text-transform: uppercase;
+	}
+	.btns__c {
+		text-align: end;
 	}
 	.danger {
 		background-color: tomato;
