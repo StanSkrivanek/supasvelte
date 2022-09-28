@@ -22,7 +22,7 @@
 	// get data from localStorage
 	// TODO: how to simplify it to create courseDetailsData only once as it has been done in courses/update page
 	// ------------ when Update
-	const courseDetailsData = JSON.parse(localStorage.getItem('courseDetails'));
+	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
 	const storeData = courseDetailsData.data[0].content;
 	// ------------
 	const editor = new EditorJS({

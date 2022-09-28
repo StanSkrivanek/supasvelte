@@ -4,7 +4,7 @@
 	import Update from '$components/editor/Update.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	// get data from localStorage
-	const courseDetailsData = JSON.parse(localStorage.getItem('courseDetails'));
+	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
 
 	// assign data from localStorage
 	let dbRowData = courseDetailsData.data[0];

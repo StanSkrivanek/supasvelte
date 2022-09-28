@@ -9,7 +9,7 @@
 
 	export let data;
 	let objAry = getData(data);
-	console.log('🚀 ~ file: +page.svelte ~ line 12 ~ objAry', objAry);
+
 	let showModal = false;
 	let cId = 0;
 	let itemTarget = null;
