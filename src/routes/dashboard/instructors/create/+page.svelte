@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
-	
+
 	let values = {
 		name: '',
 		phone: '',
@@ -18,6 +18,47 @@
 			image_url: values.image_url
 		});
 		goto('/dashboard/instructors');
+	}
+
+
+	let avatarFile = '';
+	const handleFilesUpload = async (e) => {
+		avatarFile = e.target.files[0];
+		console.log(avatarFile);
+		// UNIQUE FILE NAME
+		const { data, error } = await supabase.storage
+			.from('avatars')
+			.upload(`public/${avatarFile.name}`, avatarFile, {
+				cacheControl: '3600',
+				upsert: false
+			});
+
+		if (error) {
+			console.log('Error uploading file: ', error.message);
+		} else {
+			appendImage();
+			console.log('File uploaded successfully!');
+		}
+	};
+	// APPEND IMAGE TO DOM
+	async function appendImage() {
+		const galery = document.querySelector('.galery');
+		const { data: blob, error } = await supabase.storage
+			.from('avatars')
+			.download(`public/${avatarFile.name}`);
+
+		error && console.log('error', error.message);
+
+		if (blob) {
+			const url = URL.createObjectURL(blob);
+			values.image_url = url;
+			// addBlobToInstructor(url);
+			const img = document.createElement('img');
+			img.src = url;
+			img.alt = `image-${avatarFile.name}`;
+			galery.appendChild(img);
+			img.classList.add('avatar__img');
+		}
 	}
 </script>
 
@@ -59,10 +100,19 @@
 				bind:value={values.excerpt}
 				placeholder="type your content here"
 			/>
-			<label for="image"
+			<div class="galery" />
+			<label for="avatar"
 				>Profile Image <span>max dimension: 256px x 256px<i>(jpg, webp, avif)</i></span></label
 			>
-			<input type="file" name="image" id="image" />
+			<input
+				type="file"
+				name="avatar"
+				id="image_url"
+				accept="image/*,video/*,audio/*,.pdf,.svg,.doc,.docx,.txt"
+				on:change={(e) => {
+					handleFilesUpload(e);
+				}}
+			/>
 			<button>Add trainer</button>
 
 			<!-- Submit will redirect to courses list -->

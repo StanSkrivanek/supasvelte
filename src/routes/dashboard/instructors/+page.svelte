@@ -83,7 +83,7 @@
 							<p class="txt">{item.phone}</p>
 						</div>
 						<div class="col">
-							<img href={item.image_url} alt={item.name} />
+							<img src={item.image_url} alt={item.name} />
 						</div>
 					</div>
 					<!-- <p>{item.bio}</p> -->

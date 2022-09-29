@@ -103,6 +103,13 @@ button {
 .info {
 	background-color: #5155c7;
 }
+/* AVATAR */
+.avatar__img {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	border-radius: 0.25rem;
+}
 /* EditorJS styles */
 
 .codex-editor__redactor {
@@ -111,9 +118,4 @@ button {
 
 .ce-block__content {
 	margin: 0;
-}
-.avatar__img {
-	width: 100px;
-	height: 100px;
-	border-radius: 0.25rem;
 }

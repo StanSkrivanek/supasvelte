@@ -29,7 +29,13 @@ none for now
 - [ ] ~~`fuzzy search` functionality to `type` and `organisation` input field to be able find type faster and add new if non existent~~
 
 **NEXT**
-
+	[ ] show avatar when uploaded into DB 
+  [ ] add error msg when image with identical name exists in DB
+  <!-- [ ] add error msg when image is not uploaded
+  [ ] add error msg when image is not uploaded -->
+  [ ] add delete option under preview to delete image and update db with null
+	[ ] save image url in db on submit, delete image on cancel??, delete image on delete instructor
+	[ ] how Editor JS adding image paths to JSON to be able delete ALL images on delete course
  - find suitable RTE for Sveltekit
   - opt1: [cl-editor](https://github.com/nenadpnc/cl-editor) 
   - opt2: [tailwind-editor](https://github.com/fouita/tailwind-editor)
