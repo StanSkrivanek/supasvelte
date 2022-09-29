@@ -32,32 +32,26 @@
 			const { data: blob, error } = await supabase.storage
 				.from('avatars')
 				.download(`public/${file.name}`);
-			// console.log('data:img', blob);
+
 			error && console.log('error', error.message);
-			// function createObjectURL(blob) {
-			let objectURL = URL.createObjectURL(blob);
-			// console.log('objectURL', objectURL);
-			let img = document.createElement('img');
-			img.src = objectURL;
-			img.alt = `image-${file.name}`;
-			img.classList.add('galery__img');
 
-			galery.appendChild(img);
+			if (blob) {
+				const url = URL.createObjectURL(blob);
+				const img = document.createElement('img');
+				img.src = url;
+				img.alt = `image-${file.name}`;
+				galery.appendChild(img);
+				img.classList.add('avatar__img');
+			}
 		}
 
-		async function getPublicURL(file) {
-			console.log('🚀 ~ file: +page.svelte ~ line 57 ~ getPublicURL ~ file', file);
-			const publicURL = await supabase.storage.from('avatars').getPublicUrl(`public/${file.name}`);
-			console.log('🚀 ~ file: +page.svelte ~ line 58 ~ getPublicURL ~ publicURL', publicURL);
-		}
+		// async function getPublicURL(file) {
+		// 	console.log('🚀 ~ file: +page.svelte ~ line 57 ~ getPublicURL ~ file', file);
+		// 	const publicURL = await supabase.storage.from('avatars').getPublicUrl(`public/${file.name}`);
+		// 	console.log('🚀 ~ file: +page.svelte ~ line 58 ~ getPublicURL ~ publicURL', publicURL);
+		// }
 		//  (formData = { ...formData, file_url: publicURL })
 	};
-
-	// export async function getDbData() {
-	// 	// const { data, error } = await supabase.storage.from('venues').list("logo");
-	// 	const { data, error } = supabase.storage
-	// 		.from('avatars').download('DJ-goIcone.jpg')
-	// 		// .getPublicUrl('DJ-goIcone.jpg');
 </script>
 
 <article>
@@ -93,9 +87,5 @@
 <style>
 	section {
 		padding: 1rem 3rem;
-	}
-	.galery__img {
-		width: 100px;
-		height: 100px;
 	}
 </style>
