@@ -33,7 +33,7 @@
 
 	async function findItemById(e) {
 		// const elm = e.target.closest('.db-item').getAttribute('id');
-		const elmId = e.target.closest('.db-item').id
+		const elmId = e.target.closest('.db-item').id;
 		// get data from db table `instructors` where id = elmId
 		$itemData = await supabase.from('instructors').select('*').match({ id: elmId });
 		// store course RTE data as string in localStorage
@@ -79,11 +79,11 @@
 						<div class="col">
 							<p class="txt">{item.id}</p>
 							<p class="title">{item.name}</p>
-							<p class="txt" >{item.email}</p>
+							<p class="txt">{item.email}</p>
 							<p class="txt">{item.phone}</p>
 						</div>
-						<div class="col">
-							<img src={item.image_url} alt={item.name} />
+						<div class="col avatar__w">
+							<img class="avatar" src={item.avatar_url} alt={item.name} />
 						</div>
 					</div>
 					<!-- <p>{item.bio}</p> -->
@@ -130,18 +130,21 @@
 		gap: 1rem;
 		margin-bottom: 1rem;
 	}
-	.col .title{
+	.col .title {
 		font-size: 1.2rem;
 		font-weight: 600;
 		margin-bottom: 1rem;
 	}
-	.col .txt{
+	.col .txt {
 		font-size: 0.8rem;
 		margin-bottom: 0.5rem;
 	}
-	.col img {
-		width: 100%;
-		height: 100%;
+	.avatar__w {
+		text-align: right;
+	}
+	.avatar {
+		width: 120px;
+		height: 120px;
 		object-fit: cover;
 	}
 
