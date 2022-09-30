@@ -26,8 +26,8 @@
 	// apply delete from modal
 	async function deleteItemById() {
 		await supabase.from('instructors').delete().match({ id: cId });
-		//TODO: can I remove item from DOM without  by calling supabase again to get all data and re-render the page ??
 		objAry = objAry.filter((item) => item.id !== cId);
+		//TODO: find avatar and delete from storage
 		itemTarget.remove();
 	}
 
@@ -113,9 +113,8 @@
 	}
 	.db-list {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 		grid-gap: 1rem;
-		padding: 1rem;
 	}
 	.db-item {
 		border: #ccc 1px solid;
