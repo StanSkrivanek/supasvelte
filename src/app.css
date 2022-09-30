@@ -30,7 +30,7 @@
 	--col-bg-light: #faf0f0;
 	--col-bg-sec: #eef4ff;
 	--col-bg-color: hsla(0, 0%, 88%, 0.393);
-	--col-disabled: #f1f1f1;
+	--col-disabled: #dcdbdb;
 	--col-info: #00bcd4;
 	--col-info-2: #2ae1e1;
 	--col-success: #8fffb4;
@@ -83,7 +83,26 @@ label {
 	margin-bottom: 0.25rem;
 	font-size: 0.875rem;
 }
-
+label span {
+	font-size: 0.75rem;
+	color: rgb(144, 143, 143);
+	font-style: italic;
+}
+input,
+textarea {
+	margin-bottom: 1rem;
+	padding: 0.5rem;
+	border: none;
+	border: 1px solid #ccc;
+	border-radius: 0.25rem;
+	font-size: 1rem;
+}
+textarea {
+	width: 100%;
+	resize: none;
+	overflow-y: scroll;
+	border-radius: 0.25rem;
+}
 button {
 	padding: 0.5rem;
 	border: none;
@@ -94,9 +113,14 @@ button {
 	min-width: 80px;
 	text-transform: uppercase;
 }
-.btns__c {
-	text-align: end;
+button:disabled {
+	background-color: #ccc;
+	color: #fff;
+	pointer-events: none;
 }
+/* .btns__c {
+	text-align: end;
+} */
 .danger {
 	background-color: var(--col-danger);
 }
@@ -110,7 +134,7 @@ button {
 	align-items: left;
 	margin-bottom: 1rem;
 }
-.avatar__w button{
+.avatar__w button {
 	margin-top: 0.5rem;
 	width: 100px;
 }
@@ -119,7 +143,6 @@ button {
 	height: 100px;
 	object-fit: cover;
 	border-radius: 0.25rem;
-
 }
 /* EditorJS styles */
 
