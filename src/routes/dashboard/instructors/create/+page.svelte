@@ -33,15 +33,17 @@
 	// APPEND IMAGE TO DOM
 	async function appendImage(avatarFile) {
 		const galery = document.querySelector('.galery');
-		const publicURL = supabase.storage.from('avatars').getPublicUrl(`public/${avatarFile.name}`).data.publicUrl;
+		const publicURL = supabase.storage.from('avatars').getPublicUrl(`public/${avatarFile.name}`)
+			.data.publicUrl;
 
 		values.avatar_url = publicURL;
-
-		const img = document.createElement('img');
-		img.src = publicURL;
-		img.alt = `image-${avatarFile.name}`;
-		galery.appendChild(img);
-		img.classList.add('avatar__img');
+		const avatarImg = `
+			<div class="avatar__w">
+				<img class="avatar__img" src="${publicURL}" alt="${avatarFile.name}" />
+				<button class="danger" id="delete-img">Delete</button>
+			</div>
+		`;
+		galery.innerHTML = avatarImg;
 	}
 
 	async function handleSubmit() {
@@ -166,4 +168,5 @@
 	.btn-form-xxl h2 {
 		margin-bottom: 0.25rem;
 	}
+
 </style>

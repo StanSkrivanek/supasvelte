@@ -98,17 +98,28 @@ button {
 	text-align: end;
 }
 .danger {
-	background-color: tomato;
+	background-color: var(--col-danger);
 }
 .info {
-	background-color: #5155c7;
+	background-color: var(--col-active);
 }
 /* AVATAR */
+.avatar__w {
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	margin-bottom: 1rem;
+}
+.avatar__w button{
+	margin-top: 0.5rem;
+	width: 100px;
+}
 .avatar__img {
 	width: 100px;
 	height: 100px;
 	object-fit: cover;
 	border-radius: 0.25rem;
+
 }
 /* EditorJS styles */
 
