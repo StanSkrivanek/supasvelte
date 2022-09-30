@@ -23,12 +23,29 @@
 		itemTarget = e.target.closest('.db-item');
 		cId = itemTarget.id;
 	}
-	// apply delete from modal
-	async function deleteItemById() {
-		await supabase.from('instructors').delete().match({ id: cId });
-		objAry = objAry.filter((item) => item.id !== cId);
-		//TODO: find avatar and delete from storage
+
+	// Delete Instructor and Img from DB
+	async function deleteItemAndImg() {
+		const { data } = await supabase.from('instructors').select('avatar_url').eq('id', cId);
+		const fileName = data[0].avatar_url.split('/').pop();
+		const { error: err } = await supabase.storage.from('avatars').remove([`public/${fileName}`]);
+		if (err) {
+			console.log('Error deleting Image: ', err.message);
+		} else {
+			console.log('Image deleted successfully!');
+		}
+		const { error: e } = await supabase.from('instructors').delete().eq('id', cId);
+		if (e) {
+			console.log('deleting Instructor record: err', e.message);
+		} else {
+			console.log('Instructor deleted successfully!');
+		}
+		// remove itemData from localStorage to prevent stale data
+		if (localStorage.getItem('itemData')) {
+			localStorage.removeItem('itemData');
+		}
 		itemTarget.remove();
+		// TODO: add toast message to confirm delete
 	}
 
 	async function findItemById(e) {
@@ -53,7 +70,7 @@
 			}}
 			on:delete={() => {
 				toggleModal();
-				deleteItemById();
+				deleteItemAndImg();
 			}}
 		/>
 	</Modal>
