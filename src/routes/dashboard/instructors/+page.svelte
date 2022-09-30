@@ -140,9 +140,8 @@
 		margin-bottom: 0.25rem;
 	}
 	.db-item__header {
-		display: grid;
-		grid-template-columns: 2fr 1fr;
-		align-items: center;
+		display: flex;
+	justify-content: space-between;
 		gap: 1rem;
 		margin-bottom: 1rem;
 	}

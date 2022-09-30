@@ -40,7 +40,7 @@
 		const avatarImg = `
 			<div class="avatar__w">
 				<img class="avatar__img" src="${publicURL}" alt="${avatarFile.name}" />
-				<button class="danger" id="delete-img">Delete</button>
+				<button class="danger" id="delete-img"on:click={deleteAvatar}>Delete</button>
 			</div>
 		`;
 		galery.innerHTML = avatarImg;
