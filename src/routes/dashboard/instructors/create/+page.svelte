@@ -3,8 +3,11 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 
-	let deleteBtn = undefined;
-	let avatarFile = undefined;
+	let deleteBtn;
+	let avatarFile;
+	let uploadInput;
+	let isDisabled = false;
+
 	let values = {
 		name: '',
 		phone: '',
@@ -15,12 +18,15 @@
 
 	const handleFilesUpload = async (e) => {
 		deleteBtn = document.querySelector('#delete-img');
+		uploadInput = document.querySelector('#avatarUploadInput');
 		avatarFile = e.target.files[0];
 		createTempImgBase64(avatarFile).then((url) => {
 			values.avatar_url = url;
 		});
 		e.target.value = '';
+		uploadInput.disabled = true;
 		deleteBtn.disabled = false;
+		isDisabled = true;
 	};
 	// create Base64 image from file upload to display as a image preview
 	function createTempImgBase64(file) {
@@ -39,6 +45,8 @@
 	function deleteAvatar() {
 		values.avatar_url = '';
 		deleteBtn.disabled = true;
+		uploadInput.disabled = false;
+		isDisabled = false;
 		console.log(avatarFile);
 	}
 	async function handleSubmit() {
@@ -83,24 +91,63 @@
 	</section>
 	<section>
 		<form on:submit|preventDefault={handleSubmit} action="/dashboard/instructors" method="POST">
-			<label for="name">Name</label>
-			<input type="text" name="name" id="name" bind:value={values.name} placeholder="Full name" />
-			<label for="email">Email</label>
-			<input
-				type="text"
-				name="email"
-				id="email"
-				bind:value={values.email}
-				placeholder="joe.doe@gmail.com"
-			/>
-			<label for="phone">Phone</label>
-			<input
-				type="text"
-				name="phone"
-				id="phone"
-				bind:value={values.phone}
-				placeholder="0888965111"
-			/>
+			<div class="form-info">
+				<div class="form-contact">
+					<label for="name">Name</label>
+					<input
+						type="text"
+						name="name"
+						id="name"
+						bind:value={values.name}
+						placeholder="Full name"
+					/>
+					<label for="email">Email</label>
+					<input
+						type="email"
+						name="email"
+						id="email"
+						bind:value={values.email}
+						placeholder="joe.doe@gmail.com"
+					/>
+					<label for="phone">Phone</label>
+					<input
+						type="phone"
+						name="phone"
+						id="phone"
+						bind:value={values.phone}
+						placeholder="086 123 4567"
+					/>
+				</div>
+				<div class="form-img">
+					<div class="avatar__w">
+						{#if values.avatar_url === ''}
+							<AvatarIcn />
+						{/if}
+						{#if values.avatar_url !== ''}
+							<img class="avatar__img" src={values.avatar_url} alt={values.name} />
+						{/if}
+						<button disabled class="danger" type="button" id="delete-img" on:click={deleteAvatar}
+							>Delete</button
+						>
+					</div>
+					<div class="img-upload__c">
+						<label class="custom-file-upload" for="avatarUploadInput"
+							><span class="upload-btn {isDisabled ? 'disabled' : 'info'}">Upload Image</span
+							></label
+						>
+						<input
+							type="file"
+							name="avatar"
+							id="avatarUploadInput"
+							accept=".jpg, .jpeg, .png, .webp, .avif, .svg"
+							on:change={(e) => {
+								handleFilesUpload(e);
+							}}
+						/>
+					</div>
+				</div>
+			</div>
+
 			<label for="excerpt">Short Bio <span> (bio should have max400 characters)</span></label>
 			<textarea
 				name="excerpt"
@@ -109,37 +156,11 @@
 				bind:value={values.excerpt}
 				placeholder="type your content here"
 			/>
-			<div class="galery">
-				<div class="avatar__w">
-					{#if values.avatar_url === ''}
-						<AvatarIcn />
-					{/if}
-					{#if values.avatar_url !== ''}
-						<img class="avatar__img" src={values.avatar_url} alt={values.name} />
-					{/if}
-					<button
-						disabled
-						class="danger"
-						type="button"
-						id="delete-img"
-						on:click={deleteAvatar}>Delete</button
-					>
-				</div>
-			</div>
-			<label for="avatar"
-				>Profile Image <span>max dimension: 256px x 256px<i>(jpg, webp, avif)</i></span></label
-			>
-			<input
-				type="file"
-				name="avatar"
-				id="avatarInput"
-				accept=".jpg, .jpeg, .png, .webp, .avif, .svg"
-				on:change={(e) => {
-					handleFilesUpload(e);
-				}}
-			/>
-			<button>Add trainer</button>
 
+			<div class="btns__c">
+				<button class="danger">cancel</button>
+				<button class="info">add trainer</button>
+			</div>
 			<!-- Submit will redirect to courses list -->
 		</form>
 	</section>
@@ -172,13 +193,55 @@
 		color: #fff;
 		pointer-events: none;
 	}
+	.disabled {
+		background-color: var(--col-disabled);
+		color: #fff;
+		pointer-events: none;
+	}
 	.danger {
 		background-color: var(--col-danger);
 	}
-	/* .info {
+	.info {
 		background-color: var(--col-active);
-	} */
+	}
 	.btn-form-xxl h2 {
 		margin-bottom: 0.25rem;
+	}
+	.form-info {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		margin-bottom: 0.5rem;
+	}
+	.form-contact {
+		display: flex;
+		flex: 2;
+		flex-direction: column;
+		min-width: 300px;
+	}
+	.form-img {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		/* justify-content: space-between; */
+	}
+	input[type='file'] {
+		display: none;
+	}
+	.avatar__w {
+		margin-bottom: 0.5rem;
+		border: 1px solid var(--col-bg-color);
+	}
+
+	.upload-btn {
+		display: block;
+		padding: 0.5rem 1rem;
+		border-radius: 0.25rem;
+		color: var(--col-bg-light);
+		text-transform: uppercase;
+		letter-spacing: 0.05rem;
+		cursor: pointer;
 	}
 </style>

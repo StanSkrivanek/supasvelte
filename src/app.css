@@ -86,7 +86,7 @@ label {
 label span {
 	font-size: 0.75rem;
 	color: rgb(144, 143, 143);
-	font-style: italic;
+	/* font-style: italic; */
 }
 input,
 textarea {
@@ -118,9 +118,9 @@ button:disabled {
 	color: #fff;
 	pointer-events: none;
 }
-/* .btns__c {
+.btns__c {
 	text-align: end;
-} */
+}
 .danger {
 	background-color: var(--col-danger);
 }
@@ -144,6 +144,7 @@ button:disabled {
 	object-fit: cover;
 	border-radius: 0.25rem;
 }
+
 /* EditorJS styles */
 
 .codex-editor__redactor {

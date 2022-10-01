@@ -49,7 +49,7 @@
 	}
 	ul li a {
 		display: block;
-		font-size: 0.8rem;
+		font-size: 1rem;
 		letter-spacing: 0.05rem;
 		text-decoration: none;
 		color: #fff;
