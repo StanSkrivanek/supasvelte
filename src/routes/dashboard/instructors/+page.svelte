@@ -9,7 +9,7 @@
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 	import Search from '$lib/components/shared/formfields/Search.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
-	
+
 	export let data;
 	let objAry = getData(data);
 
@@ -24,6 +24,10 @@
 	function openDeleteConfirmModal(e) {
 		toggleModal();
 		itemTarget = e.target.closest('.db-item');
+		console.log(
+			'🚀 ~ file: +page.svelte ~ line 28 ~ openDeleteConfirmModal ~ itemTarget',
+			itemTarget
+		);
 		cId = itemTarget.id;
 	}
 
@@ -54,16 +58,15 @@
 	async function findItemById(e) {
 		// const elm = e.target.closest('.db-item').getAttribute('id');
 		const elmId = e.target.closest('.db-item').id;
-		// get data from db table `instructors` where id = elmId
+		// // get data from db table `instructors` where id = elmId
 		$itemData = await supabase.from('instructors').select('*').match({ id: elmId });
-		// store course RTE data as string in localStorage
+		// // store course RTE data as string in localStorage
 		localStorage.setItem('itemData', JSON.stringify($itemData));
 		// redirect to update page
 		goto('/dashboard/instructors/edit');
 	}
 	// sort instructors by ID
 	let sorted = sortById(objAry, 'asc');
-
 
 	// FOR SEARCH
 	let searchTerm = '';
@@ -113,17 +116,27 @@
 			{:else if filteredItems.length > 0}
 				{#each filteredItems as { id, name, avatar_url, bio, email, phone }}
 					<TrainerCard
-						{id} {name} {avatar_url} {bio} {email} {phone}
-						on:click={findItemById}
-						on:delete={openDeleteConfirmModal}
+						{id}
+						{name}
+						{avatar_url}
+						{bio}
+						{email}
+						{phone}
+						on:edit={findItemById}
+						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
 			{:else}
 				{#each sorted as { id, name, avatar_url, bio, email, phone }}
 					<TrainerCard
-						{id} {name} {avatar_url} {bio} {email} {phone}
-						on:click={findItemById}
-						on:delete={openDeleteConfirmModal}
+						{id}
+						{name}
+						{avatar_url}
+						{bio}
+						{email}
+						{phone}
+						on:edit={findItemById}
+						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
 			{/if}

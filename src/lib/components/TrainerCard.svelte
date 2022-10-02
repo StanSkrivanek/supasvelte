@@ -1,10 +1,13 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
+  
 	export let id;
 	export let name;
 	export let email;
 	export let phone;
 	export let avatar_url;
-	export let bio;
+	// export let bio;
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 </script>
 
@@ -26,13 +29,13 @@
 			</div>
 		</div>
 		<div class="bio__w">
-			<p class="bio-txt">{bio}</p>
+			<!-- <p class="bio-txt">{bio}</p> -->
 		</div>
 	</div>
 	<div class="btns__c">
-		<button class="info" on:click>Edit</button>
+		<button class="info" on:click={() => dispatch('edit')}>Edit</button>
 		<!-- load data for course by ID -->
-		<button class="danger" on:click}>Delete</button>
+		<button class="danger" on:click>Delete</button>
 		<!-- delete data by ID -->
 	</div>
 </div>

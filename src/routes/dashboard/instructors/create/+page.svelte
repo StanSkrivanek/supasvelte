@@ -1,4 +1,6 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
 	import { hasNoAvatarImg } from '$lib/stores/store';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
