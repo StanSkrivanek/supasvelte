@@ -154,7 +154,7 @@
 				</div>
 			</div>
 
-			<label for="excerpt">Short Bio <span> (bio should have max400 characters)</span></label>
+			<label for="excerpt">Short Bio <span> (bio should have max 600 characters)</span></label>
 			<textarea
 				name="excerpt"
 				id="excerpt"

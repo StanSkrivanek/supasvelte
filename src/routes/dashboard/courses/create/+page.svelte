@@ -66,7 +66,7 @@
 			/>
 
 			<label for="excerpt"
-				>Course short introduction <span> (excerpt should have max320 characters)</span></label
+				>Course short introduction <span> (excerpt should have max400 characters)</span></label
 			>
 			<textarea
 				name="excerpt"

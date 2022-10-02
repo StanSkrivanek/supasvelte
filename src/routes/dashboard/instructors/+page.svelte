@@ -6,6 +6,7 @@
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
+	import Search from '$lib/components/shared/formfields/Search.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 	export let data;
@@ -61,6 +62,18 @@
 	}
 	// sort instructors by ID
 	let sorted = sortById(objAry, 'asc');
+	console.log('🚀 ~ file: +page.svelte ~ line 65 ~ sorted', sorted);
+
+	// FOR SEARCH
+	let searchTerm = '';
+	let filteredItems = [];
+	function filterItems() {
+		return (filteredItems = sorted.filter((item) => {
+			return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+		}));
+	}
+	$: console.log('searchTerm: ', searchTerm);
+	$: console.log('filteredItems: ', filteredItems);
 </script>
 
 {#if showModal}
@@ -83,7 +96,7 @@
 	</div>
 	<section class="dashboard-page-header">
 		<div class="search-filter">
-			<h3>add search filter</h3>
+			<Search bind:searchTerm on:input={filterItems} />
 		</div>
 		<div class="form-btn--add">
 			<a href="/dashboard/instructors/create">
@@ -96,32 +109,89 @@
 	</section>
 	<section>
 		<div class="db-list">
-			{#each sorted as item (item.id)}
-				<div class="db-item" id={item.id}>
-					<div class="db-item__header">
-						<div class="col">
-							<p class="txt">{item.id}</p>
-							<p class="title">{item.name}</p>
-							<p class="txt">{item.email}</p>
-							<p class="txt">{item.phone}</p>
+			{#if searchTerm && filteredItems.length === 0}
+				<h1>NO RESULTS</h1>
+			{:else if filteredItems.length > 0}
+				{#each filteredItems as item (item.id)}
+					<div class="db-item" id={item.id}>
+						<div class="db-item__header">
+							<div class="col">
+								<p class="txt">{item.id}</p>
+								<p class="title">{item.name}</p>
+								<p class="txt">{item.email}</p>
+								<p class="txt">{item.phone}</p>
+							</div>
+							<div class="col avatar__w">
+								{#if item.avatar_url === ''}
+									<img class="avatar__img" src={avatarPlaceholder} alt={item.name} />
+								{:else}
+									<img class="avatar__img" src={item.avatar_url} alt={item.name} />
+								{/if}
+							</div>
 						</div>
-						<div class="col avatar__w">
-							{#if item.avatar_url === ''}
-								<img class="avatar__img" src={avatarPlaceholder} alt={item.name} />
-							{:else}
-								<img class="avatar__img" src={item.avatar_url} alt={item.name} />
-							{/if}
+						<!-- <p>{item.bio}</p> -->
+						<div class="btns__c">
+							<button class="info" on:click={findItemById}>Edit</button>
+							<!-- load data for course by ID -->
+							<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
+							<!-- delete data by ID -->
 						</div>
 					</div>
-					<!-- <p>{item.bio}</p> -->
-					<div class="btns__c">
-						<button class="info" on:click={findItemById}>Edit</button>
-						<!-- load data for course by ID -->
-						<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
-						<!-- delete data by ID -->
+				{/each}
+			{:else}
+				{#each sorted as item (item.id)}
+					<div class="db-item" id={item.id}>
+						<div class="db-item__header">
+							<div class="col">
+								<p class="txt">{item.id}</p>
+								<p class="title">{item.name}</p>
+								<p class="txt">{item.email}</p>
+								<p class="txt">{item.phone}</p>
+							</div>
+							<div class="col avatar__w">
+								{#if item.avatar_url === ''}
+									<img class="avatar__img" src={avatarPlaceholder} alt={item.name} />
+								{:else}
+									<img class="avatar__img" src={item.avatar_url} alt={item.name} />
+								{/if}
+							</div>
+						</div>
+						<!-- <p>{item.bio}</p> -->
+						<div class="btns__c">
+							<button class="info" on:click={findItemById}>Edit</button>
+							<!-- load data for course by ID -->
+							<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
+							<!-- delete data by ID -->
+						</div>
 					</div>
-				</div>
-			{/each}
+				{/each}
+			{/if}
+			<!-- {/if}
+			{#if filteredItems.length > 0}
+				{#each filteredItems as item (item.id)}
+					<div class="db-item" id={item.id}>
+						<div class="db-item__header">
+							<div class="col">
+								<p class="txt">{item.id}</p>
+								<p class="title">{item.name}</p>
+								<p class="txt">{item.email}</p>
+								<p class="txt">{item.phone}</p>
+							</div>
+							<div class="col avatar__w">
+								{#if item.avatar_url === ''}
+									<img class="avatar__img" src={avatarPlaceholder} alt={item.name} />
+								{:else}
+									<img class="avatar__img" src={item.avatar_url} alt={item.name} />
+								{/if}
+							</div>
+						</div>
+						<div class="btns__c">
+							<button class="info" on:click={findItemById}>Edit</button>
+							<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
+						</div>
+					</div>
+				{/each}
+			{/if} -->
 		</div>
 	</section>
 </article>
@@ -199,10 +269,10 @@
 	section:last-child {
 		border-bottom: none;
 	}
-	.search-filter {
+	/* .search-filter {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background-color: #ccc;
-	}
+
+	} */
 </style>
