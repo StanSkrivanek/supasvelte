@@ -6,6 +6,7 @@
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
+	import Plus from '$lib/components/icons/Plus.svelte';
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 	export let data;
 	let objAry = getData(data);
@@ -80,15 +81,20 @@
 	<div class="dash-header">
 		<h1>Instructors DB</h1>
 	</div>
-	<section class="dash-page-header-btn__w">
-		<div class="btn-form-xxl">
+	<section class="dashboard-page-header">
+		<div class="search-filter">
+			<h3>add search filter</h3>
+		</div>
+		<div class="form-btn--add">
 			<a href="/dashboard/instructors/create">
-				<h2>Add New +</h2>
+				<p>Add New</p>
+				<div class="plus">
+					<Plus width={44} height={44} />
+				</div>
 			</a>
 		</div>
 	</section>
 	<section>
-		<h3>list of instructors</h3>
 		<div class="db-list">
 			{#each sorted as item (item.id)}
 				<div class="db-item" id={item.id}>
@@ -129,8 +135,25 @@
 		background-color: #1b0e30;
 		color: #fff;
 	}
-	.dash-page-header-btn__w {
-		text-align: end;
+	.dashboard-page-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		/* text-align: end; */
+	}
+	.form-btn--add a {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		
+	}
+	.form-btn--add a p {
+		margin-right: 1rem;
+	}
+	.plus {
+		background-color: var(--col-lightgreen);
+		padding: 0.25rem;
+		border-radius: 50%;
 	}
 	.db-list {
 		display: grid;
@@ -161,11 +184,11 @@
 	.avatar__w {
 		text-align: right;
 	}
-	.avatar {
+	/* .avatar {
 		width: 120px;
 		height: 120px;
 		object-fit: cover;
-	}
+	} */
 
 	section {
 		padding: 1rem;
@@ -173,5 +196,11 @@
 	}
 	section:last-child {
 		border-bottom: none;
+	}
+	.search-filter {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #ccc;
 	}
 </style>
