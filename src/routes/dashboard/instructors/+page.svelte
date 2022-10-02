@@ -4,11 +4,12 @@
 	import { getData } from '$lib/utils/helpers.js';
 	import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
+	import TrainerCard from '$lib/components/TrainerCard.svelte';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 	import Search from '$lib/components/shared/formfields/Search.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
-	const avatarPlaceholder = 'https://via.placeholder.com/100';
+	
 	export let data;
 	let objAry = getData(data);
 
@@ -72,8 +73,6 @@
 			return item.name.toLowerCase().includes(searchTerm.toLowerCase());
 		}));
 	}
-	$: console.log('searchTerm: ', searchTerm);
-	$: console.log('filteredItems: ', filteredItems);
 </script>
 
 {#if showModal}
@@ -109,89 +108,26 @@
 	</section>
 	<section>
 		<div class="db-list">
+			
 			{#if searchTerm && filteredItems.length === 0}
 				<h1>NO RESULTS</h1>
 			{:else if filteredItems.length > 0}
-				{#each filteredItems as item (item.id)}
-					<div class="db-item" id={item.id}>
-						<div class="db-item__header">
-							<div class="col">
-								<p class="txt">{item.id}</p>
-								<p class="title">{item.name}</p>
-								<p class="txt">{item.email}</p>
-								<p class="txt">{item.phone}</p>
-							</div>
-							<div class="col avatar__w">
-								{#if item.avatar_url === ''}
-									<img class="avatar__img" src={avatarPlaceholder} alt={item.name} />
-								{:else}
-									<img class="avatar__img" src={item.avatar_url} alt={item.name} />
-								{/if}
-							</div>
-						</div>
-						<!-- <p>{item.bio}</p> -->
-						<div class="btns__c">
-							<button class="info" on:click={findItemById}>Edit</button>
-							<!-- load data for course by ID -->
-							<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
-							<!-- delete data by ID -->
-						</div>
-					</div>
+				{#each filteredItems as { id, name, avatar_url, bio, email, phone }}
+					<TrainerCard
+						{id} {name} {avatar_url} {bio} {email} {phone}
+						on:click={findItemById}
+						on:delete={openDeleteConfirmModal}
+					/>
 				{/each}
 			{:else}
-				{#each sorted as item (item.id)}
-					<div class="db-item" id={item.id}>
-						<div class="db-item__header">
-							<div class="col">
-								<p class="txt">{item.id}</p>
-								<p class="title">{item.name}</p>
-								<p class="txt">{item.email}</p>
-								<p class="txt">{item.phone}</p>
-							</div>
-							<div class="col avatar__w">
-								{#if item.avatar_url === ''}
-									<img class="avatar__img" src={avatarPlaceholder} alt={item.name} />
-								{:else}
-									<img class="avatar__img" src={item.avatar_url} alt={item.name} />
-								{/if}
-							</div>
-						</div>
-						<!-- <p>{item.bio}</p> -->
-						<div class="btns__c">
-							<button class="info" on:click={findItemById}>Edit</button>
-							<!-- load data for course by ID -->
-							<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
-							<!-- delete data by ID -->
-						</div>
-					</div>
+				{#each sorted as { id, name, avatar_url, bio, email, phone }}
+					<TrainerCard
+						{id} {name} {avatar_url} {bio} {email} {phone}
+						on:click={findItemById}
+						on:delete={openDeleteConfirmModal}
+					/>
 				{/each}
 			{/if}
-			<!-- {/if}
-			{#if filteredItems.length > 0}
-				{#each filteredItems as item (item.id)}
-					<div class="db-item" id={item.id}>
-						<div class="db-item__header">
-							<div class="col">
-								<p class="txt">{item.id}</p>
-								<p class="title">{item.name}</p>
-								<p class="txt">{item.email}</p>
-								<p class="txt">{item.phone}</p>
-							</div>
-							<div class="col avatar__w">
-								{#if item.avatar_url === ''}
-									<img class="avatar__img" src={avatarPlaceholder} alt={item.name} />
-								{:else}
-									<img class="avatar__img" src={item.avatar_url} alt={item.name} />
-								{/if}
-							</div>
-						</div>
-						<div class="btns__c">
-							<button class="info" on:click={findItemById}>Edit</button>
-							<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
-						</div>
-					</div>
-				{/each}
-			{/if} -->
 		</div>
 	</section>
 </article>
