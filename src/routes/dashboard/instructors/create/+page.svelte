@@ -75,6 +75,9 @@
 		});
 		goto('/dashboard/instructors');
 	}
+	function cancel() {
+		goto('/dashboard/instructors');
+	}
 </script>
 
 <article>
@@ -160,7 +163,7 @@
 			/>
 
 			<div class="btns__c">
-				<button class="danger">cancel</button>
+				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">add trainer</button>
 			</div>
 			<!-- Submit will redirect to courses list -->
