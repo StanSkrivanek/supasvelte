@@ -182,12 +182,12 @@
 				</div>
 			</div>
 
-			<label for="excerpt">Short Bio <span> (bio should have max400 characters)</span></label>
+			<label for="bio">Short Bio <span> (bio should have max400 characters)</span></label>
 			<textarea
-				name="excerpt"
-				id="excerpt"
+				name="bio"
+				id="bio"
 				rows="5"
-				bind:value={values.excerpt}
+				bind:value={values.bio}
 				placeholder="type your content here"
 			/>
 

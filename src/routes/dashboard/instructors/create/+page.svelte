@@ -4,7 +4,7 @@
 	import { supabase } from '$lib/supabase/supabaseClient';
 
 	$: hasNoAvatar = $hasNoAvatarImg;
-	$: console.log('🚀 ~ file: +page.svelte ~ line 8 ~ hasNoAvatarImg', $hasNoAvatarImg);
+	// $: console.log('🚀 ~ file: +page.svelte ~ line 8 ~ hasNoAvatarImg', $hasNoAvatarImg);
 
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
@@ -154,12 +154,12 @@
 				</div>
 			</div>
 
-			<label for="excerpt">Short Bio <span> (bio should have max 600 characters)</span></label>
+			<label for="bio">Short Bio <span> (bio should have max 600 characters)</span></label>
 			<textarea
-				name="excerpt"
-				id="excerpt"
+				name="bio"
+				id="bio"
 				rows="5"
-				bind:value={values.excerpt}
+				bind:value={values.bio}
 				placeholder="type your content here"
 			/>
 

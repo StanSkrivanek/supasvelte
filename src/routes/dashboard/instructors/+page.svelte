@@ -63,7 +63,7 @@
 	}
 	// sort instructors by ID
 	let sorted = sortById(objAry, 'asc');
-	console.log('🚀 ~ file: +page.svelte ~ line 65 ~ sorted', sorted);
+
 
 	// FOR SEARCH
 	let searchTerm = '';
