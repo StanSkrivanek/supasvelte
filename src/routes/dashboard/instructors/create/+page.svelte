@@ -129,7 +129,7 @@
 
 						<button
 							disabled={hasNoAvatar}
-							class={hasNoAvatar ? 'disabled' : 'danger' }
+							class={hasNoAvatar ? 'disabled' : 'danger'}
 							type="button"
 							id="delete-img"
 							on:click={deleteAvatar}>Delete</button
@@ -137,7 +137,8 @@
 					</div>
 					<div class="img-upload__c">
 						<label class="custom-file-upload" for="avatarUploadInput"
-							><span class="upload-btn {hasNoAvatar ? 'info' : 'disabled'}">Upload Image</span></label
+							><span class="upload-btn {hasNoAvatar ? 'info' : 'disabled'}">Upload Image</span
+							></label
 						>
 						<input
 							disabled={!hasNoAvatar}
@@ -176,14 +177,6 @@
 		border-bottom: #ccc 1px solid;
 	}
 
-	.dash-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 1rem 3rem;
-		background-color: #1b0e30;
-		color: #fff;
-	}
 	section {
 		padding: 1rem 3rem;
 	}

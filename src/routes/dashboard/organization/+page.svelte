@@ -1,12 +1,11 @@
 <script>
-
 </script>
 
 <article>
 	<div class="dash-header">
 		<h1>Organizations DB</h1>
 	</div>
-		<section>
+	<section>
 		<form action="POST" method="post">
 			<label for="name">Organization</label>
 			<input type="text" name="name" id="name" placeholder="Organization name" required />
@@ -27,18 +26,9 @@
 			<button type="submit">Add Organization</button>
 		</form>
 	</section>
-
 </article>
 
 <style>
-	.dash-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 1rem;
-		background-color: #1b0e30;
-		color: #fff;
-	}
 	section {
 		padding: 1rem;
 		padding-bottom: 6rem;

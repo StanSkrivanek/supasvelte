@@ -90,15 +90,6 @@
 	.dash-page-header-btn__w {
 		border-bottom: #ccc 1px solid;
 	}
-
-	.dash-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 1rem 3rem;
-		background-color: #1b0e30;
-		color: #fff;
-	}
 	section {
 		padding: 1rem 3rem;
 	}

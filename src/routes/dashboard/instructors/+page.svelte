@@ -135,6 +135,9 @@
 		background-color: #1b0e30;
 		color: #fff;
 	}
+	.dash-header h1 {
+		color: #fff;
+	}
 	.dashboard-page-header {
 		display: flex;
 		justify-content: space-between;
@@ -145,7 +148,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		
 	}
 	.form-btn--add a p {
 		margin-right: 1rem;

@@ -91,9 +91,9 @@
 
 			values.avatar_url = publicURL;
 		}
-    // if(avatarFile === dbRowData.avatar_url){
-    //   values.avatar_url = dbRowData.avatar_url
-    // }
+		// if(avatarFile === dbRowData.avatar_url){
+		//   values.avatar_url = dbRowData.avatar_url
+		// }
 
 		await supabase
 			.from('instructors')
@@ -156,8 +156,8 @@
 							<img class="avatar__img" src={values.avatar_url} alt={values.name} />
 						{/if}
 						<button
-              disabled={!hasNoAvatar}
-							class="{hasNoAvatar ? 'danger' : 'disabled'}"
+							disabled={!hasNoAvatar}
+							class={hasNoAvatar ? 'danger' : 'disabled'}
 							type="button"
 							id="delete-img"
 							on:click={deleteAvatar}>Delete</button
@@ -165,10 +165,11 @@
 					</div>
 					<div class="img-upload__c">
 						<label class="custom-file-upload" for="avatarUploadInput"
-							><span class="upload-btn {hasNoAvatar ? 'disabled' : 'info'}">Upload Image</span></label
+							><span class="upload-btn {hasNoAvatar ? 'disabled' : 'info'}">Upload Image</span
+							></label
 						>
 						<input
-              disabled={hasNoAvatar}
+							disabled={hasNoAvatar}
 							type="file"
 							name="avatar"
 							id="avatarUploadInput"
@@ -202,15 +203,6 @@
 <style>
 	.dash-page-header-btn__w {
 		border-bottom: #ccc 1px solid;
-	}
-
-	.dash-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 1rem 3rem;
-		background-color: #1b0e30;
-		color: #fff;
 	}
 	section {
 		padding: 1rem 3rem;

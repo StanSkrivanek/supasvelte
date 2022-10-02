@@ -47,14 +47,7 @@
 		border: 1px solid #ccc;
 		border-radius: 0.25rem;
 	}
-	.dash-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 1rem;
-		background-color: #1b0e30;
-		color: #fff;
-	}
+
 	section {
 		padding: 1rem;
 		padding-bottom: 6rem;

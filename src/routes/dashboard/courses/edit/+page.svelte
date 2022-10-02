@@ -111,6 +111,8 @@
 		align-items: center;
 		padding: 1rem 3rem;
 		background-color: #1b0e30;
+	}
+	.dash-header h1 {
 		color: #fff;
 	}
 	section {

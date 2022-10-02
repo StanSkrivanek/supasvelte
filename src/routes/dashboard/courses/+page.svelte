@@ -70,9 +70,6 @@
 		</div>
 	</section>
 	<section>
-	
-		
-
 		{#each sorted as item (item.id)}
 			<div class="courses-db-list" id={item.id}>
 				<p>{item.id}</p>
@@ -89,14 +86,7 @@
 </article>
 
 <style>
-	.dash-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 1rem;
-		background-color: #1b0e30;
-		color: #fff;
-	}
+
 	.dash-page-header-btn__w {
 		text-align: end;
 	}

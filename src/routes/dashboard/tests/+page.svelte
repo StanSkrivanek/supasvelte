@@ -118,4 +118,5 @@
 	section {
 		padding: 1rem 3rem;
 	}
+
 </style>
