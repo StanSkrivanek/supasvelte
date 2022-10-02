@@ -175,10 +175,4 @@
 	section:last-child {
 		border-bottom: none;
 	}
-	/* .search-filter {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-	} */
 </style>

@@ -167,7 +167,6 @@
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">add trainer</button>
 			</div>
-			<!-- Submit will redirect to courses list -->
 		</form>
 	</section>
 </article>
@@ -223,7 +222,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		/* justify-content: space-between; */
 	}
 	input[type='file'] {
 		display: none;

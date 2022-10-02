@@ -91,10 +91,6 @@
 
 			values.avatar_url = publicURL;
 		}
-		// if(avatarFile === dbRowData.avatar_url){
-		//   values.avatar_url = dbRowData.avatar_url
-		// }
-
 		await supabase
 			.from('instructors')
 			.update({
@@ -195,7 +191,6 @@
 				<button class="danger">cancel</button>
 				<button class="info">update data</button>
 			</div>
-			<!-- Submit will redirect to courses list -->
 		</form>
 	</section>
 </article>
