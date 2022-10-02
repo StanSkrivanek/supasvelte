@@ -108,7 +108,6 @@
 	</section>
 	<section>
 		<div class="db-list">
-			
 			{#if searchTerm && filteredItems.length === 0}
 				<h1>NO RESULTS</h1>
 			{:else if filteredItems.length > 0}
@@ -168,35 +167,6 @@
 		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 		grid-gap: 1rem;
 	}
-	.db-item {
-		border: #ccc 1px solid;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		margin-bottom: 0.25rem;
-	}
-	.db-item__header {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-		margin-bottom: 1rem;
-	}
-	.col .title {
-		font-size: 1.2rem;
-		font-weight: 600;
-		margin-bottom: 1rem;
-	}
-	.col .txt {
-		font-size: 0.8rem;
-		margin-bottom: 0.5rem;
-	}
-	.avatar__w {
-		text-align: right;
-	}
-	/* .avatar {
-		width: 120px;
-		height: 120px;
-		object-fit: cover;
-	} */
 
 	section {
 		padding: 1rem;
