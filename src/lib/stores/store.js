@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 const itemData = writable(null);
-const fuzzy = writable(null);
+const hasNoAvatarImg = writable(true);
 const dbTableOpt = writable(null);
 
-export { itemData, fuzzy, dbTableOpt };
+export { itemData, hasNoAvatarImg, dbTableOpt };

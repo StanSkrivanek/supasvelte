@@ -6,7 +6,7 @@
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
-
+	const avatarPlaceholder = 'https://via.placeholder.com/100';
 	export let data;
 	let objAry = getData(data);
 
@@ -100,7 +100,11 @@
 							<p class="txt">{item.phone}</p>
 						</div>
 						<div class="col avatar__w">
-							<img class="avatar" src={item.avatar_url} alt={item.name} />
+							{#if item.avatar_url === ''}
+								<img class="avatar__img" src={avatarPlaceholder} alt={item.name} />
+							{:else}
+								<img class="avatar__img" src={item.avatar_url} alt={item.name} />
+							{/if}
 						</div>
 					</div>
 					<!-- <p>{item.bio}</p> -->
@@ -141,7 +145,7 @@
 	}
 	.db-item__header {
 		display: flex;
-	justify-content: space-between;
+		justify-content: space-between;
 		gap: 1rem;
 		margin-bottom: 1rem;
 	}

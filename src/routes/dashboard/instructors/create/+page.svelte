@@ -1,12 +1,14 @@
 <script>
-	import AvatarIcn from '$lib/components/icons/AvatarIcn.svelte';
+	import { hasNoAvatarImg } from '$lib/stores/store';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 
-	let deleteBtn;
+	$: hasNoAvatar = $hasNoAvatarImg;
+	$: console.log('🚀 ~ file: +page.svelte ~ line 8 ~ hasNoAvatarImg', $hasNoAvatarImg);
+
+	const avatarPlaceholder = 'https://via.placeholder.com/100';
+
 	let avatarFile;
-	let uploadInput;
-	let isDisabled = false;
 
 	let values = {
 		name: '',
@@ -17,18 +19,14 @@
 	};
 
 	const handleFilesUpload = async (e) => {
-		deleteBtn = document.querySelector('#delete-img');
-		uploadInput = document.querySelector('#avatarUploadInput');
 		avatarFile = e.target.files[0];
 		createTempImgBase64(avatarFile).then((url) => {
 			values.avatar_url = url;
 		});
 		e.target.value = '';
-		uploadInput.disabled = true;
-		deleteBtn.disabled = false;
-		isDisabled = true;
+		$hasNoAvatarImg = false;
 	};
-	// create Base64 image from file upload to display as a image preview
+	// create Base64 image from file upload to display as a image preview to prevent unnecessary DB call to preview image
 	function createTempImgBase64(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -43,31 +41,31 @@
 	}
 	// delete image preview
 	function deleteAvatar() {
+		avatarFile = null;
 		values.avatar_url = '';
-		deleteBtn.disabled = true;
-		uploadInput.disabled = false;
-		isDisabled = false;
-		console.log(avatarFile);
+
+		// no need to delete image from DB (as in EDIT FORM) since we are not storing it there as it is only Base64 img preview
+		$hasNoAvatarImg = true;
 	}
 	async function handleSubmit() {
-		//// upload Avatar to Bucket
-		const { error } = await supabase.storage
-			.from('avatars')
-			.upload(`public/${avatarFile.name}`, avatarFile, {
-				cacheControl: '3600',
-				upsert: false
-			});
+		// upload Avatar to Bucket ONLY if user has uploaded a new avatar
+		if (avatarFile !== null && hasNoAvatar === true) {
+			const { error } = await supabase.storage
+				.from('avatars')
+				.upload(`public/${avatarFile.name}`, avatarFile);
 
-		// USE THIS TO GET PATH TO BUCKET OTHERVISE WILL BE USED BASE64
-		const publicURL = supabase.storage.from('avatars').getPublicUrl(`public/${avatarFile.name}`)
-			.data.publicUrl;
+			if (error) {
+				console.log('Error storing file: ', error.message);
+			} else {
+				console.log('File successfully stored in Bucket!');
+			}
+			// USE THIS TO GET PATH TO BUCKET OTHERVISE WILL BE USED BASE64
+			const publicURL = supabase.storage.from('avatars').getPublicUrl(`public/${avatarFile.name}`)
+				.data.publicUrl;
 
-		values.avatar_url = publicURL;
-		if (error) {
-			console.log('Error uploading file: ', error.message);
-		} else {
-			console.log('File uploaded successfully!');
+			values.avatar_url = publicURL;
 		}
+
 		await supabase.from('instructors').insert({
 			name: values.name,
 			phone: values.phone,
@@ -120,22 +118,26 @@
 				</div>
 				<div class="form-img">
 					<div class="avatar__w">
-						{#if values.avatar_url === ''}
-							<AvatarIcn />
-						{/if}
-						{#if values.avatar_url !== ''}
+						{#if hasNoAvatar}
+							<img class="avatar__img" src={avatarPlaceholder} alt={values.name} />
+						{:else}
 							<img class="avatar__img" src={values.avatar_url} alt={values.name} />
 						{/if}
-						<button disabled class="danger" type="button" id="delete-img" on:click={deleteAvatar}
-							>Delete</button
+
+						<button
+							disabled={hasNoAvatar}
+							class={hasNoAvatar ? 'disabled' : 'danger' }
+							type="button"
+							id="delete-img"
+							on:click={deleteAvatar}>Delete</button
 						>
 					</div>
 					<div class="img-upload__c">
 						<label class="custom-file-upload" for="avatarUploadInput"
-							><span class="upload-btn {isDisabled ? 'disabled' : 'info'}">Upload Image</span
-							></label
+							><span class="upload-btn {hasNoAvatar ? 'info' : 'disabled'}">Upload Image</span></label
 						>
 						<input
+							disabled={!hasNoAvatar}
 							type="file"
 							name="avatar"
 							id="avatarUploadInput"
