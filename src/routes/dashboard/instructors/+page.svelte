@@ -107,7 +107,7 @@
 		</div>
 	</section>
 	<section>
-		<div class="db-list">
+		<div class="trainers-list">
 			{#if searchTerm && filteredItems.length === 0}
 				<h1>NO RESULTS</h1>
 			{:else if filteredItems.length > 0}
@@ -119,7 +119,7 @@
 						{bio}
 						{email}
 						{phone}
-						on:edit={()=>findItemById(id)}
+						on:edit={() => findItemById(id)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
@@ -132,7 +132,7 @@
 						{bio}
 						{email}
 						{phone}
-						on:edit={()=>findItemById(id)}
+						on:edit={() => findItemById(id)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
@@ -172,15 +172,20 @@
 		padding: 0.25rem;
 		border-radius: 50%;
 	}
-	.db-list {
-		display: grid;
+	.trainers-list {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+
+		/* display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-		grid-gap: 1rem;
+		grid-gap: 1rem; */
 	}
 
 	section {
 		padding: 1rem;
-		border-bottom: 1px solid #d8d8d8;
+		/* border-bottom: 1px solid #d8d8d8; */
 	}
 	section:last-child {
 		border-bottom: none;

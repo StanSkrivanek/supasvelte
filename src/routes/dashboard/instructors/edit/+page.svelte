@@ -2,23 +2,21 @@
 	import { hasNoAvatarImg } from '$lib/stores/store';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
+	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
 	$: hasNoAvatar = $hasNoAvatarImg;
 
 	// get data from localStorage
 	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
-
 	// assign data from localStorage
 	let dbRowData = courseDetailsData.data[0];
 
 	let elmId = dbRowData.id;
 	// get avatart name from db
 	let avatarFile = dbRowData.avatar_url;
-
 	//get last part of avatar url
 	let avatarName = avatarFile.split('/').pop();
 
-	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
 	let values = {
 		name: '',

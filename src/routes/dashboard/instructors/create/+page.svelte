@@ -1,17 +1,13 @@
 <script>
-	// import { createEventDispatcher } from 'svelte';
-	// const dispatch = createEventDispatcher();
+
 	import { hasNoAvatarImg } from '$lib/stores/store';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
-
-	$: hasNoAvatar = $hasNoAvatarImg;
-	// $: console.log('🚀 ~ file: +page.svelte ~ line 8 ~ hasNoAvatarImg', $hasNoAvatarImg);
-
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
-	let avatarFile;
+	$: hasNoAvatar = $hasNoAvatarImg;
 
+	let avatarFile;
 	let values = {
 		name: '',
 		phone: '',

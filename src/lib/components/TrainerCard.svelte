@@ -43,6 +43,8 @@
 <style>
 	.db-item {
 		display: flex;
+		flex-grow: 1;
+		flex-basis: 400px;
 		flex-direction: column;
 		justify-content: space-between;
 		border: #ccc 1px solid;
