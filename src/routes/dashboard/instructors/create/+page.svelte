@@ -24,9 +24,6 @@
 		avatarFile = e.target.files[0];
 		console.log("🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile", avatarFile)
 		checkForDuplicates(avatarFile.name)
-		// createTempImgBase64(avatarFile).then((url) => {
-		// 	values.avatar_url = url;
-		// });
 		e.target.value = '';
 		$hasNoAvatarImg = false;
 	};
@@ -35,14 +32,11 @@
 		const { data, error } = await supabase.storage.from('avatars').list('public', { name });
 		if (error) console.log('error', error);
 		if (data) {
-			// console.log('data', data);
 			for (let item of data) {
 				if (item.name === avatarFile.name) {
 					// TODO: add a toast message to let the user know that the file already exists
 					alert('duplicate');
 					deleteAvatar()
-					// $hasNoAvatarImg = true;
-					// values.avatar_url = '';
 					return;
 				}
 			}
