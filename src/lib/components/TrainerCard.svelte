@@ -71,9 +71,9 @@
 	.bio__w {
 		margin-bottom: 1rem;
 	}
-	.bio-txt {
+	/* .bio-txt {
 		font-size: 0.9rem;
 		line-height: 1.4;
 		letter-spacing: 0.05rem;
-	}
+	} */
 </style>

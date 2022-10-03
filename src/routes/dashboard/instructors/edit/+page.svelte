@@ -91,6 +91,7 @@
 
 			values.avatar_url = publicURL;
 		}
+
 		await supabase
 			.from('instructors')
 			.update({

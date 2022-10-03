@@ -55,12 +55,9 @@
 		// TODO: add toast message to confirm delete
 	}
 
-	async function findItemById(e) {
-		// const elm = e.target.closest('.db-item').getAttribute('id');
-		const elmId = e.target.closest('.db-item').id;
-		// // get data from db table `instructors` where id = elmId
-		$itemData = await supabase.from('instructors').select('*').match({ id: elmId });
-		// // store course RTE data as string in localStorage
+	async function findItemById(id) {
+		$itemData = await supabase.from('instructors').select('*').match({ id: id });
+		// store course RTE data as string in localStorage
 		localStorage.setItem('itemData', JSON.stringify($itemData));
 		// redirect to update page
 		goto('/dashboard/instructors/edit');
@@ -122,7 +119,7 @@
 						{bio}
 						{email}
 						{phone}
-						on:edit={findItemById}
+						on:edit={()=>findItemById(id)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
@@ -135,7 +132,7 @@
 						{bio}
 						{email}
 						{phone}
-						on:edit={findItemById}
+						on:edit={()=>findItemById(id)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}

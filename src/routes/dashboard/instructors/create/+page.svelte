@@ -1,6 +1,6 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
+	// import { createEventDispatcher } from 'svelte';
+	// const dispatch = createEventDispatcher();
 	import { hasNoAvatarImg } from '$lib/stores/store';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
@@ -22,12 +22,35 @@
 
 	const handleFilesUpload = async (e) => {
 		avatarFile = e.target.files[0];
-		createTempImgBase64(avatarFile).then((url) => {
-			values.avatar_url = url;
-		});
+		console.log("🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile", avatarFile)
+		checkForDuplicates(avatarFile.name)
+		// createTempImgBase64(avatarFile).then((url) => {
+		// 	values.avatar_url = url;
+		// });
 		e.target.value = '';
 		$hasNoAvatarImg = false;
 	};
+
+	async function checkForDuplicates(name) {
+		const { data, error } = await supabase.storage.from('avatars').list('public', { name });
+		if (error) console.log('error', error);
+		if (data) {
+			// console.log('data', data);
+			for (let item of data) {
+				if (item.name === avatarFile.name) {
+					// console.log('duplicate');
+					alert('duplicate');
+					// deleteAvatar();
+					$hasNoAvatarImg = true;
+					// values.avatar_url = '';
+					return;
+				}
+			}
+			createTempImgBase64(avatarFile).then((url) => {
+			values.avatar_url = url;
+		});
+		}
+	}
 	// create Base64 image from file upload to display as a image preview to prevent unnecessary DB call to preview image
 	function createTempImgBase64(file) {
 		return new Promise((resolve, reject) => {
@@ -51,7 +74,8 @@
 	}
 	async function handleSubmit() {
 		// upload Avatar to Bucket ONLY if user has uploaded a new avatar
-		if (avatarFile !== null && hasNoAvatar === true) {
+		if (avatarFile !== null ) {
+			// find if there is already an avatar in the bucket with the same name
 			const { error } = await supabase.storage
 				.from('avatars')
 				.upload(`public/${avatarFile.name}`, avatarFile);
@@ -66,6 +90,7 @@
 				.data.publicUrl;
 
 			values.avatar_url = publicURL;
+			$hasNoAvatarImg = false;
 		}
 
 		await supabase.from('instructors').insert({
