@@ -116,7 +116,7 @@
 		color: #fff;
 	}
 	section {
-		padding: 1rem 3rem;
+		padding: 1rem ;
 	}
 	form {
 		display: flex;
@@ -124,31 +124,5 @@
 		justify-content: center;
 		max-width: 45rem;
 	}
-	label span {
-		font-size: 0.75rem;
-		color: #ccc;
-	}
-	input,
-	textarea {
-		font-size: 0.9rem;
-		margin-bottom: 1rem;
-		padding: 0.5rem;
-		border: none;
-		border: 1px solid #ccc;
-		border-radius: 0.25rem;
-	}
-	textarea {
-		width: 100%;
-		resize: none;
-		overflow-y: scroll;
-		border-radius: 0.25rem;
-	}
 
-	button {
-		padding: 0.5rem;
-		border: none;
-		border-radius: 0.25rem;
-		background-color: #1b0e30;
-		color: #fff;
-	}
 </style>

@@ -41,7 +41,7 @@
 		</div>
 	</section>
 	<section>
-		<form on:submit|preventDefault={dataSubmit} action="/register" method="POST">
+		<form on:submit|preventDefault={dataSubmit} method="POST">
 			<label for="title">Organization</label>
 			<input
 				type="text"

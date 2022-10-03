@@ -6,6 +6,8 @@
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
+	import Search from '$lib/components/shared/formfields/Search.svelte';
+	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
 	let objAry = getData(data);
@@ -42,6 +44,15 @@
 	}
 	// sort courses by ID
 	let sorted = sortById(objAry, 'asc');
+
+	// FOR SEARCH
+	let searchTerm = '';
+	let filteredItems = [];
+	function filterItems() {
+		return (filteredItems = sorted.filter((item) => {
+			return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+		}));
+	}
 </script>
 
 {#if showModal}
@@ -62,10 +73,16 @@
 	<div class="dash-header">
 		<h1>Courses DB</h1>
 	</div>
-	<section class="dash-page-header-btn__w">
-		<div class="btn-form-xxl">
+	<section class="dashboard-page-header">
+		<div class="search-filter">
+			<Search bind:searchTerm on:input={filterItems} />
+		</div>
+		<div class="form-btn--add">
 			<a href="/dashboard/courses/create">
-				<h2>Add New +</h2>
+				<p>Add New</p>
+				<div class="plus">
+					<Plus width={44} height={44} />
+				</div>
 			</a>
 		</div>
 	</section>
@@ -86,11 +103,25 @@
 </article>
 
 <style>
-
-	.dash-page-header-btn__w {
-		text-align: end;
+	.dashboard-page-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		/* text-align: end; */
 	}
-
+	.form-btn--add a {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.form-btn--add a p {
+		margin-right: 1rem;
+	}
+	.plus {
+		background-color: var(--col-lightgreen);
+		padding: 0.25rem;
+		border-radius: 50%;
+	}
 	.courses-db-list {
 		display: grid;
 		grid-template-columns: 0.25fr 2fr 1fr 1fr 0.5fr 0.5fr;

@@ -1,64 +1,77 @@
 <script>
+	import { goto } from '$app/navigation';
+	import { supabase } from '$lib/supabase/supabaseClient';
+	import Plus from '$lib/components/icons/Plus.svelte';
+	import Search from '$lib/components/shared/formfields/Search.svelte';
+
+	// FOR SEARCH
+	let searchTerm = '';
+	let filteredItems = [];
+	function filterItems() {
+		return (filteredItems = sorted.filter((item) => {
+			return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+		}));
+	}
 </script>
 
 <article>
 	<div class="dash-header">
-		<h1>Venues DB</h1>
+		<h1>Courses DB</h1>
 	</div>
+	<section class="dashboard-page-header">
+		<div class="search-filter">
+			<Search bind:searchTerm on:input={filterItems} />
+		</div>
+		<div class="form-btn--add">
+			<a href="/dashboard/courses/create">
+				<p>Add New</p>
+				<div class="plus">
+					<Plus width={44} height={44} />
+				</div>
+			</a>
+		</div>
+	</section>
 	<section>
-		<form action="POST" method="post">
-			<label for="name">Venue <span><i>(required)</i></span></label>
-			<input type="text" name="name" id="name" placeholder="Venue name" required />
-			<label for="address-1">Street <span><i>(required)</i></span></label>
-			<input type="text" name="address-1" id="address" placeholder="address 1" required />
-			<label for="address-2">Place <span><i>(required)</i></span></label>
-			<input type="text" name="address-2" id="address" placeholder="address 2" required/>
-			<label for="address-2">City <span><i>(required)</i></span></label>
-			<input type="text" name="city" id="city" placeholder="city" required />
-			<label for="eircode">EirCode <span><i>(required)</i></span></label>
-			<input type="text" name="eircode" id="eircode" placeholder="eircode" required />
-			<label for="phone">Phone <span><i>(required)</i></span></label>
-			<input type="tel" name="phone" id="phone" placeholder="phone" required />
-			<label for="bio">Venue overview <span><i>(required)</i></span></label>
-			<textarea name="bio" id="bio" rows="20" placeholder="Short overview" required />
-			<!-- <label for="logo">Logo <span>max dimension: 320px x 320 <i>(svg)</i></span></label>
-			<input type="file" name="logo" id="logo" /> -->
-			<button type="submit">Add Venue</button>
-		</form>
+		<!-- {#each sorted as item (item.id)}
+			<div class="courses-db-list" id={item.id}>
+				<p>{item.id}</p>
+				<h1>{item.title}</h1>
+				<p>{item.type}</p>
+				<p>{item.organization}</p>
+				<button class="info" on:click={findItemById}>Edit</button>
+
+				<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
+	
+			</div>
+		{/each} -->
 	</section>
 </article>
 
 <style>
 	section {
 		padding: 1rem;
-		padding-bottom: 6rem;
+		border-bottom: 1px solid #d8d8d8;
 	}
-	form {
+	section:last-child {
+		border-bottom: none;
+	}
+	.dashboard-page-header {
 		display: flex;
-		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		/* text-align: end; */
+	}
+	.form-btn--add a {
+		display: flex;
+		align-items: center;
 		justify-content: center;
-		max-width: 40rem;
 	}
-	label span {
-		font-size: 0.75rem;
-		color: rgb(137, 137, 137);
+	.form-btn--add a p {
+		margin-right: 1rem;
 	}
-	input,
-	textarea {
-		margin-bottom: 1rem;
-		padding: 0.5rem;
-		border: none;
-		border: 1px solid #ccc;
-		border-radius: 0.25rem;
-	}
-	textarea {
-		width: 100%;
-	}
-	button {
-		padding: 0.5rem;
-		border: none;
-		border-radius: 0.25rem;
-		background-color: #1b0e30;
-		color: #fff;
+	.plus {
+		background-color: var(--col-lightgreen);
+		padding: 0.25rem;
+		border-radius: 50%;
 	}
 </style>
