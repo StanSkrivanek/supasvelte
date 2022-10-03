@@ -35,7 +35,7 @@
 	async function deleteItemAndImg() {
 		const { data } = await supabase.from('instructors').select('avatar_url').eq('id', cId);
 		const fileName = data[0].avatar_url.split('/').pop();
-		const { error: err } = await supabase.storage.from('avatars').remove([`public/${fileName}`]);
+		const { error: err } = await supabase.storage.from('images').remove([`profile_img/trainer/${fileName}`]);
 		if (err) {
 			console.log('Error deleting Image: ', err.message);
 		} else {

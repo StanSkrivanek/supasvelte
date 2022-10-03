@@ -25,7 +25,7 @@
 	};
 
 	async function checkForDuplicates(name) {
-		const { data, error } = await supabase.storage.from('avatars').list('public', { name });
+		const { data, error } = await supabase.storage.from('images').list('profile_img/trainer', { name });
 		if (error) console.log('error', error);
 		if (data) {
 			for (let item of data) {
@@ -67,8 +67,8 @@
 		if (avatarFile !== null && avatarFile !== undefined) {
 			// find if there is already an avatar in the bucket with the same name
 			const { error } = await supabase.storage
-				.from('avatars')
-				.upload(`public/${avatarFile.name}`, avatarFile);
+				.from('images')
+				.upload(`profile_img/trainer/${avatarFile.name}`, avatarFile);
 
 			if (error) {
 				console.log('Error storing file: ', error.message);
@@ -76,7 +76,7 @@
 				console.log('File successfully stored in Bucket!');
 			}
 			// USE THIS TO GET PATH TO BUCKET OTHERVISE WILL BE USED BASE64
-			const publicURL = supabase.storage.from('avatars').getPublicUrl(`public/${avatarFile.name}`)
+			const publicURL = supabase.storage.from('images').getPublicUrl(`profile_img/trainer/${avatarFile.name}`)
 				.data.publicUrl;
 
 			values.avatar_url = publicURL;

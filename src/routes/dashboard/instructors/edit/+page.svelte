@@ -17,7 +17,6 @@
 	//get last part of avatar url
 	let avatarName = avatarFile.split('/').pop();
 
-
 	let values = {
 		name: '',
 		phone: '',
@@ -34,28 +33,27 @@
 
 	const handleFilesUpload = async (e) => {
 		avatarFile = e.target.files[0];
-		checkForDuplicates(avatarFile.name)
+		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
 		$hasNoAvatarImg = true;
 	};
 
-		async function checkForDuplicates(name) {
-		const { data, error } = await supabase.storage.from('avatars').list('public', { name });
+	async function checkForDuplicates(name) {
+		const { data, error } = await supabase.storage.from('images').list('profile_img/trainer', { name });
 		if (error) console.log('error', error);
 		if (data) {
-
 			for (let item of data) {
 				if (item.name === avatarFile.name) {
 					// TODO: add a toast message to let the user know that the file already exists
 					alert('duplicate');
-					deleteAvatar()
+					deleteAvatar();
 
 					return;
 				}
 			}
 			createTempImgBase64(avatarFile).then((url) => {
-			values.avatar_url = url;
-		});
+				values.avatar_url = url;
+			});
 		}
 	}
 	// create Base64 image from file upload to display as a image preview
@@ -75,7 +73,7 @@
 	async function deleteAvatar() {
 		avatarFile = null;
 		values.avatar_url = '';
-		const { error } = await supabase.storage.from('avatars').remove([`public/${avatarName}`]);
+		const { error } = await supabase.storage.from('images').remove([`profile_img/trainer/${avatarName}`]);
 		const { error: err } = await supabase
 			.from('instructors')
 			.update({ avatar_url: null })
@@ -93,8 +91,8 @@
 		// upload Avatar to Bucket ONLY if user has uploaded a new avatar
 		if (avatarFile !== dbRowData.avatar_url && avatarFile !== null) {
 			const { error } = await supabase.storage
-				.from('avatars')
-				.upload(`public/${avatarFile.name}`, avatarFile);
+				.from('images')
+				.upload(`trainers/${avatarFile.name}`, avatarFile);
 
 			if (error) {
 				console.log('Error storing file: ', error.message);
@@ -102,7 +100,7 @@
 				console.log('File successfully stored in Bucket!');
 			}
 			// USE THIS TO GET PATH TO BUCKET OTHERVISE WILL BE USED BASE64
-			const publicURL = supabase.storage.from('avatars').getPublicUrl(`public/${avatarFile.name}`)
+			const publicURL = supabase.storage.from('images').getPublicUrl(`profile_img/trainer/${avatarFile.name}`)
 				.data.publicUrl;
 
 			values.avatar_url = publicURL;
