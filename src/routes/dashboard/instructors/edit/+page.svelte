@@ -36,12 +36,34 @@
 
 	const handleFilesUpload = async (e) => {
 		avatarFile = e.target.files[0];
-		createTempImgBase64(avatarFile).then((url) => {
-			values.avatar_url = url;
-		});
+		checkForDuplicates(avatarFile.name)
+		// createTempImgBase64(avatarFile).then((url) => {
+		// 	values.avatar_url = url;
+		// });
 		e.target.value = '';
 		$hasNoAvatarImg = true;
 	};
+
+		async function checkForDuplicates(name) {
+		const { data, error } = await supabase.storage.from('avatars').list('public', { name });
+		if (error) console.log('error', error);
+		if (data) {
+			// console.log('data', data);
+			for (let item of data) {
+				if (item.name === avatarFile.name) {
+					// TODO: add a toast message to let the user know that the file already exists
+					alert('duplicate');
+					deleteAvatar()
+					// $hasNoAvatarImg = true;
+					// values.avatar_url = '';
+					return;
+				}
+			}
+			createTempImgBase64(avatarFile).then((url) => {
+			values.avatar_url = url;
+		});
+		}
+	}
 	// create Base64 image from file upload to display as a image preview
 	function createTempImgBase64(file) {
 		return new Promise((resolve, reject) => {

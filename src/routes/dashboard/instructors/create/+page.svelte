@@ -38,10 +38,10 @@
 			// console.log('data', data);
 			for (let item of data) {
 				if (item.name === avatarFile.name) {
-					// console.log('duplicate');
+					// TODO: add a toast message to let the user know that the file already exists
 					alert('duplicate');
-					// deleteAvatar();
-					$hasNoAvatarImg = true;
+					deleteAvatar()
+					// $hasNoAvatarImg = true;
 					// values.avatar_url = '';
 					return;
 				}
@@ -74,7 +74,7 @@
 	}
 	async function handleSubmit() {
 		// upload Avatar to Bucket ONLY if user has uploaded a new avatar
-		if (avatarFile !== null ) {
+		if (avatarFile !== null && avatarFile !== undefined) {
 			// find if there is already an avatar in the bucket with the same name
 			const { error } = await supabase.storage
 				.from('avatars')
