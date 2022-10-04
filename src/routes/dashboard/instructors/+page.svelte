@@ -4,7 +4,7 @@
 	import { getData } from '$lib/utils/helpers.js';
 	import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
-	import TrainerCard from '$lib/components/TrainerCard.svelte';
+	import TrainerCard from '$lib/components/cards/TrainerCard.svelte';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 	import Search from '$lib/components/shared/formfields/Search.svelte';
@@ -179,7 +179,7 @@
 	}
 	.trainers-list {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 		grid-gap: 1rem;
 		min-width: 100%;
 	}

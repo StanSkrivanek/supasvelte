@@ -1,6 +1,6 @@
 <script>
 	import { getData } from '$lib/utils/helpers.js';
-	import OpenCourse from '$lib/components/OpenCourse.svelte';
+	import OpenCourse from '$lib/components/cards/OpenCourse.svelte';
 
 	export let data;
 	let objAry = getData(data);

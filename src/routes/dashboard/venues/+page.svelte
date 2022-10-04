@@ -19,7 +19,7 @@
 	function toggleModal() {
 		showModal = !showModal;
 	}
-	// find course id to be late used for delete from modal
+	// find venue id to be late used for delete from modal
 	function openDeleteConfirmModal(e) {
 		toggleModal();
 		itemTarget = e.target.closest('.db-item');
@@ -33,14 +33,15 @@
 	}
 
 	async function findItemById(e) {
-		const elm = e.target.parentElement;
+		const elm = e.target.closest('.db-item');
 		const elmId = elm.id;
-		// get data from db table `courses` where id = elmId
-		$itemData = await supabase.from('courses').select('*').match({ id: elmId });
-		// store course RTE data as string in localStorage
+		console.log("🚀 ~ file: +page.svelte ~ line 38 ~ findItemById ~ elmId", elmId)
+		// get data from db table `venues` where id = elmId
+		$itemData = await supabase.from('venues').select('*').match({ id: elmId });
+		// store venue RTE data as string in localStorage
 		localStorage.setItem('itemData', JSON.stringify($itemData));
 		// redirect to update page
-		goto('/dashboard/courses/edit');
+		goto('/dashboard/venues/edit');
 	}
 
 	// FOR SEARCH
@@ -68,7 +69,7 @@
 {/if}
 <article>
 	<div class="dash-header">
-		<h1>Courses DB</h1>
+		<h1>venues DB</h1>
 	</div>
 	<section class="dashboard-page-header">
 		<div class="search-filter">
@@ -103,16 +104,13 @@
 							<p>{item.website}</p>
 						</div>
 					</div>
-					<div class="dsb-venue--body">
+					<!-- <div class="dsb-venue--body">
 						<p>{item.info}</p>
-					</div>
+					</div> -->
 					<div class="col dsb-venue--footer">
 						<button class="info" on:click={findItemById}>Edit</button>
 						<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
 					</div>
-					<!-- <button class="info" on:click={findItemById}>Edit</button>
-
-				<button class="danger" on:click={openDeleteConfirmModal}>Delete</button> -->
 				</div>
 			{/each}
 		</div>
@@ -152,7 +150,7 @@
 	}
 	.grid_test {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 		grid-template-rows: auto;
 		grid-gap: 1rem;
 	}
@@ -166,7 +164,6 @@
 		border: #ccc 1px solid;
 		padding: 1rem;
 		border-radius: 0.25rem;
-		margin-bottom: 0.25rem;
 	}
 	.db-item h2 {
 		margin-bottom: 1rem;
@@ -175,10 +172,12 @@
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 1rem;
+		line-height: 1.2;
 	}
-	.dsb-venue--body {
+	/* .dsb-venue--body {
 		margin-bottom: 1rem;
-	}
+		line-height: 1.4;
+	} */
 	.dsb-venue--footer {
 		text-align: right;
 	}
