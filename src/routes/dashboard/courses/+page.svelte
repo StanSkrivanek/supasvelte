@@ -47,12 +47,12 @@
 
 	// FOR SEARCH
 	let searchTerm = '';
-	let filteredItems = [];
-	function filterItems() {
-		return (filteredItems = sorted.filter((item) => {
-			return item.name.toLowerCase().includes(searchTerm.toLowerCase());
-		}));
-	}
+	// let filteredItems = [];
+	// function filterItems() {
+	// 	return (filteredItems = sorted.filter((item) => {
+	// 		return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+	// 	}));
+	// }
 </script>
 
 {#if showModal}
@@ -75,7 +75,7 @@
 	</div>
 	<section class="dashboard-page-header">
 		<div class="search-filter">
-			<Search bind:searchTerm on:input={filterItems} />
+			<!-- <Search bind:searchTerm on:input={filterItems} /> -->
 		</div>
 		<div class="form-btn--add">
 			<a href="/dashboard/courses/create">
@@ -103,6 +103,10 @@
 </article>
 
 <style>
+	article {
+		/* hack for grid in Safari */
+		min-width: 100%;
+	}
 	.dashboard-page-header {
 		display: flex;
 		justify-content: space-between;

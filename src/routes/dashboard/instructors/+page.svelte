@@ -12,7 +12,7 @@
 
 	export let data;
 	let objAry = getData(data);
-
+	let sorted = sortById(objAry, 'asc');
 	let showModal = false;
 	let cId = 0;
 	let itemTarget = null;
@@ -35,7 +35,9 @@
 	async function deleteItemAndImg() {
 		const { data } = await supabase.from('instructors').select('avatar_url').eq('id', cId);
 		const fileName = data[0].avatar_url.split('/').pop();
-		const { error: err } = await supabase.storage.from('images').remove([`profile_img/trainer/${fileName}`]);
+		const { error: err } = await supabase.storage
+			.from('images')
+			.remove([`profile_img/trainer/${fileName}`]);
 		if (err) {
 			console.log('Error deleting Image: ', err.message);
 		} else {
@@ -62,8 +64,6 @@
 		// redirect to update page
 		goto('/dashboard/instructors/edit');
 	}
-	// sort instructors by ID
-	let sorted = sortById(objAry, 'asc');
 
 	// FOR SEARCH
 	let searchTerm = '';
@@ -106,10 +106,12 @@
 			</a>
 		</div>
 	</section>
-	<section>
+	<section class="main">
 		<div class="trainers-list">
 			{#if searchTerm && filteredItems.length === 0}
-				<h1>NO RESULTS</h1>
+				<div class="no-results__w">
+					<p>No results found</p>
+				</div>
 			{:else if filteredItems.length > 0}
 				{#each filteredItems as { id, name, avatar_url, bio, email, phone }}
 					<TrainerCard
@@ -142,6 +144,10 @@
 </article>
 
 <style>
+	article{
+		/* Safari Issue hack: This `main` element is inside grid (aside / main) and as direct children of grid need to be forced to 100% to make grid nested inside this element resoponsive using minmax. In other browsers nested grid is responsive as expected */
+		min-width: 100%;
+	}
 	.dash-header {
 		display: flex;
 		justify-content: space-between;
@@ -157,7 +163,6 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		/* text-align: end; */
 	}
 	.form-btn--add a {
 		display: flex;
@@ -173,16 +178,19 @@
 		border-radius: 50%;
 	}
 	.trainers-list {
-		display: flex;
-		gap: 1rem;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-
-		/* display: grid;
+		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-		grid-gap: 1rem; */
+		grid-gap: 1rem;
+		min-width: 100%;
 	}
-
+	.no-results__w {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 50vh;
+		width: 100%;
+		font-size: 1.6rem;
+	}
 	section {
 		padding: 1rem;
 		/* border-bottom: 1px solid #d8d8d8; */

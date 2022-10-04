@@ -5,56 +5,56 @@
 	//TODO: how Editor JS adding image paths to JSON to be able delete ALL images on delete course
 	// BASE URL: https://yomarqknqlmdtqiqfxfm.supabase.co/storage/v1/object/trainers/avatars/DJ-goIcone.jpg
 	// const baseUrl = 'https://yomarqknqlmdtqiqfxfm.supabase.co/storage/v1/object/';
-	let avatarFile = '';
-	const handleFilesUpload = async (e) => {
-		avatarFile = e.target.files[0];
-		console.log(avatarFile);
-		// UNIQUE FILE NAME
-		const { data, error } = await supabase.storage
-			.from('avatars')
-			.upload(`trainers/${avatarFile.name}`, avatarFile, {
-				cacheControl: '3600',
-				upsert: false
-			});
+	// let avatarFile = '';
+	// const handleFilesUpload = async (e) => {
+	// 	avatarFile = e.target.files[0];
+	// 	console.log(avatarFile);
+	// 	// UNIQUE FILE NAME
+	// 	const { data, error } = await supabase.storage
+	// 		.from('avatars')
+	// 		.upload(`trainers/${avatarFile.name}`, avatarFile, {
+	// 			cacheControl: '3600',
+	// 			upsert: false
+	// 		});
 
-		if (error) {
-			console.log('Error uploading file: ', error.message);
-		} else {
-			appendImage();
-			console.log('File uploaded successfully!');
-		}
-		// if (data) {
-		// 	// getPublicURL(file) // WORKS
-		// 	// console.log('data', data);
-	};
+	// 	if (error) {
+	// 		console.log('Error uploading file: ', error.message);
+	// 	} else {
+	// 		appendImage();
+	// 		console.log('File uploaded successfully!');
+	// 	}
+	// 	// if (data) {
+	// 	// 	// getPublicURL(file) // WORKS
+	// 	// 	// console.log('data', data);
+	// };
 
 	// APPEND IMAGE TO DOM
-	async function appendImage() {
-		const galery = document.querySelector('.galery');
-		const { data: blob, error } = await supabase.storage
-			.from('avatars')
-			.download(`trainers/${avatarFile.name}`);
+	// async function appendImage() {
+	// 	const galery = document.querySelector('.galery');
+	// 	const { data: blob, error } = await supabase.storage
+	// 		.from('avatars')
+	// 		.download(`trainers/${avatarFile.name}`);
 
-		error && console.log('error', error.message);
+	// 	error && console.log('error', error.message);
 
-		if (blob) {
-			const url = URL.createObjectURL(blob);
-			addBlobToInstructor(url);
-			const img = document.createElement('img');
-			img.src = url;
-			img.alt = `image-${avatarFile.name}`;
-			galery.appendChild(img);
-			img.classList.add('avatar__img');
-		}
-	}
+	// 	if (blob) {
+	// 		const url = URL.createObjectURL(blob);
+	// 		addBlobToInstructor(url);
+	// 		const img = document.createElement('img');
+	// 		img.src = url;
+	// 		img.alt = `image-${avatarFile.name}`;
+	// 		galery.appendChild(img);
+	// 		img.classList.add('avatar__img');
+	// 	}
+	// }
 
 	// ADD BLOB TO INSTRUCTOR
-	async function addBlobToInstructor(url) {
-		const { data, error } = await supabase
-			.from('instructors')
-			.update({ avatar_url: url })
-			.eq('id', 1);
-	}
+	// async function addBlobToInstructor(url) {
+	// 	const { data, error } = await supabase
+	// 		.from('instructors')
+	// 		.update({ avatar_url: url })
+	// 		.eq('id', 1);
+	// }
 
 	// UPDATE AVATAR IN DB
 	// async function updateAvatar(e) {
@@ -86,7 +86,15 @@
 
 <article>
 	<section>
-		<div class="dash-header">
+		<div class="grid">
+			<div class="avatar">AVATAR</div>
+			<div class="avatar">AVATAR</div>
+			<div class="avatar">AVATAR</div>
+			<div class="avatar">AVATAR</div>
+			<div class="avatar">AVATAR</div>
+			<div class="avatar">AVATAR</div>
+		</div>
+		<!-- <div class="dash-header">
 			<h1>Upload image</h1>
 			<div class="galery" />
 		</div>
@@ -98,7 +106,7 @@
 			on:change={(e) => {
 				handleFilesUpload(e);
 			}}
-		/>
+		/> -->
 
 		<!-- {#await getDbData()}
 			<p>...loading</p>
@@ -117,5 +125,15 @@
 <style>
 	section {
 		padding: 1rem 3rem;
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		grid-gap: 1rem;
+	}
+	.avatar {
+		min-width: 100%;
+		height: 200px;
+		background-color: #ccc;
 	}
 </style>

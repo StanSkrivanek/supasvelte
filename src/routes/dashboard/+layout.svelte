@@ -12,14 +12,13 @@
 </main>
 
 <style>
-
 	main {
 		display: grid;
-		grid-template-columns: 1.25fr 10.75fr;
+		grid-template-columns: 0.5fr 3.5fr;
 		grid-template-rows: 1fr;
-    grid-template-areas: 'aside main';
+		grid-template-areas: 'aside main';
 	}
-	aside{
+	aside {
 		position: relative;
 	}
 </style>

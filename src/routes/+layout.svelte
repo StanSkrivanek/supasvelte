@@ -6,5 +6,5 @@
 <!-- HOMEPAGE -->
 <!-- <div> -->
 	<!-- Homepage Content is poulated via <slot />-->
-	<slot />
+	<slot/>
 <!-- </div> -->
