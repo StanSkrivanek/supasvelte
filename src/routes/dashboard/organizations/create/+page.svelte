@@ -1,4 +1,36 @@
 <script>
+	import { goto } from '$app/navigation';
+	import { supabase } from '$lib/supabase/supabaseClient';
+	let values = {
+		org_name: '',
+		adr_1: '',
+		adr_2: '',
+		city: '',
+		eircode: '',
+		contact: '',
+		phone: '',
+		email: '',
+		website: '',
+		info: ''
+	};
+	async function handleSubmit() {
+		await supabase.from('organizations').insert({
+			name: values.name,
+			adr_1: values.adr_1,
+			adr_2: values.adr_2,
+			city: values.city,
+			eircode: values.eircode,
+			contact: values.contact,
+			phone: values.phone,
+			email: values.email,
+			website: values.website,
+			info: values.info
+		});
+		goto('/dashboard/organizations');
+	}
+	function cancel() {
+		goto('/dashboard/organizations');
+	}
 </script>
 
 <article>
@@ -6,24 +38,85 @@
 		<h1>Organizations DB</h1>
 	</div>
 	<section>
-		<form action="POST" method="post">
-			<label for="name">Organization</label>
-			<input type="text" name="name" id="name" placeholder="Organization name" />
-			<label for="address-1">Street</label>
-			<input type="text" name="address-1" id="address" placeholder="address 1" />
-			<label for="address-2">Place</label>
-			<input type="text" name="address-2" id="address" placeholder="address 2" />
-			<label for="address-2">City</label>
-			<input type="text" name="city" id="city" placeholder="city" />
-			<label for="eircode">EirCode</label>
-			<input type="text" name="eircode" id="eircode" placeholder="eircode" />
-			<label for="phone">Phone</label>
-			<input type="tel" name="phone" id="phone" placeholder="phone" />
-			<label for="bio">Introduction</label>
-			<textarea name="bio" id="bio" rows="20" placeholder="Organization Introduction" required />
-			<label for="logo">Logo <span>max dimension: 320px x 320 <i>(svg)</i></span></label>
-			<input type="file" name="logo" id="logo" />
-			<button type="submit">Add Organization</button>
+		<form on:submit|preventDefault={handleSubmit} method="POST">
+			<div class="f-fields__c">
+				<div class="col">
+					<label for="name">Organization <span><i>(required)</i></span></label>
+					<input
+						type="text"
+						name="name"
+						id="name"
+						placeholder="Organization name"
+						bind:value={values.name}
+					/>
+					<label for="address-1">Street <span><i>(required)</i></span></label>
+					<input
+						type="text"
+						name="address-1"
+						id="adr-1"
+						placeholder="address 1"
+						bind:value={values.adr_1}
+					/>
+					<label for="address-2">Place</label>
+					<input
+						type="text"
+						name="address-2"
+						id="adr-2"
+						placeholder="address 2"
+						bind:value={values.adr_2}
+					/>
+					<label for="city">City</label>
+					<input type="text" name="city" id="city" placeholder="city" bind:value={values.city} />
+					<label for="eircode">EirCode</label>
+					<input
+						type="text"
+						name="eircode"
+						id="eircode"
+						placeholder="eircode"
+						bind:value={values.eircode}
+					/>
+				</div>
+				<div class="col">
+					<label for="contact">Contact Person</label>
+					<input
+						type="text"
+						name="contact"
+						id="contact"
+						placeholder="full name"
+						bind:value={values.contact}
+					/>
+					<label for="phone">Phone</label>
+					<input type="tel" name="phone" id="phone" placeholder="phone" bind:value={values.phone} />
+					<label for="email">Email</label>
+					<input
+						type="email"
+						name="email"
+						id="email"
+						placeholder="jon.doe@gmail.com"
+						bind:value={values.email}
+					/>
+					<label for="website">Website</label>
+					<input
+						type="text"
+						name="website"
+						id="website"
+						placeholder="jon.doe@gmail.com"
+						bind:value={values.website}
+					/>
+				</div>
+			</div>
+			<label for="info">Organization Overview</label>
+			<textarea
+				name="info"
+				id="info"
+				rows="20"
+				placeholder="Short overview"
+				bind:value={values.info}
+			/>
+			<div class="form-btns__w">
+				<button type="button" class="danger" on:click={cancel}>cancel</button>
+				<button class="info">Save</button>
+			</div>
 		</form>
 	</section>
 </article>
@@ -60,5 +153,27 @@
 		border-radius: 0.25rem;
 		background-color: #1b0e30;
 		color: #fff;
+	}
+	button:last-child {
+		margin-left: 0.5rem;
+	}
+	.f-fields__c {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-gap: 1rem;
+	}
+	.col {
+		display: flex;
+		flex-direction: column;
+		min-width: 100%;
+	}
+	.form-btns__w {
+		text-align: right;
+	}
+	.danger {
+		background-color: var(--col-danger);
+	}
+	.info {
+		background-color: var(--col-active);
 	}
 </style>
