@@ -25,20 +25,23 @@
 none for now
 **improvements**
 
-- [x] update course type in DB from Select option
+- [ x ] update course type in DB from Select option
 - [ ] ~~`fuzzy search` functionality to `type` and `organisation` input field to be able find type faster and add new if non existent~~
+[ x ] show avatar when uploaded into DB
+[ x ] add delete option under preview to delete image and update db with null
+[ x ] save image url in db on submit, delete image on cancel??, delete image on delete instructor
 
 **NEXT**
-	[ ] show avatar when uploaded into DB 
-  [ ] add error msg when image with identical name exists in DB
+[ ] add error msg when image with identical name exists in DB
+[ ] Image server side Validation with - Multer
+[ ] resize images _(before storing in DB)_ with JIMP and store them with UUID as name + extension 
   <!-- [ ] add error msg when image is not uploaded
   [ ] add error msg when image is not uploaded -->
-  [ ] add delete option under preview to delete image and update db with null
-	[ ] save image url in db on submit, delete image on cancel??, delete image on delete instructor
-	[ ] how Editor JS adding image paths to JSON to be able delete ALL images on delete course
- - find suitable RTE for Sveltekit
-  - opt1: [cl-editor](https://github.com/nenadpnc/cl-editor) 
-  - opt2: [tailwind-editor](https://github.com/fouita/tailwind-editor)
-  - execCommands: [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
-  - cdp: [execCommands browser Support](https://codepen.io/stan65/pen/OJZxYNv)
 
+[ ] how Editor JS adding image paths to JSON to be able delete ALL images on delete course
+
+- find suitable RTE for Sveltekit
+- opt1: [cl-editor](https://github.com/nenadpnc/cl-editor)
+- opt2: [tailwind-editor](https://github.com/fouita/tailwind-editor)
+- execCommands: [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
+- cdp: [execCommands browser Support](https://codepen.io/stan65/pen/OJZxYNv)

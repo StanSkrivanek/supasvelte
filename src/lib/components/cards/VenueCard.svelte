@@ -27,9 +27,9 @@
 			<p>{eircode}</p>
 		</div>
 		<div class="col">
-			<p>{contact}</p>
-			<p>{phone}</p>
+      <p>{phone}</p>
 			<p>{email}</p>
+			<p>{contact}</p>
 			<p>{website}</p>
 		</div>
 	</div>

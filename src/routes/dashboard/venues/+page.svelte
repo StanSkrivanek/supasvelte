@@ -80,7 +80,6 @@
 		</div>
 	</section>
 	<section class="main">
-		<!-- TODO: rid of grid_test and add search funcctionality -->
 		<div class="db-list">
 			{#if searchTerm && filteredItems.length === 0}
 				<div class="no-results__w">

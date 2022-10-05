@@ -131,8 +131,10 @@
 				placeholder="Short overview"
 				bind:value={values.info}
 			/>
-			<button type="button" on:click={cancel}>cancel</button>
-			<button>Add Venue</button>
+			<div class="form-btns__w">
+				<button type="button" class="danger" on:click={cancel}>cancel</button>
+				<button class="info">Update data</button>
+			</div>
 		</form>
 	</section>
 </article>
@@ -169,5 +171,17 @@
 		border-radius: 0.25rem;
 		background-color: #1b0e30;
 		color: #fff;
+	}
+  button:last-child {
+    margin-left: 0.5rem;
+  }
+	.form-btns__w {
+		text-align: right;
+	}
+	.danger {
+		background-color: var(--col-danger);
+	}
+	.info {
+		background-color: var(--col-active);
 	}
 </style>
