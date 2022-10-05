@@ -23,7 +23,6 @@
 		toggleModal();
 		target = e.target.parentElement;
 		cId = target.id;
-		console.log('🚀 ~ file: +page.svelte ~ line 26 ~ openDeleteConfirmModal ~ cId', cId);
 	}
 	// apply delete from modal
 	async function deleteItemById() {
@@ -93,10 +92,8 @@
 				<h1>{item.title}</h1>
 				<p>{item.type}</p>
 				<p>{item.organization}</p>
-				<button class="info" on:click={findItemById}>Edit</button>
-				<!-- load data for course by ID -->
 				<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
-				<!-- delete data by ID -->
+				<button class="info" on:click={findItemById}>Edit</button>
 			</div>
 		{/each}
 	</section>
@@ -153,9 +150,9 @@
 		cursor: pointer;
 	}
 	.danger {
-		background-color: tomato;
+		background-color: var(--col-danger);
 	}
 	.info {
-		background-color: #5155c7;
+		background-color: var(--col-active);
 	}
 </style>

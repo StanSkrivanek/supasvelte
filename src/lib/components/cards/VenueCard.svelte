@@ -45,7 +45,9 @@
 </div>
 
 <style>
-
+	button:last-child {
+		margin-left: 0.5rem;
+	}
 	.db-item {
 		display: flex;
 		flex-grow: 1;

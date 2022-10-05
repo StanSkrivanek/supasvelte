@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 
-
 	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
 	let dbRowData = courseDetailsData.data[0];
 
@@ -142,7 +141,6 @@
 	</section>
 </article>
 
-
 <style>
 	section {
 		padding: 1rem;
@@ -176,9 +174,9 @@
 		background-color: #1b0e30;
 		color: #fff;
 	}
-  button:last-child {
-    margin-left: 0.5rem;
-  }
+	button:last-child {
+		margin-left: 0.5rem;
+	}
 
 	.f-fields__c {
 		display: grid;
@@ -188,7 +186,8 @@
 	.col {
 		display: flex;
 		flex-direction: column;
-		min-width: 100%;
+		/* Safari hack to force reponsiveness */
+		min-height: 0;
 	}
 	.form-btns__w {
 		text-align: right;

@@ -39,7 +39,9 @@
 	};
 
 	async function checkForDuplicates(name) {
-		const { data, error } = await supabase.storage.from('images').list('profile_img/trainer', { name });
+		const { data, error } = await supabase.storage
+			.from('images')
+			.list('profile_img/trainer', { name });
 		if (error) console.log('error', error);
 		if (data) {
 			for (let item of data) {
@@ -73,7 +75,9 @@
 	async function deleteAvatar() {
 		avatarFile = null;
 		values.avatar_url = '';
-		const { error } = await supabase.storage.from('images').remove([`profile_img/trainer/${avatarName}`]);
+		const { error } = await supabase.storage
+			.from('images')
+			.remove([`profile_img/trainer/${avatarName}`]);
 		const { error: err } = await supabase
 			.from('instructors')
 			.update({ avatar_url: null })
@@ -100,8 +104,9 @@
 				console.log('File successfully stored in Bucket!');
 			}
 			// USE THIS TO GET PATH TO BUCKET OTHERVISE WILL BE USED BASE64
-			const publicURL = supabase.storage.from('images').getPublicUrl(`profile_img/trainer/${avatarFile.name}`)
-				.data.publicUrl;
+			const publicURL = supabase.storage
+				.from('images')
+				.getPublicUrl(`profile_img/trainer/${avatarFile.name}`).data.publicUrl;
 
 			values.avatar_url = publicURL;
 		}
@@ -204,7 +209,7 @@
 
 			<div class="btns__c">
 				<button class="danger">cancel</button>
-				<button class="info">update data</button>
+				<button class="info">save</button>
 			</div>
 		</form>
 	</section>
@@ -215,7 +220,7 @@
 		border-bottom: #ccc 1px solid;
 	}
 	section {
-		padding: 1rem 3rem;
+		padding: 1rem;
 	}
 	form {
 		display: flex;
@@ -256,7 +261,8 @@
 	}
 	.form-img {
 		display: flex;
-		flex: 1;
+		flex-basis: 25%;
+		min-width: 160px;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;

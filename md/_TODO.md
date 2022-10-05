@@ -31,7 +31,7 @@ none for now
 [ x ] add delete option under preview to delete image and update db with null
 [ x ] save image url in db on submit, delete image on cancel??, delete image on delete instructor
 
-**NEXT**
+[ ] Custom Select need more love ;) 
 [ ] add error msg when image with identical name exists in DB
 [ ] Image server side Validation with - Multer
 [ ] resize images _(before storing in DB)_ with JIMP and store them with UUID as name + extension 

@@ -112,7 +112,7 @@
 	.custom-select {
 		position: relative;
 		display: block;
-		width: 50%;
+		/* width: 50%; */
 		margin-bottom: 1rem;
 	}
 

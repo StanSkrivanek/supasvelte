@@ -64,7 +64,7 @@
 {/if}
 <article>
 	<div class="dash-header">
-		<h1>venues DB</h1>
+		<h1>Venues</h1>
 	</div>
 	<section class="dashboard-page-header">
 		<div class="search-filter">
@@ -163,4 +163,5 @@
 		grid-template-rows: auto;
 		grid-gap: 1rem;
 	}
+
 </style>

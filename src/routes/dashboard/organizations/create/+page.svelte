@@ -165,7 +165,8 @@
 	.col {
 		display: flex;
 		flex-direction: column;
-		min-width: 100%;
+		/* Safari hack to force reponsiveness */
+		min-height: 0;
 	}
 	.form-btns__w {
 		text-align: right;

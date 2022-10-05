@@ -4,7 +4,7 @@
 	import Update from '$components/editor/Update.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	// get data from localStorage
-	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
+	const courseDetailsData = JSON.parse(localStorage.getItem('itemData')) || [];
 
 	// assign data from localStorage
 	let dbRowData = courseDetailsData.data[0];
@@ -43,21 +43,23 @@
 			.eq('id', elmId);
 		goto('/dashboard/courses');
 	}
-
+	function cancel() {
+		goto('/dashboard/courses');
+	}
 	// Clear the local storage
 	// beforeNavigate(() => localStorage.removeItem('courseDetails'));
 </script>
 
 <article>
 	<div class="dash-header">
-		<h1>Courses DB</h1>
+		<h1>Update course</h1>
 	</div>
-	<section class="dash-page-header-btn__w">
+	<!-- <section class="dash-page-header-btn__w">
 		<div class="btn-form-xxl">
 			<h2>Update course</h2>
 			<p>update course in database</p>
 		</div>
-	</section>
+	</section> -->
 	<section>
 		<form on:submit|preventDefault={dataSubmit} method="POST">
 			<label for="title">Course Title</label>
@@ -68,13 +70,7 @@
 				bind:value={values.title}
 				placeholder="Course title"
 			/>
-			<SelectFromDb
-				db_table={'tb_crs_types'}
-				tb_col={'course_type'}
-				bind:selectedListOption={values.type}
-			/>
-
-			<label for="title">Organization</label>
+					<label for="title">Organization</label>
 			<input
 				type="text"
 				name="organization"
@@ -82,6 +78,13 @@
 				bind:value={values.organization}
 				placeholder="organization name"
 			/>
+			<SelectFromDb
+				db_table={'tb_crs_types'}
+				tb_col={'course_type'}
+				bind:selectedListOption={values.type}
+			/>
+
+
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max320 characters)</span></label
 			>
@@ -95,21 +98,24 @@
 
 			<label for="content">Course content</label>
 			<Update bind:rteOutput />
-			<button>Update</button>
+			<div class="form-btns__w">
+				<button type="button" class="danger" on:click={cancel}>cancel</button>
+				<button class="info">save</button>
+			</div>
 		</form>
 	</section>
 </article>
 
 <style>
-	.dash-page-header-btn__w {
+	/* .dash-page-header-btn__w {
 		border-bottom: #ccc 1px solid;
-	}
+	} */
 
 	.dash-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 1rem 3rem;
+		padding: 1rem ;
 		background-color: #1b0e30;
 	}
 	.dash-header h1 {
@@ -124,5 +130,10 @@
 		justify-content: center;
 		max-width: 45rem;
 	}
-
+	 button:last-child {
+    margin-left: 0.5rem;
+  }
+	.form-btns__w {
+		text-align: right;
+	}
 </style>

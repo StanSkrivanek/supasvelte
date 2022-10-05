@@ -28,18 +28,21 @@
 		// console.log(values.title);
 		goto('/dashboard/courses');
 	}
+		function cancel() {
+		goto('/dashboard/courses');
+	}
 </script>
 
 <article>
 	<div class="dash-header">
-		<h1>Courses DB</h1>
+		<h1>Register a new course</h1>
 	</div>
-	<section class="dash-page-header-btn__w">
-		<div class="btn-form-xxl">
+	<!-- <section class="dash-page-header-btn__w"> -->
+		<!-- <div class="btn-form-xxl">
 			<h2>Register a new course</h2>
 			<p>register new course to database</p>
-		</div>
-	</section>
+		</div> -->
+	<!-- </section> -->
 	<section>
 		<form on:submit|preventDefault={dataSubmit} method="POST">
 			<label for="title">Organization</label>
@@ -79,19 +82,22 @@
 			<label for="content">Course content</label>
 
 			<Editor padding={80} bind:rteOutput />
-			
-			<button>Add Course</button>
+
+			<div class="btns__c">
+				<button type="button" class="danger" on:click={cancel}>cancel</button>
+				<button class="info">save</button>
+			</div>
 		</form>
 	</section>
 </article>
 
 <style>
 
-	.dash-page-header-btn__w {
+	/* .dash-page-header-btn__w {
 		border-bottom: #ccc 1px solid;
-	}
+	} */
 	section {
-		padding: 1rem 3rem;
+		padding: 1rem ;
 	}
 	form {
 		display: flex;
@@ -117,12 +123,8 @@
 		overflow-y: scroll;
 		border-radius: 0.25rem;
 	}
+button:last-child {
+    margin-left: 0.5rem;
+  }
 
-	/* button {
-		padding: 0.5rem;
-		border: none;
-		border-radius: 0.25rem;
-		background-color: #1b0e30;
-		color: #fff;
-	} */
 </style>

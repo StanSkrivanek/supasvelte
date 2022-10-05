@@ -3,9 +3,11 @@
 	import { supabase } from '$lib/supabase/supabaseClient';
 
 	// get data from localStorage
-	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
+	const courseDetailsData = JSON.parse(localStorage.getItem('itemData')) || [];
+	console.log('🚀 ~ file: +page.svelte ~ line 7 ~ courseDetailsData', courseDetailsData);
 	// assign data from localStorage
 	let dbRowData = courseDetailsData.data[0];
+	console.log('🚀 ~ file: +page.svelte ~ line 9 ~ dbRowData', dbRowData);
 
 	let elmId = dbRowData.id;
 	let values = {
@@ -57,72 +59,78 @@
 
 <article>
 	<div class="dash-header">
-		<h1>Venues DB</h1>
+		<h1>Update Venue</h1>
 	</div>
 	<section>
 		<form on:submit|preventDefault={handleSubmit} method="POST">
-			<label for="name">Venue <span><i>(required)</i></span></label>
-			<input
-				type="text"
-				name="name"
-				id="name"
-				placeholder="Venue name"
-				required
-				bind:value={values.name}
-			/>
-			<label for="address-1">Street <span><i>(required)</i></span></label>
-			<input
-				type="text"
-				name="address-1"
-				id="adr-1"
-				placeholder="address 1"
-				required
-				bind:value={values.adr_1}
-			/>
-			<label for="address-2">Place</label>
-			<input
-				type="text"
-				name="address-2"
-				id="adr-2"
-				placeholder="address 2"
-				bind:value={values.adr_2}
-			/>
-			<label for="city">City</label>
-			<input type="text" name="city" id="city" placeholder="city" bind:value={values.city} />
-			<label for="eircode">EirCode</label>
-			<input
-				type="text"
-				name="eircode"
-				id="eircode"
-				placeholder="eircode"
-				bind:value={values.eircode}
-			/>
-			<label for="contact">Contact Person</label>
-			<input
-				type="text"
-				name="contact"
-				id="contact"
-				placeholder="full name"
-				bind:value={values.contact}
-			/>
-			<label for="phone">Phone</label>
-			<input type="tel" name="phone" id="phone" placeholder="phone" bind:value={values.phone} />
-			<label for="email">Email</label>
-			<input
-				type="email"
-				name="email"
-				id="email"
-				placeholder="jon.doe@gmail.com"
-				bind:value={values.email}
-			/>
-			<label for="website">Website</label>
-			<input
-				type="text"
-				name="website"
-				id="website"
-				placeholder="jon.doe@gmail.com"
-				bind:value={values.website}
-			/>
+			<div class="f-fields__c">
+				<div class="col">
+					<label for="name">Venue <span><i>(required)</i></span></label>
+					<input
+						type="text"
+						name="name"
+						id="name"
+						placeholder="Venue name"
+						required
+						bind:value={values.name}
+					/>
+					<label for="address-1">Street <span><i>(required)</i></span></label>
+					<input
+						type="text"
+						name="address-1"
+						id="adr-1"
+						placeholder="address 1"
+						required
+						bind:value={values.adr_1}
+					/>
+					<label for="address-2">Place</label>
+					<input
+						type="text"
+						name="address-2"
+						id="adr-2"
+						placeholder="address 2"
+						bind:value={values.adr_2}
+					/>
+					<label for="city">City</label>
+					<input type="text" name="city" id="city" placeholder="city" bind:value={values.city} />
+					<label for="eircode">EirCode</label>
+					<input
+						type="text"
+						name="eircode"
+						id="eircode"
+						placeholder="eircode"
+						bind:value={values.eircode}
+					/>
+				</div>
+				<div class="col">
+					<label for="contact">Contact Person</label>
+					<input
+						type="text"
+						name="contact"
+						id="contact"
+						placeholder="full name"
+						bind:value={values.contact}
+					/>
+					<label for="phone">Phone</label>
+					<input type="tel" name="phone" id="phone" placeholder="phone" bind:value={values.phone} />
+					<label for="email">Email</label>
+					<input
+						type="email"
+						name="email"
+						id="email"
+						placeholder="jon.doe@gmail.com"
+						bind:value={values.email}
+					/>
+					<label for="website">Website</label>
+					<input
+						type="text"
+						name="website"
+						id="website"
+						placeholder="jon.doe@gmail.com"
+						bind:value={values.website}
+					/>
+				</div>
+			</div>
 			<label for="info">Venue overview</label>
 			<textarea
 				name="info"
@@ -133,7 +141,7 @@
 			/>
 			<div class="form-btns__w">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
-				<button class="info">Update data</button>
+				<button class="info">save</button>
 			</div>
 		</form>
 	</section>
@@ -172,9 +180,20 @@
 		background-color: #1b0e30;
 		color: #fff;
 	}
-  button:last-child {
-    margin-left: 0.5rem;
-  }
+	button:last-child {
+		margin-left: 0.5rem;
+	}
+	.f-fields__c {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-gap: 1rem;
+	}
+	.col {
+		display: flex;
+		flex-direction: column;
+		/* Safari hack to force reponsiveness */
+		min-height: 0;
+	}
 	.form-btns__w {
 		text-align: right;
 	}

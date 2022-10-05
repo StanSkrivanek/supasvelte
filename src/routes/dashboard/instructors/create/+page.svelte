@@ -1,5 +1,4 @@
 <script>
-
 	import { hasNoAvatarImg } from '$lib/stores/store';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
@@ -18,27 +17,29 @@
 
 	const handleFilesUpload = async (e) => {
 		avatarFile = e.target.files[0];
-		console.log("🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile", avatarFile)
-		checkForDuplicates(avatarFile.name)
+		console.log('🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile', avatarFile);
+		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
 		$hasNoAvatarImg = false;
 	};
 
 	async function checkForDuplicates(name) {
-		const { data, error } = await supabase.storage.from('images').list('profile_img/trainer', { name });
+		const { data, error } = await supabase.storage
+			.from('images')
+			.list('profile_img/trainer', { name });
 		if (error) console.log('error', error);
 		if (data) {
 			for (let item of data) {
 				if (item.name === avatarFile.name) {
 					// TODO: add a toast message to let the user know that the file already exists
 					alert('duplicate');
-					deleteAvatar()
+					deleteAvatar();
 					return;
 				}
 			}
 			createTempImgBase64(avatarFile).then((url) => {
-			values.avatar_url = url;
-		});
+				values.avatar_url = url;
+			});
 		}
 	}
 	// create Base64 image from file upload to display as a image preview to prevent unnecessary DB call to preview image
@@ -76,8 +77,9 @@
 				console.log('File successfully stored in Bucket!');
 			}
 			// USE THIS TO GET PATH TO BUCKET OTHERVISE WILL BE USED BASE64
-			const publicURL = supabase.storage.from('images').getPublicUrl(`profile_img/trainer/${avatarFile.name}`)
-				.data.publicUrl;
+			const publicURL = supabase.storage
+				.from('images')
+				.getPublicUrl(`profile_img/trainer/${avatarFile.name}`).data.publicUrl;
 
 			values.avatar_url = publicURL;
 			$hasNoAvatarImg = false;
@@ -182,7 +184,7 @@
 
 			<div class="btns__c">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
-				<button class="info">add trainer</button>
+				<button class="info">save</button>
 			</div>
 		</form>
 	</section>
@@ -194,7 +196,7 @@
 	}
 
 	section {
-		padding: 1rem 3rem;
+		padding: 1rem;
 	}
 	form {
 		display: flex;
@@ -235,7 +237,8 @@
 	}
 	.form-img {
 		display: flex;
-		flex: 1;
+		flex-basis: 25%;
+		min-width: 160px;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;

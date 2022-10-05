@@ -21,7 +21,6 @@
 </script>
 
 <div class="custom-select">
-
 	<select name="type" id="type-select" class="select">
 		<option value="hide" disabled selected hidden>Choose here</option>//
 		{#each responseData as opt}
@@ -61,14 +60,15 @@
 		color: #fff;
 		/* visibility: hidden; */
 	}
-select::after{
-background: black;
-color: white;
-}
+	select::after {
+		background: black;
+		color: white;
+	}
 	.custom-select {
 		position: relative;
 		display: block;
-		width: 50%;
+		/* width: 50%; */
+		margin-bottom: 1rem;
 	}
 
 	.custom-arrow {
