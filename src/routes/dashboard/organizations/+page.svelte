@@ -1,64 +1,167 @@
 <script>
+	import { goto } from '$app/navigation';
+	import { supabase } from '$lib/supabase/supabaseClient';
+	import { itemData } from '$lib/stores/store.js';
+	import { getData } from '$lib/utils/helpers.js';
+	import { sortById } from '$lib/utils/helpers.js';
+	import Modal from '$lib/components/shared/modals/Modal.svelte';
+	import Plus from '$lib/components/icons/Plus.svelte';
+	import Search from '$lib/components/shared/formfields/Search.svelte';
+	import OrganizationCard from '$lib/components/cards/OrganizationCard.svelte';
+	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
+
+	export let data;
+	
+	let objAry = getData(data);
+	let sorted = sortById(objAry, 'asc');
+	let showModal = false;
+	let cId = 0;
+	let itemTarget = null;
+
+	function toggleModal() {
+		showModal = !showModal;
+	}
+	// find venue id to be late used for delete from modal
+	function openDeleteConfirmModal(e) {
+		toggleModal();
+		itemTarget = e.target.closest('.db-item');
+		cId = itemTarget.id;
+	}
+	// apply delete from modal
+	async function deleteItemById() {
+		await supabase.from('venues').delete().match({ id: cId });
+		objAry = objAry.filter((item) => item.id !== cId);
+		itemTarget.remove();
+	}
+
+	async function findItemById(id) {
+		$itemData = await supabase.from('organizations').select('*').match({ id: id });
+		localStorage.setItem('itemData', JSON.stringify($itemData));
+		goto('/dashboard/organizations/edit');
+	}
+
+	// FOR SEARCH
+	let searchTerm = '';
+	let filteredItems = [];
+	function filterItems() {
+		return (filteredItems = sorted.filter((item) => {
+			return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+		}));
+	}
 </script>
 
+{#if showModal}
+	<Modal on:cancel={toggleModal}>
+		<DeleteConfirm
+			on:cancel={() => {
+				toggleModal();
+			}}
+			on:delete={() => {
+				toggleModal();
+				deleteItemById();
+			}}
+		/>
+	</Modal>
+{/if}
 <article>
 	<div class="dash-header">
 		<h1>Organizations DB</h1>
 	</div>
-	<section>
-		<form action="POST" method="post">
-			<label for="name">Organization</label>
-			<input type="text" name="name" id="name" placeholder="Organization name" required />
-			<label for="address-1">Street</label>
-			<input type="text" name="address-1" id="address" placeholder="address 1" required />
-			<label for="address-2">Place</label>
-			<input type="text" name="address-2" id="address" placeholder="address 2" />
-			<label for="address-2">City</label>
-			<input type="text" name="city" id="city" placeholder="city" required />
-			<label for="eircode">EirCode</label>
-			<input type="text" name="eircode" id="eircode" placeholder="eircode" required />
-			<label for="phone">Phone</label>
-			<input type="tel" name="phone" id="phone" placeholder="phone" required />
-			<label for="bio">Introduction</label>
-			<textarea name="bio" id="bio" rows="20" placeholder="Organization Introduction" required />
-			<label for="logo">Logo <span>max dimension: 320px x 320 <i>(svg)</i></span></label>
-			<input type="file" name="logo" id="logo" />
-			<button type="submit">Add Organization</button>
-		</form>
+	<section class="dashboard-page-header">
+		<div class="search-filter">
+			<Search bind:searchTerm on:input={filterItems} />
+		</div>
+		<div class="form-btn--add">
+			<a href="/dashboard/organizations/create">
+				<p>Add New</p>
+				<div class="plus">
+					<Plus width={44} height={44} />
+				</div>
+			</a>
+		</div>
+	</section>
+	<section class="main">
+		<div class="db-list">
+			{#if searchTerm && filteredItems.length === 0}
+				<div class="no-results__w">
+					<p>No results found</p>
+				</div>
+			{:else if filteredItems.length > 0}
+				{#each filteredItems as { id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
+					<OrganizationCard
+						{id}
+						{name}
+						{adr_1}
+						{adr_2}
+						{city}
+						{eircode}
+						{contact}
+						{phone}
+						{email}
+						{website}
+						{info}
+						on:edit={() => findItemById(id)}
+						on:click={openDeleteConfirmModal}
+					/>
+				{/each}
+			{:else}
+				{#each sorted as {  id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
+					<OrganizationCard
+						{id}
+						{name}
+						{adr_1}
+						{adr_2}
+						{city}
+						{eircode}
+						{contact}
+						{phone}
+						{email}
+						{website}
+						{info}
+						on:edit={() => findItemById(id)}
+						on:click={openDeleteConfirmModal}
+					/>
+				{/each}
+			{/if}
+		</div>
 	</section>
 </article>
 
 <style>
+	article {
+		min-width: 100%;
+		/* hack for grid in Safari */
+	}
 	section {
 		padding: 1rem;
-		padding-bottom: 6rem;
+		border-bottom: 1px solid #d8d8d8;
 	}
-	form {
+	section:last-child {
+		border-bottom: none;
+	}
+	.dashboard-page-header {
 		display: flex;
-		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		/* text-align: end; */
+	}
+	.form-btn--add a {
+		display: flex;
+		align-items: center;
 		justify-content: center;
-		max-width: 40rem;
 	}
-	label span {
-		font-size: 0.75rem;
-		color: rgb(137, 137, 137);
+	.form-btn--add a p {
+		margin-right: 1rem;
 	}
-	input,
-	textarea {
-		margin-bottom: 1rem;
-		padding: 0.5rem;
-		border: none;
-		border: 1px solid #ccc;
-		border-radius: 0.25rem;
+	.plus {
+		background-color: var(--col-lightgreen);
+		padding: 0.25rem;
+		border-radius: 50%;
 	}
-	textarea {
-		width: 100%;
-	}
-	button {
-		padding: 0.5rem;
-		border: none;
-		border-radius: 0.25rem;
-		background-color: #1b0e30;
-		color: #fff;
+	.db-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+		grid-template-rows: auto;
+		grid-gap: 1rem;
 	}
 </style>
