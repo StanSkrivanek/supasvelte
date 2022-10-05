@@ -107,7 +107,7 @@
 		</div>
 	</section>
 	<section class="main">
-		<div class="trainers-list">
+		<div class="db-list">
 			{#if searchTerm && filteredItems.length === 0}
 				<div class="no-results__w">
 					<p>No results found</p>
@@ -177,7 +177,7 @@
 		padding: 0.25rem;
 		border-radius: 50%;
 	}
-	.trainers-list {
+	.db-list {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 		grid-gap: 1rem;

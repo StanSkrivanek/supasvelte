@@ -79,25 +79,50 @@
 			</a>
 		</div>
 	</section>
-	<section>
-		<div class="grid_test">
-			{#each sorted as { id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
-				<VenueCard
-					{id}
-					{name}
-					{adr_1}
-					{adr_2}
-					{city}
-					{eircode}
-					{contact}
-					{phone}
-					{email}
-					{website}
-					{info}
-					on:edit={()=>findItemById(id)}
-					on:click={openDeleteConfirmModal}
-				/>
-			{/each}
+	<section class="main">
+		<!-- TODO: rid of grid_test and add search funcctionality -->
+		<div class="db-list">
+			{#if searchTerm && filteredItems.length === 0}
+				<div class="no-results__w">
+					<p>No results found</p>
+				</div>
+			{:else if filteredItems.length > 0}
+				{#each filteredItems as { id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
+					<VenueCard
+						{id}
+						{name}
+						{adr_1}
+						{adr_2}
+						{city}
+						{eircode}
+						{contact}
+						{phone}
+						{email}
+						{website}
+						{info}
+						on:edit={() => findItemById(id)}
+						on:click={openDeleteConfirmModal}
+					/>
+				{/each}
+			{:else}
+				{#each sorted as {  id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
+					<VenueCard
+						{id}
+						{name}
+						{adr_1}
+						{adr_2}
+						{city}
+						{eircode}
+						{contact}
+						{phone}
+						{email}
+						{website}
+						{info}
+						on:edit={() => findItemById(id)}
+						on:click={openDeleteConfirmModal}
+					/>
+				{/each}
+			{/if}
 		</div>
 	</section>
 </article>
@@ -133,7 +158,7 @@
 		padding: 0.25rem;
 		border-radius: 50%;
 	}
-	.grid_test {
+	.db-list {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 		grid-template-rows: auto;
