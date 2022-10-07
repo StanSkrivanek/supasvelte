@@ -17,7 +17,7 @@
 	<ul>
 		<li><HomeIcn /><a href="/">Home</a></li>
 		<li><PostIcn /><a href="/dashboard/post">Post</a></li>
-		<li><CalendarIcn /><a href="/dashboard/schedule">Schedule</a></li>
+		<li><CalendarIcn /><a href="/dashboard/open">Open Courses</a></li>
 		<li class="nav-divider" />
 		<li><CourseIcn /><a href="/dashboard/courses">Courses</a></li>
 		<li><VenueIcn /><a href="/dashboard/venues">Venues</a></li>
@@ -34,7 +34,7 @@
 		top: 0;
 		width: 100%;
 		background-color: #1b0e30;
-		padding: 2rem 1rem;
+		padding: 1rem;
 		min-height: 100vh;
 		overflow: scroll;
 	}
@@ -44,7 +44,7 @@
 	ul li {
 		display: flex;
 		align-items: center;
-		padding: 0.1rem 0.5rem;
+		padding: 0.3rem;
 		margin-bottom: 0.25rem;
 	}
 	ul li a {

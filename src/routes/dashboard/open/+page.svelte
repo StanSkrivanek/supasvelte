@@ -18,6 +18,7 @@
 	function toggleModal() {
 		showModal = !showModal;
 	}
+
 	// find course id to be late used for delete from modal
 	function openDeleteConfirmModal(e) {
 		toggleModal();
@@ -67,17 +68,16 @@
 		/>
 	</Modal>
 {/if}
-
 <article>
 	<div class="dash-header">
-		<h1>All Courses</h1>
+		<h1>Open Courses</h1>
 	</div>
 	<section class="dashboard-page-header">
 		<div class="search-filter">
 			<!-- <Search bind:searchTerm on:input={filterItems} /> -->
 		</div>
 		<div class="form-btn--add">
-			<a href="/dashboard/courses/create">
+			<a href="/dashboard/open/create">
 				<p>Add New</p>
 				<div class="plus">
 					<Plus width={44} height={44} />
