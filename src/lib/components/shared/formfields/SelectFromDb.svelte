@@ -4,6 +4,7 @@
 	// DB
 	export let db_table = '';
 	export let tb_col = '';
+	export let label = '';
 	let responseData = [];
 	// SELECT
 	export let selectedListOption = '';
@@ -53,7 +54,7 @@
 	}
 </script>
 
-<label for="type-select">Course Type:</label>
+<label for="type-select">{label}</label>
 <div class="custom-select">
 	<select name="type" id="type-select" class="is-hidden">
 		{#each responseData as opt}
