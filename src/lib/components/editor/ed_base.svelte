@@ -62,42 +62,16 @@
 			},
 			image: {
 				class: ImageTool,
-
 				config: {
-					actions: [
-						{
-							icon: `<svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                      <path d="M19,16V13H23V11H19V8L15,12L19,16M5,8V11H1V13H5V16L9,12L5,8M11,20H13V4H11V20Z" />
-                     </svg>`,
-							name: 'centered',
-							title: 'Centered',
-							action: (name) => {
-								return document.querySelector('.image-tool__image').style.textAlign = '-webkit-center';
-								// console.log("🚀 ~ file: Update.svelte ~ line 80 ~ img", img)
-								// img.classList.add('rte-img-centered');
-								// alert(`${name} button clicked`);
-								// return false;
-							}
-						}
-					],
 					uploader: {
 						async uploadByFile(file) {
-							console.log(file);
-
+							// store the file in the database
 							// check if image exists in the database already
-							const { data, error } = await supabase.storage.from('images').list('rte', file.name);
-							console.log(data);
-
 							// a. send alert
 							// a. opt1 - return the url if it does
-							// store the file in the database
-							//  remove caption
-							//  add alt based on img name
+
 							// add access to images gallery (component) to add images to the database
-							await supabase.storage.from('images').upload(`rte/${file.name}`, file, {
-								cacheControl: '3600',
-								upsert: false
-							});
+							await supabase.storage.from('images').upload(`rte/${file.name}`, file);
 							const publicURL = supabase.storage.from('images').getPublicUrl(`rte/${file.name}`)
 								.data.publicUrl;
 							if (!publicURL) {
@@ -109,14 +83,22 @@
 							return {
 								success: 1,
 								file: {
-									url: publicURL,
-									alt: file.name // add alt based on img name
+									url: publicURL
 								}
 							};
 						}
 					}
 				}
 			},
+			// image: {
+			// 	class: ImageTool,
+			// 	config: {
+			// 		endpoints: {
+			// 			// byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+			// 			// byUrl: 'http://localhost:8008/fetchUrl' // Your endpoint that provides uploading by Url
+			// 		}
+			// 	}
+			// },
 			attaches: {
 				class: AttachesTool,
 				config: {
@@ -164,11 +146,11 @@
 <div id="editor-create" class="editor" />
 
 <style>
-	/* .editor {
+	.editor {
 		border-right: 4px solid rgb(229, 228, 228);
 		border-radius: 0.25rem;
 		margin-bottom: 1rem;
 		background-color: rgb(253, 251, 255);
 		padding-left: 48px;
-	} */
+	}
 </style>

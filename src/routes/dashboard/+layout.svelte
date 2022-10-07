@@ -1,12 +1,13 @@
 <script>
+
 	//add global css route only once into main +lauout.svelte to take effect on all pages of the app in routes folder
-	import Nav from '$components/shared/navs/Nav.svelte';
+	import DashboardNav from '$components/shared/navs/DashboardNav.svelte';
 	import '../../app.css';
 </script>
 
 <main>
 	<aside>
-		<Nav />
+		<DashboardNav />
 	</aside>
 	<slot />
 </main>

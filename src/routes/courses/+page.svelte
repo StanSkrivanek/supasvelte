@@ -15,7 +15,11 @@
 	let sortedCourse = sortById(objAry, 'asc');
 </script>
 
-<h1>All courses</h1>
+<div class="hero">
+	<div class="hero-conetnt__w">
+		<h2>All courses</h2>
+	</div>
+</div>
 
 <div class="courses">
 	{#each sortedCourse as course (course.id)}
@@ -45,6 +49,43 @@
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 		gap: 1rem;
 	}
+		.hero {
+		display: grid;
+		grid-template-columns: 0.25fr minmax(1fr, 1440px) 0.25fr;
+		grid-template-areas: '. content .';
+		background: #f5f5f5;
+		padding: 1rem;
+		margin-bottom: 1rem;
+		min-height: 20rem;
+		color: var(--col-white);
+		background: var(--img-overlay-gradient-main);
+	}
+	.hero h2 {
+		font-size: 4.5rem;
+		color: var(--col-white);
+	}
+	.hero h2::after {
+		content: '';
+		display: block;
+		width: 5rem;
+		height: 0.5rem;
+		background: var(--col-warning);
+		margin-top: 0.8rem;
+	}
+	/* .hero p {
+		font-size: 1.3rem;
+	} */
+	.hero-conetnt__w {
+		grid-area: content;
+		place-self: center;
+	}
+	/* .main-content__w {
+		display: grid;
+		grid-template-columns: minmax(300px, 1fr) 2fr;
+		grid-template-areas: 'aside content';
+		max-width: 1440px;
+		margin: 0 auto;
+	} */
 	.card {
 		display: grid;
 		grid-auto-rows: 1fr 2fr;

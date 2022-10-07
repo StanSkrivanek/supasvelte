@@ -68,9 +68,42 @@
 			image: {
 				class: ImageTool,
 				config: {
-					endpoints: {
-						byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
-						byUrl: 'http://localhost:8008/fetchUrl' // Your endpoint that provides uploading by Url
+					actions: [
+						{
+							icon: `<svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                      <path d="M19,16V13H23V11H19V8L15,12L19,16M5,8V11H1V13H5V16L9,12L5,8M11,20H13V4H11V20Z" />
+                     </svg>`,
+							name: 'centered',
+							title: 'Centered',
+							action: (name) => {
+								document.querySelector('.image-tool__image').classList.add('rte-img-centered');
+	
+								// console.log("🚀 ~ file: Update.svelte ~ line 80 ~ img", img)
+								// img.classList.add('rte-img-centered');
+								// alert(`${name} button clicked`);
+								return true;
+							}
+						}
+					],
+					uploader: {
+						async uploadByFile(file) {
+							// store the file in the database
+							await supabase.storage.from('images').upload(`rte/${file.name}`, file);
+							const publicURL = supabase.storage.from('images').getPublicUrl(`rte/${file.name}`)
+								.data.publicUrl;
+							// if (!publicURL) {
+							// 	return {
+							// 		success: 0,
+							// 		msg: 'Error uploading image'
+							// 	};
+							// }
+							return {
+								success: 1,
+								file: {
+									url: publicURL
+								}
+							};
+						}
 					}
 				}
 			},
@@ -114,6 +147,7 @@
 
 	export async function rteOutput() {
 		let output = editor.save();
+		// console.log("🚀 ~ file: Update.svelte ~ line 150 ~ rteOutput ~ output", output)
 		return (values.content = await output);
 	}
 </script>
@@ -128,4 +162,7 @@
 		background-color: rgb(253, 251, 255);
 		padding-left: 48px;
 	}
+	/* .rte-img-centered{
+		text-align: center;
+	} */
 </style>

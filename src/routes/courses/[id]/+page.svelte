@@ -43,7 +43,7 @@
 				class: NestedList,
 				inlineToolbar: true
 			},
-			image: SimpleImage,
+			// image: SimpleImage,
 			table: {
 				class: Table,
 				inlineToolbar: true,
@@ -68,10 +68,10 @@
 			image: {
 				class: ImageTool,
 				config: {
-					endpoints: {
-						byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
-						byUrl: 'http://localhost:8008/fetchUrl' // Your endpoint that provides uploading by Url
-					}
+					// endpoints: {
+				// 		byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+				// 		byUrl: 'http://localhost:8008/fetchUrl' // Your endpoint that provides uploading by Url
+					// }
 				}
 			},
 			attaches: {
