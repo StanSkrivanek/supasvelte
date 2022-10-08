@@ -1,6 +1,7 @@
 <script>
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { goto } from '$app/navigation';
+	import SwitchRoundy from '$lib/components/shared/formfields/SwitchRoundy.svelte';
 	// import { getData } from '$lib/utils/helpers.js';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	// export let data;
@@ -134,7 +135,12 @@
 	<div class="form-2col-section">
 		<div class="form-select__w">
 			<label for="applyWillOpen">Apply Will Open</label>
-			<input type="date" name="applyWillOpen" id="applyWillOpen" bind:value={values.applyWillOpen} />
+			<input
+				type="date"
+				name="applyWillOpen"
+				id="applyWillOpen"
+				bind:value={values.applyWillOpen}
+			/>
 		</div>
 		<div class="form-select__w">
 			<label for="applyWillClose">Apply Will Close</label>
@@ -148,16 +154,18 @@
 	</div>
 	<div class="form-2col-section">
 		<div class="form-select__w">
-			<label for="isOpen">Is Open</label>
-			<input type="checkbox" name="isOpen" id="isOpen" on:click={isActive}  />
+			<!-- <label for="isOpen">Is Open</label>
+			<input type="checkbox" name="isOpen" id="isOpen" on:click={isActive} />
+		</div> -->
+			<SwitchRoundy label={"Show on website"} on:click={isActive} />
 		</div>
-	</div>
+</div>
 
-	<div class="btns__c">
-		<button type="button" class="danger" on:click={cancel}>cancel</button>
-		<button class="info">save</button>
-	</div>
-	<pre>{JSON.stringify(values, null, 2)}</pre>
+<div class="btns__c">
+  <button type="button" class="danger" on:click={cancel}>cancel</button>
+  <button class="info">save</button>
+</div>
+<pre>{JSON.stringify(values, null, 2)}</pre>
 </form>
 
 <style>
