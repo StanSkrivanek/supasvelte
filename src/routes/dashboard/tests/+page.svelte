@@ -1,5 +1,8 @@
 <script>
 	import { supabase } from '$lib/supabase/supabaseClient';
+	import CardGlobal from '$lib/components/cards/CardGlobal.svelte';
+	
+	import OpenCoursePrev from '$lib/components/cards/OpenCoursePrev.svelte';
 	//TODO: show image in preview,add delete oprion under preview to delete image and update db with null
 	//TODO: save image url in db on submit, delete image on cancel??, delete image on delete instructor
 	//TODO: how Editor JS adding image paths to JSON to be able delete ALL images on delete course
@@ -87,12 +90,28 @@
 <article>
 	<section>
 		<div class="grid">
+			<CardGlobal>
+				<OpenCoursePrev />
+				<!-- <div class="card-global__header">
+					<h2 class="card-global__title">Avatar</h2>
+				</div>
+				<div class="card-global__body">
+					<div class="avatar">
+						<div class="avatar__img-container">
+							<img src="https://i.pravatar.cc/150?img=1" alt="avatar" class="avatar__img" />
+						</div>
+						<div class="avatar__input-container">
+							<input type="file" name="avatar" id="avatar" accept="image/*" />
+						</div>
+					</div>
+				</div> -->
+			</CardGlobal>
+			<!-- <div class="avatar">AVATAR</div>
 			<div class="avatar">AVATAR</div>
 			<div class="avatar">AVATAR</div>
 			<div class="avatar">AVATAR</div>
 			<div class="avatar">AVATAR</div>
-			<div class="avatar">AVATAR</div>
-			<div class="avatar">AVATAR</div>
+			<div class="avatar">AVATAR</div> -->
 		</div>
 		<!-- <div class="dash-header">
 			<h1>Upload image</h1>

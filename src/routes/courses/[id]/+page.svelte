@@ -1,6 +1,6 @@
 <script>
 	import { getData } from '$lib/utils/helpers.js';
-	import OpenCourse from '$lib/components/cards/OpenCourse.svelte';
+	import OpenCourseFull from '$lib/components/cards/OpenCourseFull.svelte';
 
 	export let data;
 	let objAry = getData(data);
@@ -127,7 +127,7 @@
 </div>
 <div class="main-content__w">
 	<aside>
-		<OpenCourse />
+		<OpenCourseFull />
 	</aside>
 	<main>
 		<p class="article-main-header">Course overview</p>

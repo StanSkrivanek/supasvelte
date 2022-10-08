@@ -144,13 +144,9 @@
 </article>
 
 <style>
-	article {
-		/* Safari Issue hack: This `main` element is inside grid (aside / main) and as direct children of grid need to be forced to 100% to make grid nested inside this element resoponsive using minmax. In other browsers nested grid is responsive as expected */
-		min-width: 100%;
-	}
 	section {
 		padding: 1rem;
-		/* border-bottom: 1px solid #d8d8d8; */
+		   border-bottom: 1px solid var(--col-bg-gray);
 	}
 	section:last-child {
 		border-bottom: none;
