@@ -54,20 +54,24 @@
 	}
 </script>
 
-<label for="type-select">{label}</label>
-<div class="custom-select">
-	<select name="type" id="type-select" class="is-hidden">
-		{#each responseData as opt}
-			<option value={opt}>{opt}</option>
-		{/each}
-	</select>
-	<div class="styled-select" on:click|preventDefault={showOptions}>{selectedListOption || 'please select type'}</div>
-	<ul class="options" class:is-hidden={!isActive}>
-		{#each responseData as opt}
-			<li rel={opt} on:click|preventDefault={handleList}>{opt}</li>
-		{/each}
-	</ul>
-	<span class="custom-arrow" />
+<div class="form-select__w">
+	<label for="type-select">{label}</label>
+	<div class="custom-select">
+		<select name="type" id="type-select" class="is-hidden">
+			{#each responseData as opt}
+				<option value={opt}>{opt}</option>
+			{/each}
+		</select>
+		<div class="styled-select" on:click|preventDefault={showOptions}>
+			{selectedListOption || 'please select type'}
+		</div>
+		<ul class="options" class:is-hidden={!isActive}>
+			{#each responseData as opt}
+				<li rel={opt} on:click|preventDefault={handleList}>{opt}</li>
+			{/each}
+		</ul>
+		<span class="custom-arrow" />
+	</div>
 </div>
 
 <!-- TEST UPDATE ORIGIN SELECT OPTION -->
@@ -84,6 +88,7 @@
 	*::after {
 		box-sizing: border-box;
 	}
+
 	select {
 		/* reset */
 		appearance: none;
@@ -110,11 +115,17 @@
 		background: black;
 		color: white;
 	}
+	.form-select__w {
+		/* display: flex;
+		flex-direction: column; */
+			margin-bottom: 1rem;
+	}
 	.custom-select {
 		position: relative;
 		display: block;
 		/* width: 50%; */
-		margin-bottom: 1rem;
+	
+		margin-top: 0.5rem;
 	}
 
 	.custom-arrow {
