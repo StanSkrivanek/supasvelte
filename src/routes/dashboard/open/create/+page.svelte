@@ -3,8 +3,8 @@
 	import { goto } from '$app/navigation';
 	// import { getData } from '$lib/utils/helpers.js';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
-	export let data;
-	// let venues = [];
+	// export let data;
+
 	let values = {
 		course: '',
 		type: '',
@@ -28,21 +28,23 @@
 			// type: values.type,
 			venue: values.venue,
 			groupNo: values.groupNo, // 1, 2,
-			weekday: values.weekday // Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-			// date_in: values.dateIn, // 2023-09-01
-			// date_end: values.dateEnd, // 2023-10-01
-			// time_in: values.timeIn, // 10:00AM
-			// time_end: values.timeEnd, // 10:00AM
-			// price: values.price, // 10.00
-			// formAttachment: values.formAttachment, // x.pdf, x.docx etc.
-			// applyWillOpen: values.applyWillOpen, // 2023-06-01
-			// applyWillClose: values.applyWillClose, // 2023-09-01
-			// isOpen: values.isOpen // true, false
+			weekday: values.weekday, // Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+			date_in: values.dateIn, // 2023-09-01
+			date_end: values.dateEnd, // 2023-10-01
+			time_in: values.timeIn, // 10:00AM
+			time_end: values.timeEnd, // 10:00AM
+			price: values.price, // 10.00
+			formAttachment: values.formAttachment, // x.pdf, x.docx etc.
+			applyWillOpen: values.applyWillOpen, // 2023-06-01
+			applyWillClose: values.applyWillClose, // 2023-09-01
+			isOpen: values.isOpen // true, false
 
 			// content: await rteOutput()
 		});
 	}
-
+	function isActive() {
+		values.isOpen = !values.isOpen;
+	}
 	function cancel() {
 		goto('/dashboard/open');
 	}
@@ -68,7 +70,7 @@
 	<div class="form-2col-section">
 		<div class="form-select__w">
 			<label for="group">Group</label>
-			<select name="group" id="group">
+			<select name="group" id="group" bind:value={values.groupNo}>
 				<option value="">Select group</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
@@ -77,7 +79,7 @@
 		</div>
 		<div class="form-select__w">
 			<label for="weekday">Week Day</label>
-			<select name="weekday" id="weekday">
+			<select name="weekday" id="weekday" bind:value={values.weekday}>
 				<option value="">Select day</option>
 				<option value="Monday">Monday</option>
 				<option value="Tuesday">Tuesday</option>
@@ -92,21 +94,21 @@
 	<div class="form-2col-section">
 		<div class="form-select__w">
 			<label for="date-in">Starts Date</label>
-			<input type="date" name="date-in" id="date-in" bind:this={values.date_in} />
+			<input type="date" name="date-in" id="date-in" bind:value={values.date_in} />
 		</div>
 		<div class="form-select__w">
 			<label for="date-end">Ends Date</label>
-			<input type="date" name="date-end" id="date-end" bind:this={values.date_end} />
+			<input type="date" name="date-end" id="date-end" bind:value={values.date_end} />
 		</div>
 	</div>
 	<div class="form-2col-section">
 		<div class="form-select__w">
 			<label for="time-in">Start Time</label>
-			<input type="time" name="time-in" id="time-in" bind:this={values.time_in} />
+			<input type="time" name="time-in" id="time-in" bind:value={values.time_in} />
 		</div>
 		<div class="form-select__w">
 			<label for="time-end">End Time</label>
-			<input type="time" name="time-end" id="time-end" bind:this={values.time_end} />
+			<input type="time" name="time-end" id="time-end" bind:value={values.time_end} />
 
 			<!-- <div class="form-select__w">
         <label for="time-end">Duration</label>
@@ -114,37 +116,48 @@
       </div> -->
 		</div>
 	</div>
-  <div class="form-2col-section">
-    <div class="form-select__w">
-      <label for="price">Price</label>
-      <input type="number" name="price" id="price" bind:this={values.price} />
-    </div>
-    <div class="form-select__w">
-      <label for="formAttachment">Form Attachment</label>
-      <input type="file" name="formAttachment" id="formAttachment" bind:this={values.formAttachment} />
-    </div>
-  </div>
-  <div class="form-2col-section">
-    <div class="form-select__w">
-      <label for="applyWillOpen">Apply Will Open</label>
-      <input type="date" name="applyWillOpen" id="applyWillOpen" bind:this={values.applyWillOpen} />
-    </div>
-    <div class="form-select__w">
-      <label for="applyWillClose">Apply Will Close</label>
-      <input type="date" name="applyWillClose" id="applyWillClose" bind:this={values.applyWillClose} />
-    </div>
-  </div>
-  <div class="form-2col-section">
-    <div class="form-select__w">
-      <label for="isOpen">Is Open</label>
-      <input type="checkbox" name="isOpen" id="isOpen" bind:this={values.isOpen} />
-    </div>
-  </div>
+	<div class="form-2col-section">
+		<div class="form-select__w">
+			<label for="price">Price</label>
+			<input type="number" name="price" id="price" bind:value={values.price} />
+		</div>
+		<div class="form-select__w">
+			<label for="formAttachment">Form Attachment</label>
+			<input
+				type="file"
+				name="formAttachment"
+				id="formAttachment"
+				bind:value={values.formAttachment}
+			/>
+		</div>
+	</div>
+	<div class="form-2col-section">
+		<div class="form-select__w">
+			<label for="applyWillOpen">Apply Will Open</label>
+			<input type="date" name="applyWillOpen" id="applyWillOpen" bind:value={values.applyWillOpen} />
+		</div>
+		<div class="form-select__w">
+			<label for="applyWillClose">Apply Will Close</label>
+			<input
+				type="date"
+				name="applyWillClose"
+				id="applyWillClose"
+				bind:value={values.applyWillClose}
+			/>
+		</div>
+	</div>
+	<div class="form-2col-section">
+		<div class="form-select__w">
+			<label for="isOpen">Is Open</label>
+			<input type="checkbox" name="isOpen" id="isOpen" on:click={isActive}  />
+		</div>
+	</div>
 
 	<div class="btns__c">
 		<button type="button" class="danger" on:click={cancel}>cancel</button>
 		<button class="info">save</button>
 	</div>
+	<pre>{JSON.stringify(values, null, 2)}</pre>
 </form>
 
 <style>
