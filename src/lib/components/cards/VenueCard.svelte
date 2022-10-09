@@ -12,7 +12,7 @@
 	export let phone;
 	export let email;
 	export let website;
-	export let info;
+	// export let info;
 </script>
 
 <div class="db-item" {id}>

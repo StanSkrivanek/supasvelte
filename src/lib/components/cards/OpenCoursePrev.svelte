@@ -40,10 +40,10 @@
 						<p>{item.info}</p>
 					</div> -->
 	<div class="col dsb-venue--footer">
-		<!-- <button class="info" on:click={findItemById}>Edit</button> -->
+
 		<button class="danger" on:click>Delete</button>
 		<button class="info" on:click={() => dispatch('edit')}>Edit</button>
-		<!-- <button class="danger" on:click={openDeleteConfirmModal}>Delete</button> -->
+
 	</div>
 </div>
 

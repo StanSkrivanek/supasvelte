@@ -5,17 +5,17 @@
 	import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
-	import Plus from '$lib/components/icons/Plus.svelte';
-	import Search from '$lib/components/shared/formfields/Search.svelte';
 	import OpenCoursePrev from '$lib/components/cards/OpenCoursePrev.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
+	import Search from '$lib/components/shared/formfields/Search.svelte';
+	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
 	console.log('🚀 ~ file: +page.svelte ~ line 13 ~ data', data);
 	let objAry = getData(data);
-	let sorted = sortById(objAry, 'asc');
+	// let sorted = sortById(objAry, 'asc');
 	let showModal = false;
-	let componentId = 0;
+	let cId = 0;
 	let target = null;
 
 	function toggleModal() {
@@ -25,15 +25,13 @@
 	// find course id to be late used for delete from modal
 	function openDeleteConfirmModal(e) {
 		toggleModal();
-		console.log('🚀 ~ file: +page.svelte ~ line 32 ~ openDeleteConfirmModal ~ e', e);
-		
 		target = e.target.closest('.db-item');
-		componentId = target.id;
+		cId = target.id;
 	}
 	// apply delete from modal
 	async function deleteItemById() {
-		await supabase.from('opencourses').delete().match({ id: componentId });
-		objAry = objAry.filter((item) => item.id !== componentId);
+		await supabase.from('opencourses').delete().match({ id: cId });
+		objAry = objAry.filter((item) => item.id !== cId);
 		target.remove();
 	}
 
@@ -88,7 +86,8 @@
 		</div>
 	</section>
 	<section class="courses-db-list">
-		{#each sorted as { id, course, type, venue, group, weekday, date_in, time_in, apply_open, is_open }}
+		<!-- DESTRUCTURING DOESNT WORK - WHY ??? -->
+		<!-- {#each objAry as { id, course, type, venue, group, weekday, date_in, time_in, apply_open, is_open }}
 			<OpenCoursePrev
 				{id}
 				{course}
@@ -101,6 +100,22 @@
 				{apply_open}
 				{is_open}
 				on:edit={() => findItemById(id)}
+				on:click={openDeleteConfirmModal}
+			/>
+		{/each} -->
+		{#each objAry as item (item.id)}
+			<OpenCoursePrev
+				id={item.id}
+				course={item.course}
+				type={item.type}
+				venue={item.venue}
+				group={item.group}
+				weekday={item.weekday}
+				date_in={item.date_in}
+				time_in={item.time_in}
+				apply_open={item.apply_open}
+				is_open={item.is_open}
+				on:edit={() => findItemById(item.id)}
 				on:click={openDeleteConfirmModal}
 			/>
 		{/each}

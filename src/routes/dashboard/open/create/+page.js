@@ -1,3 +1,5 @@
+export const ssr = false;
+
 // import { supabase } from '$lib/supabase/supabaseClient';
 
 // export async function load() {

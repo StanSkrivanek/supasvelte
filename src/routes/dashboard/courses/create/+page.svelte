@@ -15,7 +15,7 @@
 		content: null
 	};
 
-	async function dataSubmit() {
+	async function handleSubmit() {
 		// save data in db table `courses`
 		await supabase.from('courses').insert({
 			organization: values.organization,
@@ -44,7 +44,7 @@
 		</div> -->
 	<!-- </section> -->
 	<section>
-		<form on:submit|preventDefault={dataSubmit} method="POST">
+		<form on:submit|preventDefault={handleSubmit} method="POST">
 			<label for="title">Organization</label>
 			<input
 				type="text"
