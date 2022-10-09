@@ -1,22 +1,21 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
-  
+
 	export let id;
 	export let name;
-  export let adr_1;
-  export let adr_2;
-  export let city;
-  export let eircode;
-  export let contact;
-  export let phone;
+	export let adr_1;
+	export let adr_2;
+	export let city;
+	export let eircode;
+	export let contact;
+	export let phone;
 	export let email;
 	export let website;
-  export let info;
-
-
+	export let info;
 </script>
-<div class="db-item" id={id}>
+
+<div class="db-item" {id}>
 	<p>{id}</p>
 	<h2>{name}</h2>
 	<div class="col dsb-venue--header">
@@ -27,7 +26,7 @@
 			<p>{eircode}</p>
 		</div>
 		<div class="col">
-      <p>{phone}</p>
+			<p>{phone}</p>
 			<p>{email}</p>
 			<p>{contact}</p>
 			<p>{website}</p>
@@ -37,10 +36,8 @@
 						<p>{item.info}</p>
 					</div> -->
 	<div class="col dsb-venue--footer">
-		<!-- <button class="info" on:click={findItemById}>Edit</button> -->
-    	<button class="info" on:click={() => dispatch('edit')}>Edit</button>
-		<!-- <button class="danger" on:click={openDeleteConfirmModal}>Delete</button> -->
-    <button class="danger" on:click>Delete</button>
+		<button class="danger" on:click>Delete</button>
+		<button class="info" on:click={() => dispatch('edit')}>Edit</button>
 	</div>
 </div>
 
