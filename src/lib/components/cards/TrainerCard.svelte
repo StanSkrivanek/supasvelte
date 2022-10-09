@@ -33,10 +33,9 @@
 		</div>
 	</div>
 	<div class="btns__c">
-		<button class="info" on:click={() => dispatch('edit')}>Edit</button>
-		<!-- load data for course by ID -->
 		<button class="danger" on:click>Delete</button>
-		<!-- delete data by ID -->
+		<button class="info" on:click={() => dispatch('edit')}>Edit</button>
+
 	</div>
 </div>
 

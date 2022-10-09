@@ -2,7 +2,7 @@
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { goto } from '$app/navigation';
 	import SwitchRoundy from '$lib/components/shared/formfields/SwitchRoundy.svelte';
-	// import { getData } from '$lib/utils/helpers.js';
+	import { getData } from '$lib/utils/helpers.js';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	// export let data;
 
@@ -22,26 +22,26 @@
 		applyWillClose: '',
 		isOpen: false
 	};
-	async function dataSubmit() {
+	async function handleSubmit() {
 		// save data in db table `courses`
-		await supabase.from('courses').insert({
+		await supabase.from('opencourses').insert({
 			course: values.course,
-			// type: values.type,
+			type: values.type,
 			venue: values.venue,
-			groupNo: values.groupNo, // 1, 2,
+			group: values.groupNo, // 1, 2,
 			weekday: values.weekday, // Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-			date_in: values.dateIn, // 2023-09-01
-			date_end: values.dateEnd, // 2023-10-01
-			time_in: values.timeIn, // 10:00AM
-			time_end: values.timeEnd, // 10:00AM
+			date_in: values.date_in, // 2023-09-01
+			date_end: values.date_end, // 2023-10-01
+			time_in: values.time_in, // 10:00AM
+			time_end: values.time_end, // 10:00AM
 			price: values.price, // 10.00
-			formAttachment: values.formAttachment, // x.pdf, x.docx etc.
-			applyWillOpen: values.applyWillOpen, // 2023-06-01
-			applyWillClose: values.applyWillClose, // 2023-09-01
-			isOpen: values.isOpen // true, false
+			attachment: values.formAttachment, // x.pdf, x.docx etc.
+			apply_open: values.applyWillOpen, // 2023-06-01
+			apply_close: values.applyWillClose, // 2023-09-01
+			is_open: values.isOpen // true, false
 
-			// content: await rteOutput()
 		});
+		goto('/dashboard/open');
 	}
 	function isActive() {
 		values.isOpen = !values.isOpen;
@@ -53,7 +53,9 @@
 
 <h2>Open new course</h2>
 
-<form on:submit|preventDefault={dataSubmit} action="" id="open-course">
+<form on:submit|preventDefault={handleSubmit} action="" id="open-course" method="POST">
+<!-- <form on:submit|preventDefault={handleSubmit} action="dashboard/open" method="POST"> -->
+<!-- <form on:submit|preventDefault={handleSubmit} method="POST"> -->
 	<div class="form-select">
 		<SelectFromDb
 			label="Course"
@@ -154,18 +156,15 @@
 	</div>
 	<div class="form-2col-section">
 		<div class="form-select__w">
-			<!-- <label for="isOpen">Is Open</label>
-			<input type="checkbox" name="isOpen" id="isOpen" on:click={isActive} />
-		</div> -->
-			<SwitchRoundy label={"Show on website"} on:click={isActive} />
+			<SwitchRoundy label={'Show on website'} on:click={isActive} />
 		</div>
-</div>
+	</div>
 
-<div class="btns__c">
-  <button type="button" class="danger" on:click={cancel}>cancel</button>
-  <button class="info">save</button>
-</div>
-<pre>{JSON.stringify(values, null, 2)}</pre>
+	<div class="btns__c">
+		<button type="button" class="danger" on:click={cancel}>cancel</button>
+		<button class="info">save</button>
+	</div>
+	<pre>{JSON.stringify(values, null, 2)}</pre>
 </form>
 
 <style>

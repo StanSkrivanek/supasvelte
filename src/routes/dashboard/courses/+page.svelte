@@ -72,7 +72,7 @@
 	<div class="dash-header">
 		<h1>All Courses</h1>
 	</div>
-	<section class="dashboard-page-header">
+	<section class="dsh-page-header">
 		<div class="search-filter">
 			<!-- <Search bind:searchTerm on:input={filterItems} /> -->
 		</div>
@@ -100,11 +100,7 @@
 </article>
 
 <style>
-	article {
-		/* hack for grid in Safari */
-		min-width: 100%;
-	}
-	.dashboard-page-header {
+	.dsh-page-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

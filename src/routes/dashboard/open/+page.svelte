@@ -5,12 +5,15 @@
 	import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
+	import OpenCoursePrev from '$lib/components/cards/OpenCoursePrev.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 	import Search from '$lib/components/shared/formfields/Search.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
+	console.log('🚀 ~ file: +page.svelte ~ line 13 ~ data', data);
 	let objAry = getData(data);
+	// let sorted = sortById(objAry, 'asc');
 	let showModal = false;
 	let cId = 0;
 	let target = null;
@@ -22,28 +25,25 @@
 	// find course id to be late used for delete from modal
 	function openDeleteConfirmModal(e) {
 		toggleModal();
-		target = e.target.parentElement;
+		target = e.target.closest('.db-item');
 		cId = target.id;
 	}
 	// apply delete from modal
 	async function deleteItemById() {
-		await supabase.from('courses').delete().match({ id: cId });
+		await supabase.from('opencourses').delete().match({ id: cId });
 		objAry = objAry.filter((item) => item.id !== cId);
 		target.remove();
 	}
 
-	async function findItemById(e) {
-		const elm = e.target.parentElement;
-		const elmId = elm.id;
-		// get data from db table `courses` where id = elmId
-		$itemData = await supabase.from('courses').select('*').match({ id: elmId });
-		// store course RTE data as string in localStorage
+	async function findItemById(id) {
+		$itemData = await supabase.from('opencourses').select('*').match({ id: id });
 		localStorage.setItem('itemData', JSON.stringify($itemData));
-		// redirect to update page
-		goto('/dashboard/courses/edit');
+		goto('/dashboard/open/edit');
 	}
-	// sort courses by ID
-	let sorted = sortById(objAry, 'asc');
+	// sort opencourses by ID
+	// function sortById() {
+	// 	sorted = sortById(objAry, 'asc');
+	// }
 
 	// FOR SEARCH
 	let searchTerm = '';
@@ -72,7 +72,7 @@
 	<div class="dash-header">
 		<h1>Open Courses</h1>
 	</div>
-	<section class="dashboard-page-header">
+	<section class="dsh-page-header">
 		<div class="search-filter">
 			<!-- <Search bind:searchTerm on:input={filterItems} /> -->
 		</div>
@@ -85,26 +85,53 @@
 			</a>
 		</div>
 	</section>
-	<section>
-		{#each sorted as item (item.id)}
-			<div class="courses-db-list" id={item.id}>
-				<p>{item.id}</p>
-				<h1>{item.title}</h1>
-				<p>{item.type}</p>
-				<p>{item.organization}</p>
-				<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
-				<button class="info" on:click={findItemById}>Edit</button>
-			</div>
+	<section class="courses-db-list">
+		<!-- DESTRUCTURING DOESNT WORK - WHY ??? -->
+		<!-- {#each objAry as { id, course, type, venue, group, weekday, date_in, time_in, apply_open, is_open }}
+			<OpenCoursePrev
+				{id}
+				{course}
+				{type}
+				{venue}
+				{group}
+				{weekday}
+				{date_in}
+				{time_in}
+				{apply_open}
+				{is_open}
+				on:edit={() => findItemById(id)}
+				on:click={openDeleteConfirmModal}
+			/>
+		{/each} -->
+		{#each objAry as item (item.id)}
+			<OpenCoursePrev
+				id={item.id}
+				course={item.course}
+				type={item.type}
+				venue={item.venue}
+				group={item.group}
+				weekday={item.weekday}
+				date_in={item.date_in}
+				time_in={item.time_in}
+				apply_open={item.apply_open}
+				is_open={item.is_open}
+				on:edit={() => findItemById(item.id)}
+				on:click={openDeleteConfirmModal}
+			/>
 		{/each}
 	</section>
 </article>
 
 <style>
-	article {
-		/* hack for grid in Safari */
-		min-width: 100%;
+	section {
+		padding: 1rem;
+		border-bottom: 1px solid var(--col-bg-gray);
 	}
-	.dashboard-page-header {
+	section:last-child {
+		padding: 1rem;
+		border-bottom: none;
+	}
+	.dsh-page-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -123,36 +150,41 @@
 		padding: 0.25rem;
 		border-radius: 50%;
 	}
+	.dsh-page-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		/* text-align: end; */
+	}
+	.form-btn--add a {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.form-btn--add a p {
+		margin-right: 1rem;
+	}
+	.plus {
+		background-color: var(--col-lightgreen);
+		padding: 0.25rem;
+		border-radius: 50%;
+	}
 	.courses-db-list {
 		display: grid;
-		grid-template-columns: 0.25fr 2fr 1fr 1fr 0.5fr 0.5fr;
-		align-items: center;
-		gap: 1rem;
-		border: #ccc 1px solid;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		margin-bottom: 0.25rem;
-	}
-	section {
-		padding: 1rem;
-		border-bottom: 1px solid #d8d8d8;
-	}
-	section:last-child {
-		border-bottom: none;
-	}
-	button {
-		padding: 0.5rem;
-		border: none;
-		border-radius: 0.25rem;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
-		background-color: #1b0e30;
-		color: #fff;
-		cursor: pointer;
+		/* align-items: center; */
+		gap: 1rem;
+		/* border: #ccc 1px solid; */
+		/* padding: 1rem; */
+		/* border-radius: 0.25rem; */
+		/* margin-bottom: 0.25rem; */
 	}
-	.danger {
+	/* .danger {
 		background-color: var(--col-danger);
 	}
 	.info {
 		background-color: var(--col-active);
-	}
+	} */
 </style>

@@ -23,7 +23,7 @@
 	aside {
 		position: relative;
 	}
-	.dsh__c {
-		padding: 1rem;
+	.dsh__c{
+		min-width: 100%;
 	}
 </style>

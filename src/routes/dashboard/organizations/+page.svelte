@@ -128,10 +128,6 @@
 </article>
 
 <style>
-	article {
-		min-width: 100%;
-		/* hack for grid in Safari */
-	}
 	section {
 		padding: 1rem;
 		border-bottom: 1px solid #d8d8d8;
