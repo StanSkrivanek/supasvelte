@@ -4,10 +4,8 @@
 	// DB
 	export let db_table = '';
 	export let tb_col = '';
-
-
-	
 	export let label = '';
+	
 	let responseData = [];
 	// SELECT
 	export let selectedListOption = '';
@@ -62,12 +60,12 @@
 <div class="form-select__w" >
 	<label for="type-select">{label}</label>
 	<div class="custom-select">
-		<select name="type" id="type-select" class="is-hidden" >
+		<select name="type" id="type-select" class="is-hidden"  >
 			{#each responseData as opt}
-				<option value={opt}>{opt}</option>
+				<option value={opt} on:change>{opt}</option>
 			{/each}
 		</select>
-		<div class="styled-select" on:click|preventDefault={showOptions}>
+		<div class="styled-select" on:click|preventDefault={showOptions} >
 			{selectedListOption || 'please select type'}
 		</div>
 		<ul class="options" class:is-hidden={!isActive}>

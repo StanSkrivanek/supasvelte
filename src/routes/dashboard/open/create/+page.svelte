@@ -5,6 +5,7 @@
 	// import { getData } from '$lib/utils/helpers.js';
 	// import { dbTableOpt } from '$lib/stores/store.js';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
+
 	// export let data;
 
 	let values = {
@@ -24,26 +25,65 @@
 		isOpen: false
 	};
 	async function handleSubmit() {
-		// save data in db table `courses`
-		await supabase.from('opencourses').insert({
-			course: values.course,
-			type: values.type,
-			venue: values.venue,
-			group: values.groupNo, // 1, 2,
-			weekday: values.weekday, // Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-			date_in: values.date_in, // 2023-09-01
-			date_end: values.date_end, // 2023-10-01
-			time_in: values.time_in, // 10:00AM
-			time_end: values.time_end, // 10:00AM
-			price: values.price, // 10.00
-			attachment: values.formAttachment, // x.pdf, x.docx etc.
-			apply_open: values.applyWillOpen, // 2023-06-01
-			apply_close: values.applyWillClose, // 2023-09-01
-			is_open: values.isOpen // true, false
+		getType().then( async (type) => {
+			// save data in db table `opencourses`
+			await supabase
+				.from('opencourses')
+				.insert({
+					course: values.course,
+					type: type,
+					venue: values.venue,
+					group: values.groupNo,
+					weekday: values.weekday,
+					date_in: values.date_in,
+					date_end: values.date_end,
+					time_in: values.time_in,
+					time_end: values.time_end,
+					price: values.price,
+					attachment: values.formAttachment,
+					apply_open: values.applyWillOpen,
+					apply_close: values.applyWillClose,
+					is_open: values.isOpen
+				})
+				// .eq('id', elmId)
+				.then((res) => {
+					if (res.error) {
+						console.log(res.error);
+					} else {
+						goto('/dashboard/open');
+					}
+				});
 		});
-		goto('/dashboard/open');
+
 	}
 
+	async function getType() {
+		let courseTitle = values.course;
+		// let { data, error } = await supabase
+		// 	.from('courses')
+		// 	.select('type')
+		// 	.match({ title: courseTitle });
+		let { data, error } = await supabase.from('courses').select('type').eq('title', courseTitle);
+		if (error) console.log('error', error);
+		let type = data[0].type;
+
+		return values.type = type;
+	}
+	// let { data, error } = await supabase.from('courses').select('title, type');
+	// .distinct();
+
+	// 	console.log('🚀 ~ file: +page.svelte ~ line 52 ~ getType ~ data', data);
+	// 	if (error) console.log('error', error);
+	// 	else return data;
+	// }
+	// getType().then((data) => {
+	// 	// console.log("🚀 ~ file: +page.svelte ~ line 57 ~ getType ~ data", data.type)
+	// 	values.type = data[0].type
+	// 	// assign data to `dbTableOpt` store
+	// 	// responseData = $dbTableOpt = data.map((item) => item[tb_col]);
+	// 	// console.log("🚀 ~ file: SelectFromDb.svelte ~ line 26 ~ getDbTableData ~ responseData", responseData)
+	// 	// console.log('🚀 ~ file: +page.svelte ~ line 62 ~ getType ~ data', data);
+	// });
 	// 	async function getDbTableData() {
 
 	// 		let { data, error } = await supabase.from(db_table).select('*');
@@ -74,7 +114,7 @@
 
 <article>
 	<div class="dash-header">
-		<h1>Open New Course</h1>
+		<h1>New Open Course</h1>
 	</div>
 	<section>
 		<form on:submit|preventDefault={handleSubmit} action="" id="open-course" method="POST">
@@ -182,7 +222,6 @@
 					<SwitchRoundy label={'Show on website'} on:click={isActive} />
 				</div>
 			</div>
-
 			<div class="btns__c">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">save</button>
@@ -196,9 +235,9 @@
 	section {
 		padding: 1rem;
 	}
-		select{
-			height: 2rem;
-		}
+	select {
+		height: 2rem;
+	}
 	.form-2col-section {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -218,6 +257,5 @@
 		.form-select__w {
 			margin-bottom: 0.5rem;
 		}
-	
 	}
 </style>
