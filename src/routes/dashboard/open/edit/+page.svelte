@@ -79,7 +79,7 @@
 		<form on:submit|preventDefault={handleSubmit} action="" id="open-course" method="POST">
 			<!-- <form on:submit|preventDefault={handleSubmit} action="dashboard/open" method="POST"> -->
 			<!-- <form on:submit|preventDefault={handleSubmit} method="POST"> -->
-			<div class="form-select">
+			<div class="form-2col-section">
 				<SelectFromDb
 					label="Course"
 					db_table={'courses'}
@@ -193,12 +193,15 @@
 </article>
 
 <style>
-	section{
+	section {
 		padding: 1rem;
 	}
+		select{
+			height: 2rem;
+		}
 	.form-2col-section {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 		grid-gap: 1rem;
 	}
 	.form-select__w {
@@ -206,9 +209,15 @@
 		flex-direction: column;
 		margin-bottom: 1rem;
 	}
-	.form-select {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-gap: 1rem;
+	/* media query */
+	@media (max-width: 768px) {
+		.form-2col-section {
+			grid-template-columns: 1fr;
+			grid-gap: 0;
+		}
+		.form-select__w {
+			margin-bottom: 0.5rem;
+		}
+	
 	}
 </style>
