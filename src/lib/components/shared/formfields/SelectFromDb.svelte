@@ -165,7 +165,7 @@
 		border-style: solid;
 		border-width: var(--size) var(--size) 0 var(--size);
 		border-color: #fff transparent transparent transparent;
-		top: 55%;
+		top: 60%;
 	}
 
 	.custom-arrow::after {
@@ -174,7 +174,7 @@
 		border-width: var(--size) var(--size) 0 var(--size);
 		border-color: #fff transparent transparent transparent;
 		transform: rotate(180deg);
-		top: 35%;
+		top: 30%;
 	}
 
 	.is-hidden {
