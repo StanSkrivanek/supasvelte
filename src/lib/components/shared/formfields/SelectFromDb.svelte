@@ -4,11 +4,14 @@
 	// DB
 	export let db_table = '';
 	export let tb_col = '';
+
+
+	
 	export let label = '';
 	let responseData = [];
 	// SELECT
 	export let selectedListOption = '';
-	// export let selectedOpt = ""
+
 
 	let isActive = false;
 
@@ -23,6 +26,8 @@
 	getDbTableData(db_table).then((data) => {
 		// assign data to `dbTableOpt` store
 		responseData = $dbTableOpt = data.map((item) => item[tb_col]);
+		// console.log("🚀 ~ file: SelectFromDb.svelte ~ line 26 ~ getDbTableData ~ responseData", responseData)
+		
 	});
 
 	// SELECT
@@ -54,10 +59,10 @@
 	}
 </script>
 
-<div class="form-select__w">
+<div class="form-select__w" >
 	<label for="type-select">{label}</label>
 	<div class="custom-select">
-		<select name="type" id="type-select" class="is-hidden">
+		<select name="type" id="type-select" class="is-hidden" >
 			{#each responseData as opt}
 				<option value={opt}>{opt}</option>
 			{/each}
