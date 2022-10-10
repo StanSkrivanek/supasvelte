@@ -11,9 +11,9 @@
 	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
-	console.log('🚀 ~ file: +page.svelte ~ line 13 ~ data', data);
+
 	let objAry = getData(data);
-	// let sorted = sortById(objAry, 'asc');
+	let sorted = sortById(objAry, 'asc');
 	let showModal = false;
 	let cId = 0;
 	let target = null;
@@ -40,19 +40,17 @@
 		localStorage.setItem('itemData', JSON.stringify($itemData));
 		goto('/dashboard/open/edit');
 	}
-	// sort opencourses by ID
-	// function sortById() {
-	// 	sorted = sortById(objAry, 'asc');
-	// }
 
 	// FOR SEARCH
 	let searchTerm = '';
-	// let filteredItems = [];
-	// function filterItems() {
-	// 	return (filteredItems = sorted.filter((item) => {
-	// 		return item.name.toLowerCase().includes(searchTerm.toLowerCase());
-	// 	}));
-	// }
+	let filteredItems = [];
+	function filterItems() {
+		return (filteredItems = sorted.filter((item) => {
+			console.log(item.course);
+
+			return item.course.toLowerCase().includes(searchTerm.toLowerCase());
+		}));
+	}
 </script>
 
 {#if showModal}
@@ -74,7 +72,7 @@
 	</div>
 	<section class="dsh-page-header">
 		<div class="search-filter">
-			<!-- <Search bind:searchTerm on:input={filterItems} /> -->
+			<Search bind:searchTerm on:input={filterItems} />
 		</div>
 		<div class="form-btn--add">
 			<a href="/dashboard/open/create">
@@ -85,40 +83,48 @@
 			</a>
 		</div>
 	</section>
-	<section class="courses-db-list">
-		<!-- DESTRUCTURING DOESNT WORK - WHY ??? -->
-		<!-- {#each objAry as { id, course, type, venue, group, weekday, date_in, time_in, apply_open, is_open }}
-			<OpenCoursePrev
-				{id}
-				{course}
-				{type}
-				{venue}
-				{group}
-				{weekday}
-				{date_in}
-				{time_in}
-				{apply_open}
-				{is_open}
-				on:edit={() => findItemById(id)}
-				on:click={openDeleteConfirmModal}
-			/>
-		{/each} -->
-		{#each objAry as item (item.id)}
-			<OpenCoursePrev
-				id={item.id}
-				course={item.course}
-				type={item.type}
-				venue={item.venue}
-				group={item.group}
-				weekday={item.weekday}
-				date_in={item.date_in}
-				time_in={item.time_in}
-				apply_open={item.apply_open}
-				is_open={item.is_open}
-				on:edit={() => findItemById(item.id)}
-				on:click={openDeleteConfirmModal}
-			/>
-		{/each}
+	<section class="main">
+		<div class="db-list">
+			{#if searchTerm && filteredItems.length === 0}
+				<div class="no-results__w">
+					<p>No results found</p>
+				</div>
+			{:else if filteredItems.length > 0}
+				{#each filteredItems as item (item.id)}
+					<OpenCoursePrev
+						id={item.id}
+						course={item.course}
+						type={item.type}
+						venue={item.venue}
+						group={item.group}
+						weekday={item.weekday}
+						date_in={item.date_in}
+						time_in={item.time_in}
+						apply_open={item.apply_open}
+						is_open={item.is_open}
+						on:edit={() => findItemById(item.id)}
+						on:click={openDeleteConfirmModal}
+					/>
+				{/each}
+			{:else}
+				{#each sorted as item (item.id)}
+					<OpenCoursePrev
+						id={item.id}
+						course={item.course}
+						type={item.type}
+						venue={item.venue}
+						group={item.group}
+						weekday={item.weekday}
+						date_in={item.date_in}
+						time_in={item.time_in}
+						apply_open={item.apply_open}
+						is_open={item.is_open}
+						on:edit={() => findItemById(item.id)}
+						on:click={openDeleteConfirmModal}
+					/>
+				{/each}
+			{/if}
+		</div>
 	</section>
 </article>
 
@@ -170,16 +176,11 @@
 		padding: 0.25rem;
 		border-radius: 50%;
 	}
-	.courses-db-list {
+	.db-list {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-
-		/* align-items: center; */
-		gap: 1rem;
-		/* border: #ccc 1px solid; */
-		/* padding: 1rem; */
-		/* border-radius: 0.25rem; */
-		/* margin-bottom: 0.25rem; */
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		grid-gap: 1rem;
+		min-width: 100%;
 	}
 	/* .danger {
 		background-color: var(--col-danger);

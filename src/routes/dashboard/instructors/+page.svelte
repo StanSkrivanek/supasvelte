@@ -11,6 +11,7 @@
 	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
+
 	let objAry = getData(data);
 	let sorted = sortById(objAry, 'asc');
 	let showModal = false;
@@ -24,10 +25,6 @@
 	function openDeleteConfirmModal(e) {
 		toggleModal();
 		itemTarget = e.target.closest('.db-item');
-		console.log(
-			'🚀 ~ file: +page.svelte ~ line 28 ~ openDeleteConfirmModal ~ itemTarget',
-			itemTarget
-		);
 		cId = itemTarget.id;
 	}
 
