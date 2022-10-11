@@ -73,39 +73,13 @@
 
 	async function getType() {
 		let courseTitle = values.course;
-		// let { data, error } = await supabase
-		// 	.from('courses')
-		// 	.select('type')
-		// 	.match({ title: courseTitle });
+
 		let { data, error } = await supabase.from('courses').select('type').eq('title', courseTitle);
 		if (error) console.log('error', error);
 		let type = data[0].type;
-
 		return (values.type = type);
 	}
-	// async function handleSubmit() {
-	// 	// save data in db table `opencourses`
-	// 	await supabase
-	// 		.from('opencourses')
-	// 		.update({
-	// 			course: values.course,
-	// 			type: values.type,
-	// 			venue: values.venue,
-	// 			group: values.groupNo,
-	// 			weekday: values.weekday,
-	// 			date_in: values.date_in,
-	// 			date_end: values.date_end,
-	// 			time_in: values.time_in,
-	// 			time_end: values.time_end,
-	// 			price: values.price,
-	// 			attachment: values.formAttachment,
-	// 			apply_open: values.applyWillOpen,
-	// 			apply_close: values.applyWillClose,
-	// 			is_open: values.isOpen
-	// 		})
-	// 		.eq('id', elmId);
-	// 	goto('/dashboard/open');
-	// }
+
 	function isActive() {
 		values.isOpen = !values.isOpen;
 	}

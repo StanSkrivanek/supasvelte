@@ -59,50 +59,12 @@
 
 	async function getType() {
 		let courseTitle = values.course;
-		// let { data, error } = await supabase
-		// 	.from('courses')
-		// 	.select('type')
-		// 	.match({ title: courseTitle });
 		let { data, error } = await supabase.from('courses').select('type').eq('title', courseTitle);
 		if (error) console.log('error', error);
 		let type = data[0].type;
 
 		return values.type = type;
 	}
-	// let { data, error } = await supabase.from('courses').select('title, type');
-	// .distinct();
-
-	// 	console.log('🚀 ~ file: +page.svelte ~ line 52 ~ getType ~ data', data);
-	// 	if (error) console.log('error', error);
-	// 	else return data;
-	// }
-	// getType().then((data) => {
-	// 	// console.log("🚀 ~ file: +page.svelte ~ line 57 ~ getType ~ data", data.type)
-	// 	values.type = data[0].type
-	// 	// assign data to `dbTableOpt` store
-	// 	// responseData = $dbTableOpt = data.map((item) => item[tb_col]);
-	// 	// console.log("🚀 ~ file: SelectFromDb.svelte ~ line 26 ~ getDbTableData ~ responseData", responseData)
-	// 	// console.log('🚀 ~ file: +page.svelte ~ line 62 ~ getType ~ data', data);
-	// });
-	// 	async function getDbTableData() {
-
-	// 		let { data, error } = await supabase.from(db_table).select('*');
-	// 		if (error) console.log('error', error);
-	// 		return await data;
-	// 	}
-	// // get course type from db
-	// 	getDbTableData().then((data) => {
-	// 		// assign data to `dbTableOpt` store
-	// 		let crs_type = data.map((item) => {
-	// 			console.log('item: ', item.type);
-
-	// 			return {
-	// 				value: item.id,
-	// 				label: item.title
-	// 			};
-	// 		});
-	// 		responseData = $dbTableOpt = data.map((item) => item[tb_col]);
-	// 	});
 
 	function isActive() {
 		values.isOpen = !values.isOpen;

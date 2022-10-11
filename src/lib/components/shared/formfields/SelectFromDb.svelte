@@ -24,7 +24,7 @@
 	getDbTableData(db_table).then((data) => {
 		// assign data to `dbTableOpt` store
 		responseData = $dbTableOpt = data.map((item) => item[tb_col]);
-		// console.log("🚀 ~ file: SelectFromDb.svelte ~ line 26 ~ getDbTableData ~ responseData", responseData)
+
 		
 	});
 
@@ -53,7 +53,6 @@
 				opt.selected = true;
 			}
 		});
-		// console.log('originOpts: ', selectedListOption);
 	}
 </script>
 
@@ -77,14 +76,6 @@
 	</div>
 </div>
 
-<!-- TEST UPDATE ORIGIN SELECT OPTION -->
-
-<!-- <select name="type" id="type-select" class="">
-	<option value="hide" disabled selected hidden>Choose here</option>
-	{#each responseData as opt}
-		<option value={opt}>{opt}</option>
-	{/each}
-</select> -->
 <style>
 	*,
 	*::before,
@@ -106,7 +97,6 @@
 		font-size: inherit;
 		cursor: inherit;
 		line-height: inherit;
-		/* outline: none; */
 	}
 
 	select {
@@ -119,15 +109,11 @@
 		color: white;
 	}
 	.form-select__w {
-		/* display: flex;
-		flex-direction: column; */
 			margin-bottom: 1rem;
 	}
 	.custom-select {
 		position: relative;
 		display: block;
-		/* width: 50%; */
-	
 		margin-top: 0.5rem;
 	}
 
