@@ -4,6 +4,7 @@ export function sortById(objAry, order) {
 		return a.id - b.id;
 	});
 }
+// delete `getData` after refactoring
 export function getData(data) {
 	for (let item in data) {
 		return data[item];

@@ -11,8 +11,10 @@
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 
 	export let data;
-	let objAry = getData(data);
-	let sorted = sortById(objAry, 'asc');
+	
+	let {venues} = data;
+
+	let sorted = sortById(venues, 'asc');
 	let showModal = false;
 	let cId = 0;
 	let itemTarget = null;
@@ -81,6 +83,7 @@
 	</section>
 	<section class="main">
 		<div class="db-list">
+
 			{#if searchTerm && filteredItems.length === 0}
 				<div class="no-results__w">
 					<p>No results found</p>
@@ -163,5 +166,4 @@
 		grid-template-rows: auto;
 		grid-gap: 1rem;
 	}
-
 </style>

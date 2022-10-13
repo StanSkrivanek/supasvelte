@@ -1,20 +1,20 @@
-<script>
+<!-- <script>
 	// export let data;
 
 	// let venues_details;
 	// Object.keys(data).forEach((key) => {
 	// 	venues_details = data[key];
 	// });
-</script>
+</script> -->
 
-<svelte:head>
+<!-- <svelte:head> -->
 	<!-- <link rel="stylesheet" href="/global.css" /> -->
-</svelte:head>
-
+<!-- </svelte:head> -->
+<!-- 
 <article>
 
 
-</article>
+</article> -->
 
 <!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
 
