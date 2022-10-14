@@ -1,21 +1,24 @@
 <script>
-
+		import { goto } from '$app/navigation';
+	/** @type {import('./$types').PageData} */
+	export let data;
+	let { contact } = data;
 
 </script>
 
 <section>
-
-	<form method="POST" action="?/add">
+	<form method="POST" >
 		<div class="form-info">
 			<div class="form-contact">
 				<label for="name">Contact Name</label>
-				<input type="text" name="name" id="name" placeholder="Full name" />
+				<input type="text" name="name" id="name" placeholder="Full name" value={contact[0].name || ""} />
 				<label for="email">Email</label>
-				<input type="email" name="email" id="email" placeholder="joe.doe@gmail.com" />
+				<input type="email" name="email" id="email" placeholder="joe.doe@gmail.com" value={contact[0].email || ""}/>
 				<label for="phone">Phone</label>
-				<input type="phone" name="phone" id="phone" placeholder="086 123 4567" />
+				<input type="phone" name="phone" id="phone" placeholder="086 123 4567" value={contact[0].phone || ""}/>
 				<label for="type">Type</label>
-				<input type="type" name="type" id="type" placeholder="personal" />
+				<input type="type" name="type" id="type" placeholder="personal" value={contact[0].type || ""}/>
+				<input type="hidden" hidden name="itemId" value={contact[0].id}>
 			</div>
 		</div>
 

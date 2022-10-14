@@ -1,8 +1,10 @@
 <script>
-
-
+	/** @type {import('./$types').PageData} */
+	// export let data;
+	// console.log("🚀 ~ file: +page.svelte ~ line 4 ~ data", data)
+	// export let form;
+	// console.log("🚀 ~ file: +page.svelte ~ line 5 ~ form", form)
 </script>
-
 <section>
 
 	<form method="POST" action="?/add">
