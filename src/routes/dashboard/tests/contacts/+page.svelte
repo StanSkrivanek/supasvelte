@@ -1,10 +1,9 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/supabase/supabaseClient';
-	import { getData } from '$lib/utils/helpers.js';
-	import { itemData } from '$lib/stores/store.js';
+	// import { supabase } from '$lib/supabase/supabaseClient';
+	// import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
-	import TrainerCard from '$lib/components/cards/TrainerCard.svelte';
+	// import TrainerCard from '$lib/components/cards/TrainerCard.svelte';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 	import Search from '$lib/components/shared/formfields/Search.svelte';
@@ -15,11 +14,11 @@
 
 	let { contacts } = data;
 
-	let objAry = getData(data);
-	let sorted = sortById(objAry, 'asc');
+	let sorted = sortById(contacts, 'asc');
+	console.log("🚀 ~ file: +page.svelte ~ line 18 ~ sorted", sorted)
+
 	let showModal = false;
-	// let cId = 0;
-	// let itemTarget = null;
+
 
 	function toggleModal() {
 		showModal = !showModal;
@@ -67,16 +66,18 @@
 
 	// FOR SEARCH
 	let searchTerm = '';
+	// $: console.log("🚀 ~ file: +page.svelte ~ line 69 ~ searchTerm", searchTerm)
 	let filteredItems = [];
-	// function filterItems() {
-	// 	return (filteredItems = sorted.filter((item) => {
-	// 		return item.name.toLowerCase().includes(searchTerm.toLowerCase());
-	// 	}));
-	// }
+	function filterItems() {
+		return (filteredItems = contacts.filter((item) => {		
+			return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+		}));
+	}
 	function redirect(e) {
 		const id = e.target.id;
-		console.log('🚀 ~ file: +page.svelte ~ line 79 ~ redirect ~ id', id);
-		// localStorage.setItem('itemData', JSON.stringify(id));
+		// const contactName = e.target.closest(".card").querySelector("h3").dataset.name;
+		// const slug = contactName.split(" ").join("-");
+		// goto(`/dashboard/tests/contacts/${slug}`);
 		goto(`/dashboard/tests/contacts/${id}`);
 	}
 </script>
@@ -89,7 +90,6 @@
 			}}
 			on:delete={() => {
 				toggleModal();
-				// deleteItemAndImg();
 			}}
 		/>
 	</Modal>
@@ -100,7 +100,7 @@
 	</div>
 	<section class="dsh-page-header">
 		<div class="search-filter">
-			<!-- <Search bind:searchTerm on:input={filterItems} /> -->
+			<Search bind:searchTerm on:input={filterItems} />
 		</div>
 		<div class="form-btn--add">
 			<a href="/dashboard/tests/contacts/create">
@@ -113,11 +113,11 @@
 	</section>
 	<section>
 		<div class="grid">
-			{#each contacts as { id, name, email, phone, type }}
+			{#each sorted as { id, name, email, phone, type,order_num}}
 				<!-- content here -->
 				<div class="card">
-					<p>{id}</p>
-					<h3>{name || ''}</h3>
+					<p>{order_num}</p>
+					<h3 data-name={name}>{name || ''}</h3>
 					<p>{email || ''}</p>
 					<p>{phone || ''}</p>
 					<p>{type || ''}</p>

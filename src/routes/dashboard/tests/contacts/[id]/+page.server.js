@@ -3,8 +3,9 @@ import { supabase } from '$lib/supabase/supabaseClient';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-  default: async ({ request }) => {
+  default: async ({ request}) => {
     const fd = await request.formData();
+
 
     const {itemId, name, email, phone, type } = Object.fromEntries([...fd]);
 
