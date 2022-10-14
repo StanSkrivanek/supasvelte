@@ -1,19 +1,18 @@
+import { supabase } from '$lib/supabase/supabaseClient';
+
 /** @type {import('./$types').Actions} */
-// export const actions = {
-// 	default: async ({ request }) => {
-// 		const data = await request.formData();
-// 		const person = {
-// 			name: data.get('name'),
-// 			email: data.get('email'),
-// 			phone: data.get('phone'),
-// 			type: data.get('type')
-// 		};
-// 		console.log("🚀 ~ file: +page.server.js ~ line 11 ~ default: ~ person", person)
-// 	},
+export const actions = {
+	add: async ({ request }) => {
+		const fd = await request.formData();
 
+		// console.log('🚀 ~ file: +page.server.js ~ line 5 ~ default: ~ data', [...fd]);
+		const { name, email, phone, type } = Object.fromEntries([...fd]);
 
-// };
+		const { error } = await supabase
+			.from('contacts')
+			.insert({ name: name, email: email, phone: phone, type: type });
 
-
-
-
+		if (error) return { status: 500, body: { error: error.message } };
+		return { success: true };
+	}
+};

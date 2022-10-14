@@ -1,48 +1,13 @@
 <script>
-		import { supabase } from '$lib/supabase/supabaseClient';
-  // import { invalidateAll, goto } from '$app/navigation';
-  // import { applyAction } from '$app/forms';
-  // /** @type {import('./$types').ActionData} */
-  // export let form;
-  // console.log("🚀 ~ file: +page.svelte ~ line 6 ~ form", form)
-  // /** @type {any} */
-  // let error;
+	import { supabase } from '$lib/supabase/supabaseClient';
+	import { invalidateAll, goto } from '$app/navigation';
 
-  async function handleSubmit(event) {
-    const data = new FormData(this);
-		const res = await fetch('/api/contacts', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				name: data.get('name'),
-				email: data.get('email'),
-				phone: data.get('phone'),
-				type: data.get('type')
-			})
-		});
-
-		if (res.error) {
-		  error = res.error;
-		} else {
-		  // invalidateAll();
-		  // goto('/dashboard/courses');
-		}
-	}
- 
-
-  //   if (result.type === 'success') {
-  //     // re-run all `load` functions, following the successful update
-  //     await invalidateAll();
-  //   }
-
-  //   applyAction(result);
-  
 </script>
 
 <section>
-	<form method="POST" on:submit|preventDefault={handleSubmit}>
+	<!-- <form method="POST" on:submit|preventDefault={handleSubmit}> -->
+	<form method="POST" action="?/add">
+	<!-- <form method="POST"> -->
 		<div class="form-info">
 			<div class="form-contact">
 				<label for="name">Contact Name</label>

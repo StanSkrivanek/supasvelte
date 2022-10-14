@@ -8,27 +8,32 @@ export const GET = async () => {
   // 	return { status: 401, body: { error: 'Unauthorized' } };
 
   const { data, error } = await supabase.from('contacts').select('*');
+  
   if (error) return { status: 500, body: { error: error.message } };
   return new Response(JSON.stringify(data), { status: 200 });
 }
 
-// export const POST = async (request) => {
-//   console.log("🚀 ~ file: +server.js ~ line 16 ~ POST ~ request", request)
-//   const data = await request.json();
-//   console.log("🚀 ~ file: +server.js ~ line 17 ~ POST ~ data", data)
-  
-//   // const { error } = await supabase.from('contacts').insert([data]);
-//   // if (error) return { status: 500, body: { error: error.message } };
-//   // return new Response(JSON.stringify(data), { status: 200 });
-// }
-
-// set post request to create a new contact
 export const POST = async ({request}) => {
-  // console.log("🚀 ~ file: +server.js ~ line 27 ~ POST ~ request", request)
+
   const data = await request.json();
   // console.log("🚀 ~ file: +server.js ~ line 28 ~ POST ~ data", data)
   
   const { error } = await supabase.from('contacts').insert({name: data.name, email: data.email, phone: data.phone, type: data.type}); 
+
   if (error) return { status: 500, body: { error: error.message } };
   return new Response({ message: 'success' }, { status: 200 });
 };
+
+export const PATCH = async ({request}) => {
+  const data = await request.json();
+  const { error } = await supabase.from('contacts').update({name: data.name, email: data.email, phone: data.phone, type: data.type}).eq('id', data.id); 
+  if (error) return { status: 500, body: { error: error.message } };
+  return new Response({ message: 'success' }, { status: 200 });
+}
+
+export const DELETE = async ({request}) => {
+  const data = await request.json();
+  const { error } = await supabase.from('contacts').delete().eq('id', data.id); 
+  if (error) return { status: 500, body: { error: error.message } };
+  return new Response({ message: 'success' }, { status: 200 });
+}
