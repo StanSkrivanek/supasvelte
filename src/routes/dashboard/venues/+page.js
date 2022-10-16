@@ -6,7 +6,7 @@ export const load = ({ fetch }) => {
 		const res = await fetch('/api/venues');
 		const data = await res.json();
 
-		// console.log('🚀 ~ file: +page.js ~ line 5 ~ fetchVenues ~ venues', data);
+		console.log('🚀 ~ file: dashboard/venues/+page.js ~ line 5 ~ fetchVenues ~ venues', data);
 		return data;
 	};
 	return {

@@ -10,74 +10,37 @@
 	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
-	// export let form;
+
+	// Fetch: data -> contacts/+page.js -> api/contacts.js
 
 	let { contacts } = data;
 
 	let sorted = sortById(contacts, 'asc');
-	console.log("🚀 ~ file: +page.svelte ~ line 18 ~ sorted", sorted)
+	console.log('🚀 ~ file: +page.svelte ~ line 18 ~ sorted', sorted);
 
 	let showModal = false;
-
 
 	function toggleModal() {
 		showModal = !showModal;
 	}
 	// find course id to be late used for delete from modal
-	// function openDeleteConfirmModal(e) {
-	// 	toggleModal();
-	// 	itemTarget = e.target.closest('.db-item');
-	// 	cId = itemTarget.id;
-	// }
-
-	// Delete Instructor and Img from DB
-	// async function deleteItemAndImg() {
-	// 	const { data } = await supabase.from('instructors').select('avatar_url').eq('id', cId);
-	// 	const fileName = data[0].avatar_url.split('/').pop();
-	// 	const { error: err } = await supabase.storage
-	// 		.from('images')
-	// 		.remove([`profile_img/trainer/${fileName}`]);
-	// 	if (err) {
-	// 		console.log('Error deleting Image: ', err.message);
-	// 	} else {
-	// 		console.log('Image deleted successfully!');
-	// 	}
-	// 	const { error: e } = await supabase.from('instructors').delete().eq('id', cId);
-	// 	if (e) {
-	// 		console.log('deleting Instructor record: err', e.message);
-	// 	} else {
-	// 		console.log('Instructor deleted successfully!');
-	// 	}
-	// 	// remove itemData from localStorage to prevent stale data
-	// 	if (localStorage.getItem('itemData')) {
-	// 		localStorage.removeItem('itemData');
-	// 	}
-	// 	itemTarget.remove();
-	// 	// TODO: add toast message to confirm delete
-	// }
-
-	// async function findItemById(id) {
-	// 	$itemData = await supabase.from('instructors').select('*').match({ id: id });
-	// 	// store course RTE data as string in localStorage
-	// 	localStorage.setItem('itemData', JSON.stringify($itemData));
-	// 	// redirect to update page
-	// 	goto('/dashboard/tests/contacts/edit');
-	// }
+	function openDeleteConfirmModal(e) {
+		toggleModal();
+		itemTarget = e.target.closest('.db-item');
+		cId = itemTarget.id;
+	}
 
 	// FOR SEARCH
 	let searchTerm = '';
 	// $: console.log("🚀 ~ file: +page.svelte ~ line 69 ~ searchTerm", searchTerm)
 	let filteredItems = [];
 	function filterItems() {
-		return (filteredItems = contacts.filter((item) => {		
+		return (filteredItems = contacts.filter((item) => {
 			return item.name.toLowerCase().includes(searchTerm.toLowerCase());
 		}));
 	}
 	function redirect(e) {
 		const id = e.target.id;
-		// const contactName = e.target.closest(".card").querySelector("h3").dataset.name;
-		// const slug = contactName.split(" ").join("-");
-		// goto(`/dashboard/tests/contacts/${slug}`);
 		goto(`/dashboard/tests/contacts/${id}`);
 	}
 </script>
@@ -113,11 +76,11 @@
 	</section>
 	<section>
 		<div class="grid">
-			{#each sorted as { id, name, email, phone, type,order_num}}
+			{#each sorted as { id, name, email, phone, type, order_num }}
 				<!-- content here -->
 				<div class="card">
 					<p>{order_num}</p>
-					<h3 data-name={name}>{name || ''}</h3>
+					<h3>{name || ''}</h3>
 					<p>{email || ''}</p>
 					<p>{phone || ''}</p>
 					<p>{type || ''}</p>
@@ -127,7 +90,7 @@
 						<!-- <input type="hidden" name="itemId" value={id} id="db-item"/> -->
 						<button {id} class="info" on:click={(e) => redirect(e)}>edit</button>
 						<!-- </form> -->
-						<button class="danger">delete</button>
+						<button {id} class="danger" on:click={openDeleteConfirmModal}>delete</button>
 					</div>
 				</div>
 			{/each}
