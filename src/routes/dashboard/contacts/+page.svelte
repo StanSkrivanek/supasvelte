@@ -1,22 +1,22 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
-	// import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
-	// import TrainerCard from '$lib/components/cards/TrainerCard.svelte';
+	import { currentItemId } from '$lib/stores/store.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 	import Search from '$lib/components/shared/formfields/Search.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
-
-	// Fetch: data -> contacts/+page.js -> api/contacts.js
+	$: currentItemId;
+	// Fetch: data <- contacts/+page.js <-> api/contacts.js
 	let { contacts } = data;
 	let sorted = sortById(contacts, 'asc');
-
 	let showModal = false;
 	let itemToDelete = '';
+
+	// Functions
 	function toggleModal() {
 		showModal = !showModal;
 	}
@@ -28,7 +28,7 @@
 	async function deleteItem() {
 		await supabase.from('contacts').delete().eq('id', itemToDelete);
 		sorted = sorted.filter((item) => item.id !== itemToDelete);
-		goto('/dashboard/tests/contacts');
+		goto('/dashboard/contacts');
 	}
 	// FOR SEARCH
 	let searchTerm = '';
@@ -39,8 +39,12 @@
 		}));
 	}
 	function redirect(e) {
-		const item = e.target.closest('.db-item').dataset.id;
-		goto(`/dashboard/tests/contacts/${item}`);
+		$currentItemId = e.target.closest('.db-item').dataset.id;
+		localStorage.setItem('currentItemId', e.target.closest('.db-item').dataset.id);
+		// slugify name
+		const slug = e.target.closest('.db-item').dataset.slug.split(' ').join('-').toLowerCase();
+
+		goto(`/dashboard/contacts/${slug}`);
 	}
 </script>
 
@@ -74,7 +78,7 @@
 			<Search bind:searchTerm on:input={filterItems} />
 		</div>
 		<div class="form-btn--add">
-			<a href="/dashboard/tests/contacts/create">
+			<a href="/dashboard/contacts/create">
 				<p>Add New</p>
 				<div class="plus">
 					<Plus width={44} height={44} />
@@ -110,7 +114,7 @@
 			{:else}
 				{#each sorted as { id, name, email, phone, type, order_num }}
 					<!-- content here -->
-					<div class="card db-item" data-id={id}>
+					<div class="card db-item" data-id={id} data-slug={name}>
 						<p>{order_num}</p>
 
 						<h3>{name || ''}</h3>
@@ -121,9 +125,9 @@
 							<!-- <form method="POST"> -->
 							<!-- open form with prefilled data based on itemId -->
 							<!-- <input type="hidden" name="itemId" value={id} id="db-item"/> -->
-							<button {id} class="info" on:click={(e) => redirect(e)}>edit</button>
 							<!-- </form> -->
 							<button {id} class="danger" on:click={openDeleteConfirmModal}>delete</button>
+							<button {id} class="info" on:click={(e) => redirect(e)}>edit</button>
 						</div>
 					</div>
 				{/each}

@@ -1,16 +1,22 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
+	// import { enhance } from '$app/forms';
+	// export let action;
 </script>
 
 <div class="modal-body">
 	<div class="modal-head__w">
 		<h3>Are you sure?</h3>
-		<p>You are about to delete data from DB, this action cant be undone.</p>
+		<p>You are about to delete data from DB, this action can't be undone.</p>
 	</div>
 	<div class="buttons">
 		<button class="info" on:click={() => dispatch('cancel')}>Cancel</button>
 		<button class="danger" on:click={() => dispatch('delete')}>Delete</button>
+		<!-- <form method="POST" {action} use:enhance> -->
+		<!-- <button class="danger">Delete</button> -->
+		<!-- <button formaction={action} class="danger">Delete</button> -->
+		<!-- </form> -->
 	</div>
 </div>
 

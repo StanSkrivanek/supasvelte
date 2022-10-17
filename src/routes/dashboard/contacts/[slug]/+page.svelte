@@ -2,7 +2,9 @@
 	import { enhance } from '$app/forms';
 
 	export let data;
+	console.log("🚀 ~ file: +page.svelte ~ line 5 ~ data", data)
 	let { contact } = data;
+	// console.log("🚀 ~ file: +page.svelte ~ line 6 ~ contact", contact)
 </script>
 
 <section>

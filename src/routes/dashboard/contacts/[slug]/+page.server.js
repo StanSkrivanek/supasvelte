@@ -14,7 +14,7 @@ export const actions = {
 			.eq('id', itemId);
 
 		if (err) return { status: 500, body: { error: err.message } };
-		if (!err) throw redirect(307, '/dashboard/tests/contacts');
+		if (!err) throw redirect(307, '/dashboard/contacts');
 
 		return { success: true };
 	},
@@ -28,7 +28,7 @@ export const actions = {
 		const { error: err } = await supabase.from('contacts').delete().eq('id', itemId);
 
 		if (err) return { status: 500, body: { error: err.message } };
-		if (!err) throw redirect(307, '/dashboard/tests/contacts');
+		if (!err) throw redirect(307, '/dashboard/contacts');
 
 		return { success: true };
 	}
