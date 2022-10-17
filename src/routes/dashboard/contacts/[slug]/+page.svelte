@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
-
+	const courseDetailsData = JSON.parse(localStorage.getItem('currentItem')) || [];
+	console.log("🚀 ~ file: +page.svelte ~ line 16 ~ courseDetailsData", courseDetailsData)
 	export let data;
 	console.log("🚀 ~ file: +page.svelte ~ line 5 ~ data", data)
 	let { contact } = data;

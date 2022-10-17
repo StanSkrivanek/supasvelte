@@ -4,7 +4,7 @@
 
 	// get data from localStorage
 	const courseDetailsData = JSON.parse(localStorage.getItem('itemData')) || [];
-	console.log('🚀 ~ file: +page.svelte ~ line 7 ~ courseDetailsData', courseDetailsData);
+	// console.log('🚀 ~ file: +page.svelte ~ line 7 ~ courseDetailsData', courseDetailsData);
 	// assign data from localStorage
 	let dbRowData = courseDetailsData.data[0];
 	console.log('🚀 ~ file: +page.svelte ~ line 9 ~ dbRowData', dbRowData);

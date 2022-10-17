@@ -70,7 +70,7 @@
 				bind:value={values.title}
 				placeholder="Course title"
 			/>
-					<label for="title">Organization</label>
+			<label for="title">Organization</label>
 			<input
 				type="text"
 				name="organization"
@@ -83,7 +83,6 @@
 				tb_col={'course_type'}
 				bind:selectedListOption={values.type}
 			/>
-
 
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max320 characters)</span></label
@@ -115,14 +114,14 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 1rem ;
+		padding: 1rem;
 		background-color: #1b0e30;
 	}
 	.dash-header h1 {
 		color: #fff;
 	}
 	section {
-		padding: 1rem ;
+		padding: 1rem;
 	}
 	form {
 		display: flex;
@@ -130,9 +129,9 @@
 		justify-content: center;
 		max-width: 45rem;
 	}
-	 button:last-child {
-    margin-left: 0.5rem;
-  }
+	button:last-child {
+		margin-left: 0.5rem;
+	}
 	.form-btns__w {
 		text-align: right;
 	}

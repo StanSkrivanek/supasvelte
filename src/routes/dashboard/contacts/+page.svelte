@@ -11,6 +11,9 @@
 	export let data;
 	$: currentItemId;
 	// Fetch: data <- contacts/+page.js <-> api/contacts.js
+	// const courseDetailsData = JSON.parse(localStorage.getItem('currentItem')) || [];
+	// console.log("🚀 ~ file: +page.svelte ~ line 16 ~ courseDetailsData", courseDetailsData)
+
 	let { contacts } = data;
 	let sorted = sortById(contacts, 'asc');
 	let showModal = false;
@@ -41,6 +44,7 @@
 	function redirect(e) {
 		$currentItemId = e.target.closest('.db-item').dataset.id;
 		localStorage.setItem('currentItemId', e.target.closest('.db-item').dataset.id);
+
 		// slugify name
 		const slug = e.target.closest('.db-item').dataset.slug.split(' ').join('-').toLowerCase();
 
