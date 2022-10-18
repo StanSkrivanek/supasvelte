@@ -40,12 +40,8 @@
 	}
 	function redirect(e) {
 		const itemId = e.target.closest('.db-item').dataset.id;
-		// goto(`/dashboard/tests/contacts/${itemId}`);
-
 		localStorage.setItem('currentItemId', itemId);
-		const slug = e.target.closest('.db-item').dataset.name.split(' ').join('-').toLowerCase();
-
-		goto(`/dashboard/tests/contacts/${slug}`);
+		goto(`/dashboard/tests/contacts/edit`);
 	}
 </script>
 
@@ -114,12 +110,10 @@
 						<p>{phone || ''}</p>
 						<p>{type || ''}</p>
 						<div class="btns__c">
-							<!-- <form method="POST"> -->
-							<!-- open form with prefilled data based on itemId -->
-							<!-- <input type="hidden" name="itemId" value={id} id="db-item"/> -->
-							<button {id} class="info" on:click={(e) => redirect(e)}>edit</button>
-							<!-- </form> -->
-							<button {id} class="danger" on:click={openDeleteConfirmModal}>delete</button>
+
+							<button class="info" on:click={(e) => redirect(e)}>edit</button>
+
+							<button class="danger" on:click={openDeleteConfirmModal}>delete</button>
 						</div>
 					</div>
 				{/each}
