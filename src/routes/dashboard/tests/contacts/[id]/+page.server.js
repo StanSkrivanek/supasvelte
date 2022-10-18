@@ -20,8 +20,8 @@ export const actions = {
 	},
 	del: async ({ request }) => {
 		const fd = await request.formData();
-		console.log('🚀 ~ file: +page.server.js ~ line 23 ~ delete: ~ fd', [...fd]);
-		console.log('DELETE ITEM');
+		// console.log('🚀 ~ file: +page.server.js ~ line 23 ~ delete: ~ fd', [...fd]);
+		// console.log('DELETE ITEM');
 
 		const { itemId } = Object.fromEntries([...fd]);
 

@@ -1,8 +1,9 @@
 <script>
-		import { enhance } from '$app/forms';
+	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 </script>
-<section>
 
+<section>
 	<form method="POST" action="?/add" use:enhance>
 		<div class="form-info">
 			<div class="form-contact">
@@ -18,6 +19,9 @@
 		</div>
 
 		<div class="btns__c">
+			<button type="button" class="danger" on:click={() => goto('/dashboard/contacts')}
+				>cancel</button
+			>
 			<button class="info">Submit</button>
 		</div>
 	</form>

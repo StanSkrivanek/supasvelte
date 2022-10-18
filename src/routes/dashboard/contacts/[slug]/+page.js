@@ -8,7 +8,6 @@ export const load = ({ fetch }) => {
 		const res = await fetch('/api/contacts');
 		const data = await res.json();
 		let item = data.filter((contact) => contact.id === id);
-		localStorage.setItem('currentItem', JSON.stringify(item));
 		return item;
 	};
 	return {

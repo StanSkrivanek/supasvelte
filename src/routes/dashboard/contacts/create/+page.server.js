@@ -14,7 +14,7 @@ export const actions = {
 			.insert({ name: name, email: email, phone: phone, type: type });
 
 		if (err) return { status: 500, body: { error: err.message } };
-		throw redirect(307, '/dashboard/tests/contacts');
+		throw redirect(307, '/dashboard/contacts');
 		// return { success: true };
 	}
 };

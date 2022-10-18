@@ -42,11 +42,11 @@
 		}));
 	}
 	function redirect(e) {
-		$currentItemId = e.target.closest('.db-item').dataset.id;
+		// $currentItemId = e.target.closest('.db-item').dataset.id;
 		localStorage.setItem('currentItemId', e.target.closest('.db-item').dataset.id);
 
 		// slugify name
-		const slug = e.target.closest('.db-item').dataset.slug.split(' ').join('-').toLowerCase();
+		const slug = e.target.closest('.db-item').dataset.name.split(' ').join('-').toLowerCase();
 
 		goto(`/dashboard/contacts/${slug}`);
 	}
@@ -98,9 +98,8 @@
 				</div>
 			{:else if searchTerm && filteredItems.length > 0}
 				{#each filteredItems as { id, name, email, phone, type, order_num }}
-					<div class="card db-item" data-id={id}>
+					<div class="card db-item" data-id={id} data-name={name}>
 						<p>{order_num}</p>
-
 						<h3>{name || ''}</h3>
 						<p>{email || ''}</p>
 						<p>{phone || ''}</p>
@@ -109,16 +108,16 @@
 							<!-- <form method="POST"> -->
 							<!-- open form with prefilled data based on itemId -->
 							<!-- <input type="hidden" name="itemId" value={id} id="db-item"/> -->
-							<button {id} class="info" on:click={(e) => redirect(e)}>edit</button>
 							<!-- </form> -->
-							<button {id} class="danger" on:click={openDeleteConfirmModal}>delete</button>
+							<button class="info" on:click={(e) => redirect(e)}>edit</button>
+							<button class="danger" on:click={openDeleteConfirmModal}>delete</button>
 						</div>
 					</div>
 				{/each}
 			{:else}
 				{#each sorted as { id, name, email, phone, type, order_num }}
 					<!-- content here -->
-					<div class="card db-item" data-id={id} data-slug={name}>
+					<div class="card db-item" data-id={id} data-name={name}>
 						<p>{order_num}</p>
 
 						<h3>{name || ''}</h3>
@@ -126,12 +125,8 @@
 						<p>{phone || ''}</p>
 						<p>{type || ''}</p>
 						<div class="btns__c">
-							<!-- <form method="POST"> -->
-							<!-- open form with prefilled data based on itemId -->
-							<!-- <input type="hidden" name="itemId" value={id} id="db-item"/> -->
-							<!-- </form> -->
-							<button {id} class="danger" on:click={openDeleteConfirmModal}>delete</button>
-							<button {id} class="info" on:click={(e) => redirect(e)}>edit</button>
+							<button class="danger" on:click={openDeleteConfirmModal}>delete</button>
+							<button class="info" on:click={(e) => redirect(e)}>edit</button>
 						</div>
 					</div>
 				{/each}

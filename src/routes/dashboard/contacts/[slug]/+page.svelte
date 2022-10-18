@@ -1,11 +1,8 @@
 <script>
 	import { enhance } from '$app/forms';
-	const courseDetailsData = JSON.parse(localStorage.getItem('currentItem')) || [];
-	console.log("🚀 ~ file: +page.svelte ~ line 16 ~ courseDetailsData", courseDetailsData)
+	import { goto } from '$app/navigation';
 	export let data;
-	console.log("🚀 ~ file: +page.svelte ~ line 5 ~ data", data)
 	let { contact } = data;
-	// console.log("🚀 ~ file: +page.svelte ~ line 6 ~ contact", contact)
 </script>
 
 <section>
@@ -49,6 +46,9 @@
 		</div>
 
 		<div class="btns__c">
+			<button type="button" class="danger" on:click={() => goto('/dashboard/contacts')}
+				>cancel</button
+			>
 			<button class="info">Save</button>
 		</div>
 	</form>
