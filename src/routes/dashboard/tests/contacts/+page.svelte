@@ -39,12 +39,12 @@
 		}));
 	}
 	function redirect(e) {
-		// const item = e.target.closest('.db-item').dataset.id;
-		// goto(`/dashboard/tests/contacts/${item}`);
+		const itemId = e.target.closest('.db-item').dataset.id;
+		// goto(`/dashboard/tests/contacts/${itemId}`);
 
-		localStorage.setItem('currentItemId', e.target.closest('.db-item').dataset.id);
+		localStorage.setItem('currentItemId', itemId);
 		const slug = e.target.closest('.db-item').dataset.name.split(' ').join('-').toLowerCase();
-		
+
 		goto(`/dashboard/tests/contacts/${slug}`);
 	}
 </script>
@@ -61,14 +61,6 @@
 			}}
 		/>
 	</Modal>
-	<!-- <Modal on:cancel={toggleModal}>
-		<DeleteConfirm action="?/del"
-			on:cancel={() => {
-				toggleModal();
-			}}
-
-		/>
-	</Modal> -->
 {/if}
 <article>
 	<div class="dash-header">

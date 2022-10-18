@@ -1,14 +1,14 @@
-
+// prevent ERR 500 on page reload
+export const ssr = false;
 /** @type {import('./$types').PageLoad} */
-export const load = ({ fetch, params, page}) => {
-	console.log("🚀 ~ file: +page.js ~ line 3 ~ load ~ params", page)
-	const fetchContact = async () => {
 
+export const load = ({ fetch }) => {
+	const fetchContact = async () => {
+		let id = localStorage.getItem('currentItemId');
 		const res = await fetch('/api/contacts');
 		const data = await res.json();
-		let item = data.filter((contact) => contact.id === params.id);
-		console.log("🚀 ~ file: +page.js ~ line 10 ~ load ~ item", item);
-		
+		let item = data.filter((contact) => contact.id === id);
+	localStorage.removeItem('currentItemId');
 		return item;
 	};
 	return {

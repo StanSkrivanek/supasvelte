@@ -1,8 +1,9 @@
 <script>
 	import { enhance } from '$app/forms';
-
+	import { goto } from '$app/navigation';
 	export let data;
 	let { contact } = data;
+
 </script>
 
 <section>
@@ -41,11 +42,15 @@
 					placeholder="personal"
 					value={contact[0].type || ''}
 				/>
+				<!-- passing id as formData to actions -->
 				<input type="hidden" hidden name="itemId" value={contact[0].id} />
 			</div>
 		</div>
 
 		<div class="btns__c">
+			<button type="button" class="danger" on:click={() => goto('/dashboard/tests/contacts')}
+				>cancel</button
+			>
 			<button class="info">Save</button>
 		</div>
 	</form>
