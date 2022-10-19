@@ -23,7 +23,7 @@
 		<li><VenueIcn /><a href="/dashboard/venues">Venues</a></li>
 		<li><OrganizationIcn /><a href="/dashboard/organizations">Organizations</a></li>
 		<li><InstructorIcn /><a href="/dashboard/instructors">Instructors</a></li>
-		<li><InstructorIcn /><a href="/dashboard/tests/contacts">test/Contacts</a></li>
+		<!-- <li><InstructorIcn /><a href="/dashboard/tests/contacts">test/Contacts</a></li> -->
 		<li><InstructorIcn /><a href="/dashboard/contacts">Contacts</a></li>
 		<li class="nav-divider" />
 		<li><SettingsIcn /><a href="/dashboard/settings"> Page Settings</a></li>

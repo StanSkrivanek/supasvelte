@@ -42,9 +42,7 @@
 		}));
 	}
 	function redirect(e) {
-		// $currentItemId = e.target.closest('.db-item').dataset.id;
 		localStorage.setItem('currentItemId', e.target.closest('.db-item').dataset.id);
-
 		// slugify name
 		const slug = e.target.closest('.db-item').dataset.name.split(' ').join('-').toLowerCase();
 
