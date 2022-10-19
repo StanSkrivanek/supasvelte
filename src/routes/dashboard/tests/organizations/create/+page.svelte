@@ -1,7 +1,33 @@
 <script>
-	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-
+	import { supabase } from '$lib/supabase/supabaseClient';
+	let values = {
+		org_name: '',
+		adr_1: '',
+		adr_2: '',
+		city: '',
+		eircode: '',
+		contact: '',
+		phone: '',
+		email: '',
+		website: '',
+		info: ''
+	};
+	async function handleSubmit() {
+		await supabase.from('organizations').insert({
+			name: values.name,
+			adr_1: values.adr_1,
+			adr_2: values.adr_2,
+			city: values.city,
+			eircode: values.eircode,
+			contact: values.contact,
+			phone: values.phone,
+			email: values.email,
+			website: values.website,
+			info: values.info
+		});
+		goto('/dashboard/organizations');
+	}
 	function cancel() {
 		goto('/dashboard/organizations');
 	}
@@ -12,7 +38,7 @@
 		<h1>Organizations DB</h1>
 	</div>
 	<section>
-		<form method="POST" action="?/add" use:enhance>
+		<form on:submit|preventDefault={handleSubmit} method="POST">
 			<div class="f-fields__c">
 				<div class="col">
 					<label for="name">Organization <span><i>(required)</i></span></label>
@@ -21,38 +47,33 @@
 						name="name"
 						id="name"
 						placeholder="Organization name"
+						bind:value={values.name}
 					/>
-					<label for="adr-1">Street <span><i>(required)</i></span></label>
+					<label for="address-1">Street <span><i>(required)</i></span></label>
 					<input
 						type="text"
-						name="adr_1"
-						id="adr_1"
-
+						name="address-1"
+						id="adr-1"
 						placeholder="address 1"
+						bind:value={values.adr_1}
 					/>
-					<label for="adr_2">Place</label>
+					<label for="address-2">Place</label>
 					<input
 						type="text"
-						name="adr_2"
-						id="adr_2"
-
+						name="address-2"
+						id="adr-2"
 						placeholder="address 2"
+						bind:value={values.adr_2}
 					/>
 					<label for="city">City</label>
-					<input
-						type="text"
-						name="city"
-						id="city"
-
-						placeholder="city"
-					/>
+					<input type="text" name="city" id="city" placeholder="city" bind:value={values.city} />
 					<label for="eircode">EirCode</label>
 					<input
 						type="text"
 						name="eircode"
 						id="eircode"
-
 						placeholder="eircode"
+						bind:value={values.eircode}
 					/>
 				</div>
 				<div class="col">
@@ -61,32 +82,26 @@
 						type="text"
 						name="contact"
 						id="contact"
-
-						placeholder="contact person name"
+						placeholder="full name"
+						bind:value={values.contact}
 					/>
 					<label for="phone">Phone</label>
-					<input
-						type="tel"
-						name="phone"
-						id="phone"
-
-						placeholder="phone"
-					/>
+					<input type="tel" name="phone" id="phone" placeholder="phone" bind:value={values.phone} />
 					<label for="email">Email</label>
 					<input
 						type="email"
 						name="email"
 						id="email"
-
-						placeholder="orgzgmail.com"
+						placeholder="jon.doe@gmail.com"
+						bind:value={values.email}
 					/>
 					<label for="website">Website</label>
 					<input
 						type="text"
 						name="website"
 						id="website"
-
-						placeholder="organization.com"
+						placeholder="jon.doe@gmail.com"
+						bind:value={values.website}
 					/>
 				</div>
 			</div>
@@ -95,8 +110,8 @@
 				name="info"
 				id="info"
 				rows="20"
-
 				placeholder="Short overview"
+				bind:value={values.info}
 			/>
 			<div class="form-btns__w">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>

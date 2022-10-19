@@ -11,9 +11,9 @@
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 
 	export let data;
-	 let { orgs } = data;
-	// let objAry = getData(data);
-	let sorted = sortById(orgs, 'asc');
+	
+	let objAry = getData(data);
+	let sorted = sortById(objAry, 'asc');
 	let showModal = false;
 	let cId = 0;
 	let itemTarget = null;
@@ -39,13 +39,7 @@
 		localStorage.setItem('itemData', JSON.stringify($itemData));
 		goto('/dashboard/organizations/edit');
 	}
-	function redirect(id,name) {
-		localStorage.setItem('currentItemId', id);
-		// // slugify name
-		const slug = name.split(' ').join('-').toLowerCase();
 
-		goto(`/dashboard/organizations/${slug}`);
-	}
 	// FOR SEARCH
 	let searchTerm = '';
 	let filteredItems = [];
@@ -106,7 +100,7 @@
 						{email}
 						{website}
 						{info}
-						on:edit={() => redirect(id, name)}
+						on:edit={() => findItemById(id)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
@@ -124,7 +118,7 @@
 						{email}
 						{website}
 						{info}
-						on:edit={() => redirect(id,name)}
+						on:edit={() => findItemById(id)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}

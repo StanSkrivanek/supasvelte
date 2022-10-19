@@ -62,14 +62,7 @@
 			}}
 		/>
 	</Modal>
-	<!-- <Modal on:cancel={toggleModal}>
-		<DeleteConfirm action="?/del"
-			on:cancel={() => {
-				toggleModal();
-			}}
 
-		/>
-	</Modal> -->
 {/if}
 <article>
 	<div class="dash-header">

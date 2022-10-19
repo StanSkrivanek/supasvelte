@@ -1,6 +1,8 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
+	export let data;
+	let { org } = data;
 
 	function cancel() {
 		goto('/dashboard/organizations');
@@ -12,7 +14,7 @@
 		<h1>Organizations DB</h1>
 	</div>
 	<section>
-		<form method="POST" action="?/add" use:enhance>
+		<form method="POST" action="?/update" use:enhance>
 			<div class="f-fields__c">
 				<div class="col">
 					<label for="name">Organization <span><i>(required)</i></span></label>
@@ -20,22 +22,23 @@
 						type="text"
 						name="name"
 						id="name"
-						placeholder="Organization name"
+						value={org[0].name || ''}
+						placeholder="org name"
 					/>
 					<label for="adr-1">Street <span><i>(required)</i></span></label>
 					<input
 						type="text"
 						name="adr_1"
 						id="adr_1"
-
+						value={org[0].adr_1 || ''}
 						placeholder="address 1"
 					/>
-					<label for="adr_2">Place</label>
+					<label for="adr-2">Place</label>
 					<input
 						type="text"
 						name="adr_2"
 						id="adr_2"
-
+						value={org[0].adr_2 || ''}
 						placeholder="address 2"
 					/>
 					<label for="city">City</label>
@@ -43,7 +46,7 @@
 						type="text"
 						name="city"
 						id="city"
-
+						value={org[0].city || ''}
 						placeholder="city"
 					/>
 					<label for="eircode">EirCode</label>
@@ -51,7 +54,7 @@
 						type="text"
 						name="eircode"
 						id="eircode"
-
+						value={org[0].eircode || ''}
 						placeholder="eircode"
 					/>
 				</div>
@@ -61,7 +64,7 @@
 						type="text"
 						name="contact"
 						id="contact"
-
+						value={org[0].contact || ''}
 						placeholder="contact person name"
 					/>
 					<label for="phone">Phone</label>
@@ -69,7 +72,7 @@
 						type="tel"
 						name="phone"
 						id="phone"
-
+						value={org[0].phone || ''}
 						placeholder="phone"
 					/>
 					<label for="email">Email</label>
@@ -77,7 +80,7 @@
 						type="email"
 						name="email"
 						id="email"
-
+						value={org[0].email || ''}
 						placeholder="orgzgmail.com"
 					/>
 					<label for="website">Website</label>
@@ -85,19 +88,20 @@
 						type="text"
 						name="website"
 						id="website"
-
-						placeholder="organization.com"
+						value={org[0].website || ''}
+						placeholder="org.com"
 					/>
 				</div>
 			</div>
-			<label for="info">Organization Overview</label>
+			<label for="info">Overview</label>
 			<textarea
 				name="info"
 				id="info"
 				rows="20"
-
+				value={org[0].info || ''}
 				placeholder="Short overview"
 			/>
+					<input type="hidden" hidden name="id" value={org[0].id} />
 			<div class="form-btns__w">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">Save</button>
@@ -105,7 +109,6 @@
 		</form>
 	</section>
 </article>
-
 <style>
 	section {
 		padding: 1rem;
@@ -142,6 +145,7 @@
 	button:last-child {
 		margin-left: 0.5rem;
 	}
+
 	.f-fields__c {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

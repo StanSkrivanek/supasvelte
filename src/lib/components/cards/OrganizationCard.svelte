@@ -15,7 +15,7 @@
 	// export let info;
 </script>
 
-<div class="db-item" {id}>
+<div class="db-item" {id} {name}>
 	<p>{id}</p>
 	<h2>{name}</h2>
 	<div class="col dsb-venue--header">

@@ -1,4 +1,5 @@
 export function sortById(array, order) {
+	console.log("🚀 ~ file: helpers.js ~ line 2 ~ sortById ~ array", array)
 	return array.sort((a, b) => {
 		if (order === 'desc') return b.order_num - a.order_num;
 		return a.order_num - b.order_num;
