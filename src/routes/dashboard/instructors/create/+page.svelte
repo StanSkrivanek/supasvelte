@@ -4,6 +4,8 @@
 	import { supabase } from '$lib/supabase/supabaseClient';
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
+
+	
 	$: hasNoAvatar = $hasNoAvatarImg;
 
 	let avatarFile;
