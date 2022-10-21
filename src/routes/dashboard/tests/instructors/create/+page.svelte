@@ -4,19 +4,11 @@
 	import { supabase } from '$lib/supabase/supabaseClient';
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
+
+
 	$: hasNoAvatar = $hasNoAvatarImg;
 
-	// get data from localStorage
-	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
-	// assign data from localStorage
-	let dbRowData = courseDetailsData.data[0];
-
-	let elmId = dbRowData.id;
-	// get avatart name from db
-	let avatarFile = dbRowData.avatar_url;
-	//get last part of avatar url
-	let avatarName = avatarFile.split('/').pop();
-
+	let avatarFile;
 	let values = {
 		name: '',
 		phone: '',
@@ -25,17 +17,12 @@
 		avatar_url: ''
 	};
 
-	values.name = dbRowData.name;
-	values.phone = dbRowData.phone;
-	values.email = dbRowData.email;
-	values.bio = dbRowData.bio;
-	values.avatar_url = dbRowData.avatar_url;
-
 	const handleFilesUpload = async (e) => {
 		avatarFile = e.target.files[0];
+		console.log('🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile', avatarFile);
 		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
-		$hasNoAvatarImg = true;
+		$hasNoAvatarImg = false;
 	};
 
 	async function checkForDuplicates(name) {
@@ -49,7 +36,6 @@
 					// TODO: add a toast message to let the user know that the file already exists
 					alert('duplicate');
 					deleteAvatar();
-
 					return;
 				}
 			}
@@ -58,7 +44,7 @@
 			});
 		}
 	}
-	// create Base64 image from file upload to display as a image preview
+	// create Base64 image from file upload to display as a image preview to prevent unnecessary DB call to preview image
 	function createTempImgBase64(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -72,28 +58,17 @@
 		});
 	}
 	// delete image preview
-	async function deleteAvatar() {
+	function deleteAvatar() {
 		avatarFile = null;
 		values.avatar_url = '';
-		const { error } = await supabase.storage
-			.from('images')
-			.remove([`profile_img/trainer/${avatarName}`]);
-		const { error: err } = await supabase
-			.from('instructors')
-			.update({ avatar_url: null })
-			.eq('id', elmId);
 
-		$hasNoAvatarImg = false;
-		if (error || err) {
-			console.log('Error delete file: ', error.message);
-		} else {
-			console.log('File deleted successfully!');
-		}
+		// no need to delete image from DB (as in EDIT FORM) since we are not storing it there as it is only Base64 img preview
+		$hasNoAvatarImg = true;
 	}
-
 	async function handleSubmit() {
 		// upload Avatar to Bucket ONLY if user has uploaded a new avatar
-		if (avatarFile !== dbRowData.avatar_url && avatarFile !== null) {
+		if (avatarFile !== null && avatarFile !== undefined) {
+			// find if there is already an avatar in the bucket with the same name
 			const { error } = await supabase.storage
 				.from('images')
 				.upload(`profile_img/trainer/${avatarFile.name}`, avatarFile);
@@ -109,34 +84,29 @@
 				.getPublicUrl(`profile_img/trainer/${avatarFile.name}`).data.publicUrl;
 
 			values.avatar_url = publicURL;
+			$hasNoAvatarImg = false;
 		}
 
-		await supabase
-			.from('instructors')
-			.update({
-				name: values.name,
-				phone: values.phone,
-				email: values.email,
-				bio: values.bio,
-				avatar_url: values.avatar_url
-			})
-			.eq('id', elmId);
+		await supabase.from('instructors').insert({
+			name: values.name,
+			phone: values.phone,
+			email: values.email,
+			bio: values.bio,
+			avatar_url: values.avatar_url
+		});
+		goto('/dashboard/instructors');
+	}
+	function cancel() {
 		goto('/dashboard/instructors');
 	}
 </script>
 
 <article>
 	<div class="dash-header">
-		<h1>Instructors</h1>
+		<h1>Register a new Instructor</h1>
 	</div>
-	<section class="dash-page-header-btn__w">
-		<div class="btn-form-xxl">
-			<h2>Register a new Instructor</h2>
-			<p>add new instructor to database</p>
-		</div>
-	</section>
 	<section>
-		<form on:submit|preventDefault={handleSubmit} action="/dashboard/instructors" method="POST">
+		<form method="POST" on:submit|preventDefault={handleSubmit} >
 			<div class="form-info">
 				<div class="form-contact">
 					<label for="name">Name</label>
@@ -166,14 +136,15 @@
 				</div>
 				<div class="form-img">
 					<div class="avatar__w">
-						{#if values.avatar_url === ''}
+						{#if hasNoAvatar}
 							<img class="avatar__img" src={avatarPlaceholder} alt={values.name} />
 						{:else}
 							<img class="avatar__img" src={values.avatar_url} alt={values.name} />
 						{/if}
+
 						<button
-							disabled={!hasNoAvatar}
-							class={hasNoAvatar ? 'danger' : 'disabled'}
+							disabled={hasNoAvatar}
+							class={hasNoAvatar ? 'disabled' : 'danger'}
 							type="button"
 							id="delete-img"
 							on:click={deleteAvatar}>Delete</button
@@ -181,11 +152,11 @@
 					</div>
 					<div class="img-upload__c">
 						<label class="custom-file-upload" for="avatarUploadInput"
-							><span class="upload-btn {hasNoAvatar ? 'disabled' : 'info'}">Upload Image</span
+							><span class="upload-btn {hasNoAvatar ? 'info' : 'disabled'}">Upload Image</span
 							></label
 						>
 						<input
-							disabled={hasNoAvatar}
+							disabled={!hasNoAvatar}
 							type="file"
 							name="avatar"
 							id="avatarUploadInput"
@@ -198,7 +169,7 @@
 				</div>
 			</div>
 
-			<label for="bio">Short Bio <span> (bio should have max400 characters)</span></label>
+			<label for="bio">Short Bio <span> (bio should have max 600 characters)</span></label>
 			<textarea
 				name="bio"
 				id="bio"
@@ -208,7 +179,7 @@
 			/>
 
 			<div class="btns__c">
-				<button class="danger">cancel</button>
+				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">save</button>
 			</div>
 		</form>
@@ -219,6 +190,7 @@
 	.dash-page-header-btn__w {
 		border-bottom: #ccc 1px solid;
 	}
+
 	section {
 		padding: 1rem;
 	}
@@ -266,7 +238,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		/* justify-content: space-between; */
 	}
 	input[type='file'] {
 		display: none;

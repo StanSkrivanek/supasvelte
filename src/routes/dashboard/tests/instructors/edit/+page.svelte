@@ -96,7 +96,7 @@
 		if (avatarFile !== dbRowData.avatar_url && avatarFile !== null) {
 			const { error } = await supabase.storage
 				.from('images')
-				.upload(`profile_img/trainer/${avatarFile.name}`, avatarFile);
+				.upload(`trainers/${avatarFile.name}`, avatarFile);
 
 			if (error) {
 				console.log('Error storing file: ', error.message);
