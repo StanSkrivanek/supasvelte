@@ -5,7 +5,7 @@
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
 
-	
+
 	$: hasNoAvatar = $hasNoAvatarImg;
 
 	let avatarFile;
@@ -103,16 +103,10 @@
 
 <article>
 	<div class="dash-header">
-		<h1>Instructors</h1>
+		<h1>Register a new Instructor</h1>
 	</div>
-	<section class="dash-page-header-btn__w">
-		<div class="btn-form-xxl">
-			<h2>Register a new Instructor</h2>
-			<p>add new instructor to database</p>
-		</div>
-	</section>
 	<section>
-		<form on:submit|preventDefault={handleSubmit} action="/dashboard/instructors" method="POST">
+		<form method="POST" on:submit|preventDefault={handleSubmit} >
 			<div class="form-info">
 				<div class="form-contact">
 					<label for="name">Name</label>
