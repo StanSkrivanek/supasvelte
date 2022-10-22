@@ -1,13 +1,11 @@
 <script>
-	import { hasNoAvatarImg } from '$lib/stores/store';
+	// import { hasNoAvatarImg } from '$lib/stores/store';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
-
-
-	$: hasNoAvatar = $hasNoAvatarImg;
-
+	// $: hasNoAvatar = $hasNoAvatarImg;
+	let hasNoAvatarImg = true;
 	let avatarFile;
 	let values = {
 		name: '',
@@ -22,7 +20,7 @@
 		console.log('🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile', avatarFile);
 		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
-		$hasNoAvatarImg = false;
+		hasNoAvatarImg = false;
 	};
 
 	async function checkForDuplicates(name) {
@@ -63,7 +61,7 @@
 		values.avatar_url = '';
 
 		// no need to delete image from DB (as in EDIT FORM) since we are not storing it there as it is only Base64 img preview
-		$hasNoAvatarImg = true;
+		hasNoAvatarImg = true;
 	}
 	async function handleSubmit() {
 		// upload Avatar to Bucket ONLY if user has uploaded a new avatar
@@ -84,7 +82,7 @@
 				.getPublicUrl(`profile_img/trainer/${avatarFile.name}`).data.publicUrl;
 
 			values.avatar_url = publicURL;
-			$hasNoAvatarImg = false;
+			hasNoAvatarImg = false;
 		}
 
 		await supabase.from('instructors').insert({
@@ -106,7 +104,7 @@
 		<h1>Register a new Instructor</h1>
 	</div>
 	<section>
-		<form method="POST" on:submit|preventDefault={handleSubmit} >
+		<form method="POST" on:submit|preventDefault={handleSubmit}>
 			<div class="form-info">
 				<div class="form-contact">
 					<label for="name">Name</label>
@@ -136,15 +134,15 @@
 				</div>
 				<div class="form-img">
 					<div class="avatar__w">
-						{#if hasNoAvatar}
+						{#if hasNoAvatarImg}
 							<img class="avatar__img" src={avatarPlaceholder} alt={values.name} />
 						{:else}
 							<img class="avatar__img" src={values.avatar_url} alt={values.name} />
 						{/if}
 
 						<button
-							disabled={hasNoAvatar}
-							class={hasNoAvatar ? 'disabled' : 'danger'}
+							disabled={hasNoAvatarImg}
+							class={hasNoAvatarImg ? 'disabled' : 'danger'}
 							type="button"
 							id="delete-img"
 							on:click={deleteAvatar}>Delete</button
@@ -152,11 +150,11 @@
 					</div>
 					<div class="img-upload__c">
 						<label class="custom-file-upload" for="avatarUploadInput"
-							><span class="upload-btn {hasNoAvatar ? 'info' : 'disabled'}">Upload Image</span
+							><span class="upload-btn {hasNoAvatarImg ? 'info' : 'disabled'}">Upload Image</span
 							></label
 						>
 						<input
-							disabled={!hasNoAvatar}
+							disabled={!hasNoAvatarImg}
 							type="file"
 							name="avatar"
 							id="avatarUploadInput"

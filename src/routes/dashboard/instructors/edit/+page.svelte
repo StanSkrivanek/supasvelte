@@ -33,6 +33,7 @@
 
 	const handleFilesUpload = async (e) => {
 		avatarFile = e.target.files[0];
+		console.log("TARGET",e.target.files[0]);
 		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
 		$hasNoAvatarImg = true;
@@ -127,14 +128,9 @@
 
 <article>
 	<div class="dash-header">
-		<h1>Instructors</h1>
+		<h1>Update Instructor data</h1>
 	</div>
-	<section class="dash-page-header-btn__w">
-		<div class="btn-form-xxl">
-			<h2>Register a new Instructor</h2>
-			<p>add new instructor to database</p>
-		</div>
-	</section>
+
 	<section>
 		<form on:submit|preventDefault={handleSubmit} action="/dashboard/instructors" method="POST">
 			<div class="form-info">
