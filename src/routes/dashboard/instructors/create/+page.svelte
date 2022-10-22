@@ -1,23 +1,24 @@
 <script>
-	// import { hasNoAvatarImg } from '$lib/stores/store';
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
-	// $: hasNoAvatar = $hasNoAvatarImg;
 	let hasNoAvatarImg = true;
 	let avatarFile;
 	let values = {
-		name: '',
-		phone: '',
-		email: '',
-		bio: '',
+		// 	// name: '',
+		// 	// phone: '',
+		// 	// email: '',
+		// 	// bio: '',
 		avatar_url: ''
 	};
 
+	$: console.log('values', values);
+
 	const handleFilesUpload = async (e) => {
 		avatarFile = e.target.files[0];
-		console.log('🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile', avatarFile);
+		// console.log('🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile', avatarFile);
 		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
 		hasNoAvatarImg = false;
@@ -37,8 +38,8 @@
 					return;
 				}
 			}
-			createTempImgBase64(avatarFile).then((url) => {
-				values.avatar_url = url;
+			createTempImgBase64(avatarFile).then((blob) => {
+				values.avatar_url = blob;
 			});
 		}
 	}
@@ -70,28 +71,29 @@
 			const { error } = await supabase.storage
 				.from('images')
 				.upload(`profile_img/trainer/${avatarFile.name}`, avatarFile);
-
+			console.log(error);
 			if (error) {
 				console.log('Error storing file: ', error.message);
 			} else {
 				console.log('File successfully stored in Bucket!');
 			}
 			// USE THIS TO GET PATH TO BUCKET OTHERVISE WILL BE USED BASE64
-			const publicURL = supabase.storage
-				.from('images')
-				.getPublicUrl(`profile_img/trainer/${avatarFile.name}`).data.publicUrl;
+			// const publicURL = await supabase.storage
+			// 	.from('images')
+			// 	.getPublicUrl(`profile_img/trainer/${avatarFile.name}`).data.publicUrl;
 
+			const publicURL = 'TEST';
 			values.avatar_url = publicURL;
 			hasNoAvatarImg = false;
 		}
 
-		await supabase.from('instructors').insert({
-			name: values.name,
-			phone: values.phone,
-			email: values.email,
-			bio: values.bio,
-			avatar_url: values.avatar_url
-		});
+		// await supabase.from('instructors').insert({
+		// 	name: values.name,
+		// 	phone: values.phone,
+		// 	email: values.email,
+		// 	bio: values.bio,
+		// 	avatar_url: values.avatar_url
+		// });
 		goto('/dashboard/instructors');
 	}
 	function cancel() {
@@ -104,40 +106,31 @@
 		<h1>Register a new Instructor</h1>
 	</div>
 	<section>
-		<form method="POST" on:submit|preventDefault={handleSubmit}>
+		<!-- <form method="POST" on:submit|preventDefault={handleSubmit} use:enhance> -->
+		<!-- <form
+				method="POST"
+				action="?/create"
+				use:enhance={() => {
+					console.log('handleSubmit', handleSubmit);
+					handleSubmit();
+				}}
+				> -->
+		<form method="POST" action="?/create" use:enhance={() => handleSubmit}>
 			<div class="form-info">
 				<div class="form-contact">
 					<label for="name">Name</label>
-					<input
-						type="text"
-						name="name"
-						id="name"
-						bind:value={values.name}
-						placeholder="Full name"
-					/>
+					<input type="text" name="name" id="name" placeholder="Full name" />
 					<label for="email">Email</label>
-					<input
-						type="email"
-						name="email"
-						id="email"
-						bind:value={values.email}
-						placeholder="joe.doe@gmail.com"
-					/>
+					<input type="email" name="email" id="email" placeholder="joe.doe@gmail.com" />
 					<label for="phone">Phone</label>
-					<input
-						type="phone"
-						name="phone"
-						id="phone"
-						bind:value={values.phone}
-						placeholder="086 123 4567"
-					/>
+					<input type="phone" name="phone" id="phone" placeholder="086 123 4567" />
 				</div>
 				<div class="form-img">
 					<div class="avatar__w">
 						{#if hasNoAvatarImg}
-							<img class="avatar__img" src={avatarPlaceholder} alt={values.name} />
+							<img class="avatar__img" src={avatarPlaceholder} alt="" />
 						{:else}
-							<img class="avatar__img" src={values.avatar_url} alt={values.name} />
+							<img class="avatar__img" src={values.avatar_url} alt="" />
 						{/if}
 
 						<button
@@ -164,17 +157,12 @@
 							}}
 						/>
 					</div>
+					<input type="hidden" name="avatarUrl" value={values.avatar_url} />
 				</div>
 			</div>
 
 			<label for="bio">Short Bio <span> (bio should have max 600 characters)</span></label>
-			<textarea
-				name="bio"
-				id="bio"
-				rows="5"
-				bind:value={values.bio}
-				placeholder="type your content here"
-			/>
+			<textarea name="bio" id="bio" rows="5" placeholder="type your content here" />
 
 			<div class="btns__c">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
