@@ -6,24 +6,18 @@
 
 	let hasNoAvatarImg = true;
 	let avatarFile;
-	let values = {
-		// 	// name: '',
-		// 	// phone: '',
-		// 	// email: '',
-		// 	// bio: '',
-		avatar_url: ''
-	};
+	$: avatarDbUrl = '';
+	$: console.log('🚀 ~ file: +page.svelte ~ line 10 ~ avatarDbUrl global', avatarDbUrl);
 
-	$: console.log('values', values);
-
-	const handleFilesUpload = async (e) => {
+	const handleImgPreview = async (e) => {
 		avatarFile = e.target.files[0];
-		// console.log('🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile', avatarFile);
+
 		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
 		hasNoAvatarImg = false;
 	};
 
+	// find if there is already an avatar in the DB bucket with the same name
 	async function checkForDuplicates(name) {
 		const { data, error } = await supabase.storage
 			.from('images')
@@ -38,8 +32,9 @@
 					return;
 				}
 			}
+			// assign base64 blob to a variable to preview the image
 			createTempImgBase64(avatarFile).then((blob) => {
-				values.avatar_url = blob;
+				avatarDbUrl = blob;
 			});
 		}
 	}
@@ -56,46 +51,41 @@
 			reader.readAsDataURL(file);
 		});
 	}
-	// delete image preview
+	// delete avatar blob preview
 	function deleteAvatar() {
 		avatarFile = null;
-		values.avatar_url = '';
-
-		// no need to delete image from DB (as in EDIT FORM) since we are not storing it there as it is only Base64 img preview
+		avatarDbUrl = '';
+		// no need to delete image from DB (as in EDIT FORM) since I'm not storing it and it is only base64 img preview
 		hasNoAvatarImg = true;
 	}
-	async function handleSubmit() {
-		// upload Avatar to Bucket ONLY if user has uploaded a new avatar
-		if (avatarFile !== null && avatarFile !== undefined) {
-			// find if there is already an avatar in the bucket with the same name
-			const { error } = await supabase.storage
+	function handleSubmit({ data }) {
+		// if user has uploaded a new avatar
+		if (avatarFile !== undefined && avatarFile !== null) {
+			// Upload it to DB
+			const { error } = supabase.storage
 				.from('images')
 				.upload(`profile_img/trainer/${avatarFile.name}`, avatarFile);
-			console.log(error);
+
 			if (error) {
 				console.log('Error storing file: ', error.message);
 			} else {
 				console.log('File successfully stored in Bucket!');
 			}
 			// USE THIS TO GET PATH TO BUCKET OTHERVISE WILL BE USED BASE64
-			// const publicURL = await supabase.storage
-			// 	.from('images')
-			// 	.getPublicUrl(`profile_img/trainer/${avatarFile.name}`).data.publicUrl;
+			// THIS WORKS AND RETURNS THE PATH TO THE BUCKET BUT...
+			const publicURL = supabase.storage
+				.from('images')
+				.getPublicUrl(`profile_img/trainer/${avatarFile.name}`).data.publicUrl;
 
-			const publicURL = 'TEST';
-			values.avatar_url = publicURL;
+				// after saving avatar into DB and getting its public url
+				// (path to image in bucket) force reasign (set) publicUrl
+				// as url value instead of base64. 
+			data.set('url', publicURL);
 			hasNoAvatarImg = false;
-		}
 
-		// await supabase.from('instructors').insert({
-		// 	name: values.name,
-		// 	phone: values.phone,
-		// 	email: values.email,
-		// 	bio: values.bio,
-		// 	avatar_url: values.avatar_url
-		// });
-		goto('/dashboard/instructors');
 	}
+	
+}
 	function cancel() {
 		goto('/dashboard/instructors');
 	}
@@ -106,16 +96,8 @@
 		<h1>Register a new Instructor</h1>
 	</div>
 	<section>
-		<!-- <form method="POST" on:submit|preventDefault={handleSubmit} use:enhance> -->
-		<!-- <form
-				method="POST"
-				action="?/create"
-				use:enhance={() => {
-					console.log('handleSubmit', handleSubmit);
-					handleSubmit();
-				}}
-				> -->
-		<form method="POST" action="?/create" use:enhance={() => handleSubmit}>
+
+		<form method="POST" action="?/create" use:enhance={handleSubmit}>
 			<div class="form-info">
 				<div class="form-contact">
 					<label for="name">Name</label>
@@ -128,9 +110,9 @@
 				<div class="form-img">
 					<div class="avatar__w">
 						{#if hasNoAvatarImg}
-							<img class="avatar__img" src={avatarPlaceholder} alt="" />
+							<img class="avatar__img" src={avatarPlaceholder} alt={avatarFile} />
 						{:else}
-							<img class="avatar__img" src={values.avatar_url} alt="" />
+							<img class="avatar__img" src={avatarDbUrl} alt={avatarFile} />
 						{/if}
 
 						<button
@@ -153,16 +135,18 @@
 							id="avatarUploadInput"
 							accept=".jpg, .jpeg, .png, .webp, .avif, .svg"
 							on:change={(e) => {
-								handleFilesUpload(e);
+								handleImgPreview(e);
 							}}
 						/>
 					</div>
-					<input type="hidden" name="avatarUrl" value={values.avatar_url} />
 				</div>
 			</div>
 
 			<label for="bio">Short Bio <span> (bio should have max 600 characters)</span></label>
 			<textarea name="bio" id="bio" rows="5" placeholder="type your content here" />
+
+			<!-- ISSUE IS THAT FORM DO NOT UPDATE variable `avatarDbUrl` that is passed with `handleSubmit` so the value send to `+page.server.js` is BASE64 code and not avatar public URL -->
+			<input type="hidden" name="url" value=""/>
 
 			<div class="btns__c">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
@@ -173,10 +157,6 @@
 </article>
 
 <style>
-	.dash-page-header-btn__w {
-		border-bottom: #ccc 1px solid;
-	}
-
 	section {
 		padding: 1rem;
 	}
