@@ -4,17 +4,16 @@
 	import { supabase } from '$lib/supabase/supabaseClient';
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
-	let hasNoAvatarImg = true;
+	let hasProfileImg = false;
 	let avatarFile;
 	let avatarDbUrl = '';
 
 
 	const handleImgPreview = async (e) => {
 		avatarFile = e.target.files[0];
-
 		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
-		hasNoAvatarImg = false;
+		hasProfileImg = true;
 	};
 
 	// find if there is already an avatar in the DB bucket with the same name
@@ -56,7 +55,7 @@
 		avatarFile = null;
 		avatarDbUrl = '';
 		// no need to delete image from DB (as in EDIT FORM) since I'm not storing it and it is only base64 img preview
-		hasNoAvatarImg = true;
+		hasProfileImg = false;
 	}
 	function handleSubmit({ data }) {
 		// if user has uploaded a new avatar
@@ -81,7 +80,7 @@
 				// (path to image in bucket) force reasign (set) publicUrl
 				// as url value instead of base64. 
 			data.set('url', publicURL);
-			hasNoAvatarImg = false;
+			hasProfileImg = true;
 
 	}
 	
@@ -109,15 +108,15 @@
 				</div>
 				<div class="form-img">
 					<div class="avatar__w">
-						{#if hasNoAvatarImg}
-							<img class="avatar__img" src={avatarPlaceholder} alt={avatarFile} />
+						{#if !hasProfileImg}
+							<img class="avatar__img" src={avatarPlaceholder} alt="" />
 						{:else}
-							<img class="avatar__img" src={avatarDbUrl} alt={avatarFile} />
+							<img class="avatar__img" src={avatarDbUrl} alt="" />
 						{/if}
 
 						<button
-							disabled={hasNoAvatarImg}
-							class={hasNoAvatarImg ? 'disabled' : 'danger'}
+							disabled={!hasProfileImg}
+							class={!hasProfileImg ? 'disabled' : 'danger'}
 							type="button"
 							id="delete-img"
 							on:click={deleteAvatar}>Delete</button
@@ -125,11 +124,11 @@
 					</div>
 					<div class="img-upload__c">
 						<label class="custom-file-upload" for="avatarUploadInput"
-							><span class="upload-btn {hasNoAvatarImg ? 'info' : 'disabled'}">Upload Image</span
+							><span class="upload-btn {!hasProfileImg ? 'info' : 'disabled'}">Upload Image</span
 							></label
 						>
 						<input
-							disabled={!hasNoAvatarImg}
+							disabled={hasProfileImg}
 							type="file"
 							name="avatar"
 							id="avatarUploadInput"
@@ -145,7 +144,6 @@
 			<label for="bio">Short Bio <span> (bio should have max 600 characters)</span></label>
 			<textarea name="bio" id="bio" rows="5" placeholder="type your content here" />
 
-			<!-- ISSUE IS THAT FORM DO NOT UPDATE variable `avatarDbUrl` that is passed with `handleSubmit` so the value send to `+page.server.js` is BASE64 code and not avatar public URL -->
 			<input type="hidden" name="url" value=""/>
 
 			<div class="btns__c">

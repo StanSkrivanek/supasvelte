@@ -16,7 +16,6 @@
 	// if avatar url is not null, then set hasProfileImg to false
 	if (avatar_url == null || avatar_url == '' || avatar_url == undefined) {
 		hasProfileImg = false;
-
 	}
 	if (avatar_url) {
 		hasProfileImg = true;
