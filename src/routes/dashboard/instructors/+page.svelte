@@ -56,7 +56,7 @@
 	async function redirectToEdit(id, name) {
 		localStorage.setItem('currentItemId', id);
 		const slug = name.split(' ').join('-').toLowerCase();
-// redirect to ID if name doesn't exist
+		// redirect to ID if name doesn't exist
 		if (!name) {
 			goto(`/dashboard/instructors/${id}`);
 		} else {

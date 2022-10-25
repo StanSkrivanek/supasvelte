@@ -7,7 +7,7 @@ export const actions = {
 		const fd = await request.formData();
 
 		const { itemId, name, email, phone, type } = Object.fromEntries([...fd]);
-
+// format phone number
 		const { error: err } = await supabase
 			.from('contacts')
 			.update({ name: name, email: email, phone: phone, type: type })
