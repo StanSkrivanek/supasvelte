@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { getData } from '$lib/utils/helpers.js';
-	import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import TrainerCard from '$lib/components/cards/TrainerCard.svelte';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
@@ -12,10 +11,10 @@
 
 	export let data;
 
-	let objAry = getData(data);
-	let sorted = sortById(objAry, 'asc');
+	let dataItems = getData(data);
+	let sorted = sortById(dataItems, 'asc');
 	let showModal = false;
-	let cId = 0;
+	let itemId = 0;
 	let itemTarget = null;
 
 	function toggleModal() {
@@ -25,12 +24,12 @@
 	function openDeleteConfirmModal(e) {
 		toggleModal();
 		itemTarget = e.target.closest('.db-item');
-		cId = itemTarget.id;
+		itemId = itemTarget.id;
 	}
 
 	// Delete Instructor and Img from DB
 	async function deleteItemAndImg() {
-		const { data } = await supabase.from('instructors').select('avatar_url').eq('id', cId);
+		const { data } = await supabase.from('instructors').select('avatar_url').eq('id', itemId);
 		const fileName = data[0].avatar_url.split('/').pop();
 		const { error: err } = await supabase.storage
 			.from('images')
@@ -40,7 +39,7 @@
 		} else {
 			console.log('Image deleted successfully!');
 		}
-		const { error: e } = await supabase.from('instructors').delete().eq('id', cId);
+		const { error: e } = await supabase.from('instructors').delete().eq('id', itemId);
 		if (e) {
 			console.log('deleting Instructor record: err', e.message);
 		} else {
@@ -56,9 +55,8 @@
 
 	async function redirectToEdit(id, name) {
 		localStorage.setItem('currentItemId', id);
-		// // slugify name
 		const slug = name.split(' ').join('-').toLowerCase();
-
+// redirect to ID if name doesn't exist
 		if (!name) {
 			goto(`/dashboard/instructors/${id}`);
 		} else {
