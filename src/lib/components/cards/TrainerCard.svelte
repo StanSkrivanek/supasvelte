@@ -21,10 +21,10 @@
 				<p class="txt">{phone}</p>
 			</div>
 			<div class="col avatar__w">
-				{#if avatar_url === ''}
-					<img class="avatar__img" src={avatarPlaceholder} alt={name} />
+				{#if avatar_url === '' || avatar_url === null}
+					<img class="avatar__img" src={avatarPlaceholder} alt="" />
 				{:else}
-					<img class="avatar__img" src={avatar_url} alt={name} />
+					<img class="avatar__img" src={avatar_url} alt='{name} profile image' />
 				{/if}
 			</div>
 		</div>

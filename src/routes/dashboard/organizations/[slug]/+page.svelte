@@ -3,7 +3,6 @@
 	import { goto } from '$app/navigation';
 	export let data;
 	let { org } = data;
-
 	function cancel() {
 		goto('/dashboard/organizations');
 	}

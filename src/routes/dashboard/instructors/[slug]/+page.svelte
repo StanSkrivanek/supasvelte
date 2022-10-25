@@ -1,42 +1,34 @@
 <script>
-	import { hasNoAvatarImg } from '$lib/stores/store';
-	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
+	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
-	$: hasNoAvatar = $hasNoAvatarImg;
+	export let data;
+	let { instructor } = data;
+	let { id, name, avatar_url, bio, email, phone, website, instagram, facebook, twitter, youtube } =
+		instructor[0];
 
-	// get data from localStorage
-	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
-	// assign data from localStorage
-	let dbRowData = courseDetailsData.data[0];
+	let avatarFile;
+	let avatarName;
+	let hasProfileImg;
 
-	let elmId = dbRowData.id;
-	// get avatart name from db
-	let avatarFile = dbRowData.avatar_url;
-	//get last part of avatar url
-	let avatarName = avatarFile.split('/').pop();
+	// if avatar url is not null, then set hasProfileImg to false
+	if (avatar_url == null || avatar_url == '' || avatar_url == undefined) {
+		hasProfileImg = false;
 
-	let values = {
-		name: '',
-		phone: '',
-		email: '',
-		bio: '',
-		avatar_url: ''
-	};
-
-	values.name = dbRowData.name;
-	values.phone = dbRowData.phone;
-	values.email = dbRowData.email;
-	values.bio = dbRowData.bio;
-	values.avatar_url = dbRowData.avatar_url;
+	}
+	if (avatar_url) {
+		hasProfileImg = true;
+		avatarName = avatar_url.split('/').pop();
+	}
 
 	const handleFilesUpload = async (e) => {
 		avatarFile = e.target.files[0];
-		console.log("TARGET",e.target.files[0]);
+		console.log('TARGET', e.target.files[0]);
 		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
-		$hasNoAvatarImg = true;
+		hasProfileImg = true;
 	};
 
 	async function checkForDuplicates(name) {
@@ -55,11 +47,11 @@
 				}
 			}
 			createTempImgBase64(avatarFile).then((url) => {
-				values.avatar_url = url;
+				avatar_url = url;
 			});
 		}
 	}
-	// create Base64 image from file upload to display as a image preview
+	// // create Base64 image from file upload to display as a image preview
 	function createTempImgBase64(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -72,19 +64,21 @@
 			reader.readAsDataURL(file);
 		});
 	}
-	// delete image preview
+	// // delete image preview
 	async function deleteAvatar() {
-		avatarFile = null;
-		values.avatar_url = '';
+
+		// remove image from DB bucket
 		const { error } = await supabase.storage
 			.from('images')
 			.remove([`profile_img/trainer/${avatarName}`]);
-		const { error: err } = await supabase
+			// update instructor record in DB table
+ 		const { error: err } = await supabase
 			.from('instructors')
 			.update({ avatar_url: null })
-			.eq('id', elmId);
-
-		$hasNoAvatarImg = false;
+			.eq('id', id);
+		avatarFile = null;
+		avatar_url = '';
+		hasProfileImg = false;
 		if (error || err) {
 			console.log('Error delete file: ', error.message);
 		} else {
@@ -92,10 +86,11 @@
 		}
 	}
 
-	async function handleSubmit() {
-		// upload Avatar to Bucket ONLY if user has uploaded a new avatar
-		if (avatarFile !== dbRowData.avatar_url && avatarFile !== null) {
-			const { error } = await supabase.storage
+	function handleSubmit({ data }) {
+		// if user has uploaded a new avatar
+		if (avatarFile !== undefined && avatarFile !== null) {
+			// Upload it to DB
+			const { error } = supabase.storage
 				.from('images')
 				.upload(`profile_img/trainer/${avatarFile.name}`, avatarFile);
 
@@ -109,19 +104,14 @@
 				.from('images')
 				.getPublicUrl(`profile_img/trainer/${avatarFile.name}`).data.publicUrl;
 
-			values.avatar_url = publicURL;
+			// after saving avatar into DB and getting its public url
+			// (path to image in bucket) force reasign (set) publicUrl
+			// as url value instead of base64.
+			data.set('url', publicURL);
+			hasProfileImg = true;
 		}
-
-		await supabase
-			.from('instructors')
-			.update({
-				name: values.name,
-				phone: values.phone,
-				email: values.email,
-				bio: values.bio,
-				avatar_url: values.avatar_url
-			})
-			.eq('id', elmId);
+	}
+	function cancel() {
 		goto('/dashboard/instructors');
 	}
 </script>
@@ -132,23 +122,17 @@
 	</div>
 
 	<section>
-		<form on:submit|preventDefault={handleSubmit} action="/dashboard/instructors" method="POST">
+		<form method="POST" action="?/update" use:enhance={handleSubmit}>
 			<div class="form-info">
 				<div class="form-contact">
 					<label for="name">Name</label>
-					<input
-						type="text"
-						name="name"
-						id="name"
-						bind:value={values.name}
-						placeholder="Full name"
-					/>
+					<input type="text" name="name" id="name" value={name || ''} placeholder="Full name" />
 					<label for="email">Email</label>
 					<input
 						type="email"
 						name="email"
 						id="email"
-						bind:value={values.email}
+						value={email || ''}
 						placeholder="joe.doe@gmail.com"
 					/>
 					<label for="phone">Phone</label>
@@ -156,20 +140,20 @@
 						type="phone"
 						name="phone"
 						id="phone"
-						bind:value={values.phone}
+						value={phone || ''}
 						placeholder="086 123 4567"
 					/>
 				</div>
 				<div class="form-img">
 					<div class="avatar__w">
-						{#if values.avatar_url === ''}
-							<img class="avatar__img" src={avatarPlaceholder} alt={values.name} />
+						{#if avatar_url == '' || avatar_url == null}
+							<img class="avatar__img" src={avatarPlaceholder} alt="" />
 						{:else}
-							<img class="avatar__img" src={values.avatar_url} alt={values.name} />
+							<img class="avatar__img" src={avatar_url} alt="" />
 						{/if}
 						<button
-							disabled={!hasNoAvatar}
-							class={hasNoAvatar ? 'danger' : 'disabled'}
+							disabled={!hasProfileImg}
+							class={hasProfileImg ? 'danger' : 'disabled'}
 							type="button"
 							id="delete-img"
 							on:click={deleteAvatar}>Delete</button
@@ -177,11 +161,11 @@
 					</div>
 					<div class="img-upload__c">
 						<label class="custom-file-upload" for="avatarUploadInput"
-							><span class="upload-btn {hasNoAvatar ? 'disabled' : 'info'}">Upload Image</span
+							><span class="upload-btn {hasProfileImg ? 'disabled' : 'info'}">Upload Image</span
 							></label
 						>
 						<input
-							disabled={hasNoAvatar}
+							disabled={hasProfileImg}
 							type="file"
 							name="avatar"
 							id="avatarUploadInput"
@@ -195,26 +179,18 @@
 			</div>
 
 			<label for="bio">Short Bio <span> (bio should have max400 characters)</span></label>
-			<textarea
-				name="bio"
-				id="bio"
-				rows="5"
-				bind:value={values.bio}
-				placeholder="type your content here"
-			/>
-
+			<textarea name="bio" id="bio" rows="5" placeholder="type your content here" value={bio} />
+			<input type="hidden" name="id" value={id} />
 			<div class="btns__c">
-				<button class="danger">cancel</button>
+				<button class="danger" on:click={cancel}>cancel</button>
 				<button class="info">save</button>
 			</div>
+			<!-- </div> -->
 		</form>
 	</section>
 </article>
 
 <style>
-	.dash-page-header-btn__w {
-		border-bottom: #ccc 1px solid;
-	}
 	section {
 		padding: 1rem;
 	}

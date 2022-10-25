@@ -17,21 +17,21 @@ export const actions = {
 		if (!err) throw redirect(307, '/dashboard/contacts');
 
 		return { success: true };
-	},
-	del: async ({ request }) => {
-		const fd = await request.formData();
-		console.log('🚀 ~ file: +page.server.js ~ line 23 ~ delete: ~ fd', [...fd]);
-		console.log('DELETE ITEM');
-
-		const { itemId } = Object.fromEntries([...fd]);
-
-		const { error: err } = await supabase.from('contacts').delete().eq('id', itemId);
-
-		if (err) return { status: 500, body: { error: err.message } };
-		if (!err) throw redirect(307, '/dashboard/contacts');
-
-		return { success: true };
 	}
+	// del: async ({ request }) => {
+	// 	const fd = await request.formData();
+	// 	console.log('🚀 ~ file: +page.server.js ~ line 23 ~ delete: ~ fd', [...fd]);
+	// 	console.log('DELETE ITEM');
+
+	// 	const { itemId } = Object.fromEntries([...fd]);
+
+	// 	const { error: err } = await supabase.from('contacts').delete().eq('id', itemId);
+
+	// 	if (err) return { status: 500, body: { error: err.message } };
+	// 	if (!err) throw redirect(307, '/dashboard/contacts');
+
+	// 	return { success: true };
+	// }
 };
 
 

@@ -6,8 +6,8 @@
 
 	let hasNoAvatarImg = true;
 	let avatarFile;
-	$: avatarDbUrl = '';
-	$: console.log('🚀 ~ file: +page.svelte ~ line 10 ~ avatarDbUrl global', avatarDbUrl);
+	let avatarDbUrl = '';
+
 
 	const handleImgPreview = async (e) => {
 		avatarFile = e.target.files[0];

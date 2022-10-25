@@ -54,14 +54,14 @@
 		// TODO: add toast message to confirm delete
 	}
 
-	async function findItemById(id) {
-		$itemData = await supabase.from('instructors').select('*').match({ id: id });
-		// store course RTE data as string in localStorage
-		localStorage.setItem('itemData', JSON.stringify($itemData));
-		// redirect to update page
-		goto('/dashboard/instructors/edit');
-	}
 
+	async function redirectToEdit(id, name) {
+				localStorage.setItem('currentItemId', id);
+		// // slugify name
+		const slug = name.split(' ').join('-').toLowerCase();
+
+		goto(`/dashboard/instructors/${slug}`);
+	}
 	// FOR SEARCH
 	let searchTerm = '';
 	let filteredItems = [];
@@ -118,7 +118,7 @@
 						{bio}
 						{email}
 						{phone}
-						on:edit={() => findItemById(id)}
+						on:edit={() => redirectToEdit(id,name)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
@@ -131,7 +131,7 @@
 						{bio}
 						{email}
 						{phone}
-						on:edit={() => findItemById(id)}
+						on:edit={() => redirectToEdit(id,name)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
@@ -143,7 +143,7 @@
 <style>
 	section {
 		padding: 1rem;
-		   border-bottom: 1px solid var(--col-bg-gray);
+		border-bottom: 1px solid var(--col-bg-gray);
 	}
 	section:last-child {
 		border-bottom: none;
