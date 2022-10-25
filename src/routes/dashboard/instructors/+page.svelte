@@ -54,13 +54,16 @@
 		// TODO: add toast message to confirm delete
 	}
 
-
 	async function redirectToEdit(id, name) {
-				localStorage.setItem('currentItemId', id);
+		localStorage.setItem('currentItemId', id);
 		// // slugify name
 		const slug = name.split(' ').join('-').toLowerCase();
 
-		goto(`/dashboard/instructors/${slug}`);
+		if (!name) {
+			goto(`/dashboard/instructors/${id}`);
+		} else {
+			goto(`/dashboard/instructors/${slug}`);
+		}
 	}
 	// FOR SEARCH
 	let searchTerm = '';
@@ -118,7 +121,7 @@
 						{bio}
 						{email}
 						{phone}
-						on:edit={() => redirectToEdit(id,name)}
+						on:edit={() => redirectToEdit(id, name)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
@@ -131,7 +134,7 @@
 						{bio}
 						{email}
 						{phone}
-						on:edit={() => redirectToEdit(id,name)}
+						on:edit={() => redirectToEdit(id, name)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
