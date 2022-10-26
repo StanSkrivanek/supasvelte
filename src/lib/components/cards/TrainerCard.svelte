@@ -1,8 +1,8 @@
 <script>
-	import {formatPhoneNumber} from '$lib/utils/helpers';
+	import { formatPhoneNumber } from '$lib/utils/helpers';
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
-  
+
 	export let id;
 	export let name;
 	export let email;
@@ -10,9 +10,6 @@
 	export let avatar_url;
 	// export let bio;
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
-
-
-
 </script>
 
 <div class="db-item" {id}>
@@ -28,7 +25,7 @@
 				{#if avatar_url === '' || avatar_url === null}
 					<img class="avatar__img" src={avatarPlaceholder} alt="" />
 				{:else}
-					<img class="avatar__img" src={avatar_url} alt='{name} profile image' />
+					<img class="avatar__img" src={avatar_url} alt="{name} profile image" />
 				{/if}
 			</div>
 		</div>
@@ -39,7 +36,6 @@
 	<div class="btns__c">
 		<button class="danger" on:click>Delete</button>
 		<button class="info" on:click={() => dispatch('edit')}>Edit</button>
-
 	</div>
 </div>
 

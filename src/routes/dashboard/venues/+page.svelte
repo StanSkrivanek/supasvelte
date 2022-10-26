@@ -11,11 +11,7 @@
 
 	export let data;
 	let { venues } = data;
-	console.log('🚀 ~ file: +page.svelte ~ line 14 ~ venues', venues)
-
 	let sorted = sortById(venues, 'asc');
-	console.log('🚀 ~ file: +page.svelte ~ line 17 ~ sorted', sorted)
-
 
 	let showModal = false;
 	let itemId = 0;
@@ -103,7 +99,7 @@
 					<p>No results found</p>
 				</div>
 			{:else if filteredItems.length > 0}
-				{#each filteredItems as { id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
+				{#each filteredItems as { id, name, adr_1, adr_2, city, eircode, contact, phone, email, website }}
 					<VenueCard
 						{id}
 						{name}
@@ -115,13 +111,12 @@
 						{phone}
 						{email}
 						{website}
-						{info}
 						on:edit={() => redirectToEdit(id, name)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
 			{:else}
-				{#each sorted as { id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
+				{#each sorted as { id, name, adr_1, adr_2, city, eircode, contact, phone, email, website }}
 					<VenueCard
 						{id}
 						{name}
@@ -133,7 +128,6 @@
 						{phone}
 						{email}
 						{website}
-						{info}
 						on:edit={() => redirectToEdit(id, name)}
 						on:click={openDeleteConfirmModal}
 					/>

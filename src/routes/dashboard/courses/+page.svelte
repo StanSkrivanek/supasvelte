@@ -8,11 +8,20 @@
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 	import Search from '$lib/components/shared/formfields/Search.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
+	import RegisteredCourse from '../../../lib/components/cards/RegisteredCourse.svelte';
 
 	export let data;
-	let objAry = getData(data);
+	let { courses } = data;
+	console.log('🚀 ~ file: +page.svelte ~ line 14 ~ courses', courses);
+
+	// let { id, name, org_id, org_name, info, status, start_date, end_date, created_at, updated_at } =
+	// 	courses[0];
+
+	// sort courses by ID
+	let sorted = sortById(courses, 'asc');
+
 	let showModal = false;
-	let cId = 0;
+	let itemId = 0;
 	let target = null;
 
 	function toggleModal() {
@@ -22,36 +31,29 @@
 	function openDeleteConfirmModal(e) {
 		toggleModal();
 		target = e.target.parentElement;
-		cId = target.id;
+		itemId = target.id;
 	}
 	// apply delete from modal
 	async function deleteItemById() {
-		await supabase.from('courses').delete().match({ id: cId });
-		objAry = objAry.filter((item) => item.id !== cId);
+		await supabase.from('courses').delete().match({ id: itemId });
+		objAry = objAry.filter((item) => item.id !== itemId);
 		target.remove();
 	}
+	function redirectToEdit(id, name) {
+		localStorage.setItem('currentItemId', id);
+		const slug = name.split(' ').join('-').toLowerCase();
 
-	async function findItemById(e) {
-		const elm = e.target.parentElement;
-		const elmId = elm.id;
-		// get data from db table `courses` where id = elmId
-		$itemData = await supabase.from('courses').select('*').match({ id: elmId });
-		// store course RTE data as string in localStorage
-		localStorage.setItem('itemData', JSON.stringify($itemData));
-		// redirect to update page
-		goto('/dashboard/courses/edit');
+		goto(`/dashboard/courses/${slug}`);
 	}
-	// sort courses by ID
-	let sorted = sortById(objAry, 'asc');
 
 	// FOR SEARCH
 	let searchTerm = '';
-	// let filteredItems = [];
-	// function filterItems() {
-	// 	return (filteredItems = sorted.filter((item) => {
-	// 		return item.name.toLowerCase().includes(searchTerm.toLowerCase());
-	// 	}));
-	// }
+	let filteredItems = [];
+	function filterItems() {
+		return (filteredItems = sorted.filter((item) => {
+			return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+		}));
+	}
 </script>
 
 {#if showModal}
@@ -74,7 +76,7 @@
 	</div>
 	<section class="dsh-page-header">
 		<div class="search-filter">
-			<!-- <Search bind:searchTerm on:input={filterItems} /> -->
+			<Search bind:searchTerm on:input={filterItems} />
 		</div>
 		<div class="form-btn--add">
 			<a href="/dashboard/courses/create">
@@ -85,21 +87,48 @@
 			</a>
 		</div>
 	</section>
-	<section>
-		{#each sorted as item (item.id)}
-			<div class="courses-db-list" id={item.id}>
-				<p>{item.id}</p>
-				<h1>{item.title}</h1>
-				<p>{item.type}</p>
-				<p>{item.organization}</p>
-				<button class="danger" on:click={openDeleteConfirmModal}>Delete</button>
-				<button class="info" on:click={findItemById}>Edit</button>
-			</div>
-		{/each}
+	<section class="main">
+		<div class="db-list">
+			{#if searchTerm && filteredItems.length === 0}
+				<div class="no-results__w">
+					<h1>No results found</h1>
+				</div>
+			{:else if searchTerm && filteredItems.length > 0}
+				{#each filteredItems as { id, title, type, organization }}
+					<RegisteredCourse
+						{id}
+						{title}
+						{type}
+						{organization}
+						on:edit={() => redirectToEdit(id, title)}
+						on:click={openDeleteConfirmModal}
+					/>
+				{/each}
+				<!-- else content here -->
+			{:else}
+				{#each sorted as { id, title, type, organization }}
+					<RegisteredCourse
+						{id}
+						{title}
+						{type}
+						{organization}
+						on:edit={() => redirectToEdit(id, title)}
+						on:click={openDeleteConfirmModal}
+					/>
+				{/each}
+			{/if}
+		</div>
 	</section>
 </article>
 
 <style>
+		section {
+		padding: 1rem;
+		border-bottom: 1px solid #d8d8d8;
+	}
+	section:last-child {
+		border-bottom: none;
+	}
 	.dsh-page-header {
 		display: flex;
 		justify-content: space-between;
@@ -119,7 +148,22 @@
 		padding: 0.25rem;
 		border-radius: 50%;
 	}
-	.courses-db-list {
+
+		.db-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+		grid-gap: 1rem;
+		min-width: 100%;
+	}
+	.no-results__w {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 50vh;
+		width: 100%;
+		font-size: 1.6rem;
+	}
+	/* .courses-db-list {
 		display: grid;
 		grid-template-columns: 0.25fr 2fr 1fr 1fr 0.5fr 0.5fr;
 		align-items: center;
@@ -128,15 +172,9 @@
 		padding: 1rem;
 		border-radius: 0.25rem;
 		margin-bottom: 0.25rem;
-	}
-	section {
-		padding: 1rem;
-		border-bottom: 1px solid #d8d8d8;
-	}
-	section:last-child {
-		border-bottom: none;
-	}
-	button {
+	} */
+
+	/* button {
 		padding: 0.5rem;
 		border: none;
 		border-radius: 0.25rem;
@@ -144,11 +182,11 @@
 		background-color: #1b0e30;
 		color: #fff;
 		cursor: pointer;
-	}
-	.danger {
+	} */
+	/* .danger {
 		background-color: var(--col-danger);
-	}
-	.info {
+	} */
+	/* .info {
 		background-color: var(--col-active);
-	}
+	} */
 </style>

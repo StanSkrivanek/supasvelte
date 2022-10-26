@@ -3,6 +3,8 @@
 	import { goto } from '$app/navigation';
 	export let data;
 	let { org } = data;
+	let { id, name, adr_1, adr_2, city, eircode, phone, email, website, contact, info } = org[0];
+
 	function cancel() {
 		goto('/dashboard/organizations');
 	}
@@ -17,43 +19,19 @@
 			<div class="f-fields__c">
 				<div class="col">
 					<label for="name">Organization <span><i>(required)</i></span></label>
-					<input
-						type="text"
-						name="name"
-						id="name"
-						value={org[0].name || ''}
-						placeholder="org name"
-					/>
+					<input type="text" name="name" id="name" value={name || ''} placeholder="org name" />
 					<label for="adr-1">Street <span><i>(required)</i></span></label>
-					<input
-						type="text"
-						name="adr_1"
-						id="adr_1"
-						value={org[0].adr_1 || ''}
-						placeholder="address 1"
-					/>
+					<input type="text" name="adr_1" id="adr_1" value={adr_1 || ''} placeholder="address 1" />
 					<label for="adr-2">Place</label>
-					<input
-						type="text"
-						name="adr_2"
-						id="adr_2"
-						value={org[0].adr_2 || ''}
-						placeholder="address 2"
-					/>
+					<input type="text" name="adr_2" id="adr_2" value={adr_2 || ''} placeholder="address 2" />
 					<label for="city">City</label>
-					<input
-						type="text"
-						name="city"
-						id="city"
-						value={org[0].city || ''}
-						placeholder="city"
-					/>
+					<input type="text" name="city" id="city" value={city || ''} placeholder="city" />
 					<label for="eircode">EirCode</label>
 					<input
 						type="text"
 						name="eircode"
 						id="eircode"
-						value={org[0].eircode || ''}
+						value={eircode || ''}
 						placeholder="eircode"
 					/>
 				</div>
@@ -63,23 +41,17 @@
 						type="text"
 						name="contact"
 						id="contact"
-						value={org[0].contact || ''}
+						value={contact || ''}
 						placeholder="contact person name"
 					/>
 					<label for="phone">Phone</label>
-					<input
-						type="tel"
-						name="phone"
-						id="phone"
-						value={org[0].phone || ''}
-						placeholder="phone"
-					/>
+					<input type="tel" name="phone" id="phone" value={phone || ''} placeholder="phone" />
 					<label for="email">Email</label>
 					<input
 						type="email"
 						name="email"
 						id="email"
-						value={org[0].email || ''}
+						value={email || ''}
 						placeholder="orgzgmail.com"
 					/>
 					<label for="website">Website</label>
@@ -87,20 +59,14 @@
 						type="text"
 						name="website"
 						id="website"
-						value={org[0].website || ''}
+						value={website || ''}
 						placeholder="org.com"
 					/>
 				</div>
 			</div>
 			<label for="info">Overview</label>
-			<textarea
-				name="info"
-				id="info"
-				rows="20"
-				value={org[0].info || ''}
-				placeholder="Short overview"
-			/>
-					<input type="hidden" hidden name="id" value={org[0].id} />
+			<textarea name="info" id="info" rows="20" value={info || ''} placeholder="Short overview" />
+			<input type="hidden" hidden name="id" value={id} />
 			<div class="form-btns__w">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">Save</button>
@@ -108,6 +74,7 @@
 		</form>
 	</section>
 </article>
+
 <style>
 	section {
 		padding: 1rem;

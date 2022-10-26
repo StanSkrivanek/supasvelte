@@ -1,4 +1,4 @@
-// prevent ERR 500 on page reload 
+// prevent ERR 500 on page reload
 export const ssr = false;
 
 /** @type {import('./$types').PageLoad} */
@@ -10,7 +10,6 @@ export const load = ({ fetch }) => {
 
 		let item = data.filter((org) => org.id == id);
 
-		
 		return item;
 	};
 	return {

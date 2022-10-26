@@ -1,7 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
-	import { getData } from '$lib/utils/helpers.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import TrainerCard from '$lib/components/cards/TrainerCard.svelte';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
