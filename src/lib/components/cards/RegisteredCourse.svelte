@@ -8,7 +8,7 @@
 </script>
 
 <div class="db-item" {id}>
-	<!-- <p>{id}</p> -->
+	<p>{id}</p>
 	<p class="txt">{type}</p>
 	<p class="title">{title}</p>
 	<p>{organization}</p>

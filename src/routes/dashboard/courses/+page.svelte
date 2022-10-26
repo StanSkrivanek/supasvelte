@@ -1,23 +1,15 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
-	import { getData } from '$lib/utils/helpers.js';
-	import { itemData } from '$lib/stores/store.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 	import Search from '$lib/components/shared/formfields/Search.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
-	import RegisteredCourse from '../../../lib/components/cards/RegisteredCourse.svelte';
+	import RegisteredCourse from '$lib/components/cards/RegisteredCourse.svelte';
 
 	export let data;
 	let { courses } = data;
-	console.log('🚀 ~ file: +page.svelte ~ line 14 ~ courses', courses);
-
-	// let { id, name, org_id, org_name, info, status, start_date, end_date, created_at, updated_at } =
-	// 	courses[0];
-
-	// sort courses by ID
 	let sorted = sortById(courses, 'asc');
 
 	let showModal = false;
@@ -36,14 +28,19 @@
 	// apply delete from modal
 	async function deleteItemById() {
 		await supabase.from('courses').delete().match({ id: itemId });
-		objAry = objAry.filter((item) => item.id !== itemId);
+		// objAry = objAry.filter((item) => item.id !== itemId);
 		target.remove();
 	}
+
 	function redirectToEdit(id, name) {
 		localStorage.setItem('currentItemId', id);
 		const slug = name.split(' ').join('-').toLowerCase();
-
-		goto(`/dashboard/courses/${slug}`);
+		// redirect to ID if name doesn't exist
+		if (!name) {
+			goto(`/dashboard/courses/${id}`);
+		} else {
+			goto(`/dashboard/courses/${slug}`);
+		}
 	}
 
 	// FOR SEARCH
@@ -122,7 +119,7 @@
 </article>
 
 <style>
-		section {
+	section {
 		padding: 1rem;
 		border-bottom: 1px solid #d8d8d8;
 	}
@@ -149,7 +146,7 @@
 		border-radius: 50%;
 	}
 
-		.db-list {
+	.db-list {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 		grid-gap: 1rem;

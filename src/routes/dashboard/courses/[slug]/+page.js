@@ -2,15 +2,15 @@
 export const ssr = false;
 
 export const load = ({ fetch }) => {
-	const fetchContact = async () => {
-		let id = localStorage.getItem('currentItemId');
-		const res = await fetch('/api/contacts');
+	let id = localStorage.getItem('currentItemId');
+	const fetchCourses = async () => {
+		const res = await fetch('/api/courses');
 		const data = await res.json();
-		let item = data.filter((contact) => contact.id === id);
+		let item = data.filter((org) => org.id == id);
 
 		return item;
 	};
 	return {
-		contact: fetchContact()
+		course: fetchCourses()
 	};
 };
