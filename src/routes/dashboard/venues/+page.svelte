@@ -11,7 +11,11 @@
 
 	export let data;
 	let { venues } = data;
+	console.log('🚀 ~ file: +page.svelte ~ line 14 ~ venues', venues)
+
 	let sorted = sortById(venues, 'asc');
+	console.log('🚀 ~ file: +page.svelte ~ line 17 ~ sorted', sorted)
+
 
 	let showModal = false;
 	let itemId = 0;
