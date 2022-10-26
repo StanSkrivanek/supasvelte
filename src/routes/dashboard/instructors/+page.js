@@ -1,24 +1,22 @@
-/** @type {import('./$types').PageLoad} */
 export const load = ({ fetch }) => {
-	const fetchVenues = async () => {
-		const res = await fetch('/api/venues');
+	const fetchContacts = async () => {
+		const res = await fetch('/api/instructors');
 		const data = await res.json();
 		return data;
 	};
 	return {
-		venues: fetchVenues()
+		instructors: fetchContacts()
 	};
 };
-
 
 // import { supabase } from '$lib/supabase/supabaseClient';
 
 // export async function load() {
-// 	const { data: venues, error } = await supabase.from('venues').select('*');
+// 	const { data: instructors, error } = await supabase.from('instructors').select('*');
 
 // 	if (error) {
 // 		console.log(error);
 // 	}
 
-// 	return { venues };
+// 	return { instructors };
 // }

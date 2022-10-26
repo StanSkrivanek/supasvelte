@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { itemData } from '$lib/stores/store.js';
-	import { getData } from '$lib/utils/helpers.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
@@ -10,12 +9,13 @@
 	import OrganizationCard from '$lib/components/cards/OrganizationCard.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 
+	// get and sort ALL data records from DB
 	export let data;
-	 let { orgs } = data;
-	// let objAry = getData(data);
+	let { orgs } = data;
 	let sorted = sortById(orgs, 'asc');
+
 	let showModal = false;
-	let cId = 0;
+	let itemId = 0;
 	let itemTarget = null;
 
 	function toggleModal() {
@@ -25,23 +25,17 @@
 	function openDeleteConfirmModal(e) {
 		toggleModal();
 		itemTarget = e.target.closest('.db-item');
-		cId = itemTarget.id;
+		itemId = itemTarget.id;
 	}
 	// apply delete from modal
 	async function deleteItemById() {
-		await supabase.from('venues').delete().match({ id: cId });
-		objAry = objAry.filter((item) => item.id !== cId);
+		await supabase.from('venues').delete().match({ id: itemId });
+		objAry = objAry.filter((item) => item.id !== itemId);
 		itemTarget.remove();
 	}
 
-	async function findItemById(id) {
-		$itemData = await supabase.from('organizations').select('*').match({ id: id });
-		localStorage.setItem('itemData', JSON.stringify($itemData));
-		goto('/dashboard/organizations/edit');
-	}
-	function redirect(id,name) {
+	function redirect(id, name) {
 		localStorage.setItem('currentItemId', id);
-		// // slugify name
 		const slug = name.split(' ').join('-').toLowerCase();
 
 		goto(`/dashboard/organizations/${slug}`);
@@ -111,7 +105,7 @@
 					/>
 				{/each}
 			{:else}
-				{#each sorted as {  id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
+				{#each sorted as { id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
 					<OrganizationCard
 						{id}
 						{name}
@@ -124,7 +118,7 @@
 						{email}
 						{website}
 						{info}
-						on:edit={() => redirect(id,name)}
+						on:edit={() => redirect(id, name)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}

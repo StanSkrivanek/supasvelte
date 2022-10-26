@@ -1,4 +1,5 @@
 <script>
+		import {formatPhoneNumber} from '$lib/utils/helpers';
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
@@ -26,7 +27,7 @@
 			<p>{eircode}</p>
 		</div>
 		<div class="col">
-			<p>{phone}</p>
+			<p>{formatPhoneNumber(phone)}</p>
 			<p>{email}</p>
 			<p>{contact}</p>
 			<p>{website}</p>

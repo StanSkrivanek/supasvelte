@@ -1,4 +1,5 @@
 <script>
+	import { formatPhoneNumber } from '$lib/utils/helpers';
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
@@ -20,16 +21,16 @@
 	<h2>{name}</h2>
 	<div class="col dsb-venue--header">
 		<div class="col">
-			<p>{adr_1}</p>
-			<p>{adr_2}</p>
-			<p>{city}</p>
-			<p>{eircode}</p>
+			<p>{adr_1 || '---'}</p>
+			<p>{adr_2 || '---'}</p>
+			<p>{city || '---'}</p>
+			<p>{eircode || '---'}</p>
 		</div>
 		<div class="col">
-			<p>{phone}</p>
-			<p>{email}</p>
-			<p>{contact}</p>
-			<p>{website}</p>
+			<p>{formatPhoneNumber(phone) || ''}</p>
+			<p>{email || '---'}</p>
+			<p>{contact || '---'}</p>
+			<p>{website || '---'}</p>
 		</div>
 	</div>
 	<!-- <div class="dsb-venue--body">

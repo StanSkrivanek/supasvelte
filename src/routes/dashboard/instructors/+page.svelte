@@ -10,9 +10,11 @@
 	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
+	let { instructors } = data;
+	console.log('🚀 ~ file: +page.svelte ~ line 14 ~ instructors', instructors)
 
-	let dataItems = getData(data);
-	let sorted = sortById(dataItems, 'asc');
+	let sorted = sortById(instructors, 'asc');
+
 	let showModal = false;
 	let itemId = 0;
 	let itemTarget = null;

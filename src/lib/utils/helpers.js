@@ -12,6 +12,14 @@ export function getData(data) {
 	}
 }
 
+export function formatPhoneNumber(phoneNumberString) {
+	var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+	var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+	if (match) {
+		return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+	}
+	return null;
+}
 // --------------------------------------------------
 // Path: src/lib/utils/helperFunctions.js
 // `ObjAry` is an array of rows from a supabase table

@@ -1,4 +1,5 @@
 <script>
+	import {formatPhoneNumber} from '$lib/utils/helpers';
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
   
@@ -10,14 +11,7 @@
 	// export let bio;
 	const avatarPlaceholder = 'https://via.placeholder.com/100';
 
-	function formatPhoneNumber(phoneNumberString) {
-  var cleaned = ('' + phoneNumberString).replace(/\D/g, '')
-  var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-  if (match) {
-    return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-  }
-  return null
-}
+
 
 </script>
 

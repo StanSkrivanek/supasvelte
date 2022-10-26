@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { itemData } from '$lib/stores/store.js';
-	import { getData } from '$lib/utils/helpers.js';
 	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
@@ -11,12 +10,11 @@
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
 
 	export let data;
-	
-	let {venues} = data;
-
+	let { venues } = data;
 	let sorted = sortById(venues, 'asc');
+
 	let showModal = false;
-	let cId = 0;
+	let itemId = 0;
 	let itemTarget = null;
 
 	function toggleModal() {
@@ -26,19 +24,32 @@
 	function openDeleteConfirmModal(e) {
 		toggleModal();
 		itemTarget = e.target.closest('.db-item');
-		cId = itemTarget.id;
+		itemId = itemTarget.id;
 	}
 	// apply delete from modal
 	async function deleteItemById() {
-		await supabase.from('venues').delete().match({ id: cId });
-		objAry = objAry.filter((item) => item.id !== cId);
+		const { error } = await supabase.from('venues').delete().eq({ id: itemId });
+		venues = venues.filter((item) => {
+			return item.id !== itemId;
+		});
+		if (error) {
+			console.log('deleting Instructor record: err', error.message);
+		} else {
+			console.log('Instructor deleted successfully!');
+		}
+
 		itemTarget.remove();
 	}
 
-	async function findItemById(id) {
-		$itemData = await supabase.from('venues').select('*').match({ id: id });
-		localStorage.setItem('itemData', JSON.stringify($itemData));
-		goto('/dashboard/venues/edit');
+	async function redirectToEdit(id, name) {
+		localStorage.setItem('currentItemId', id);
+		const slug = name.split(' ').join('-').toLowerCase();
+		// redirect to ID if name doesn't exist
+		if (!name) {
+			goto(`/dashboard/venues/${id}`);
+		} else {
+			goto(`/dashboard/venues/${slug}`);
+		}
 	}
 
 	// FOR SEARCH
@@ -83,7 +94,6 @@
 	</section>
 	<section class="main">
 		<div class="db-list">
-
 			{#if searchTerm && filteredItems.length === 0}
 				<div class="no-results__w">
 					<p>No results found</p>
@@ -102,12 +112,12 @@
 						{email}
 						{website}
 						{info}
-						on:edit={() => findItemById(id)}
+						on:edit={() => redirectToEdit(id, name)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
 			{:else}
-				{#each sorted as {  id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
+				{#each sorted as { id, name, adr_1, adr_2, city, eircode, contact, phone, email, website, info }}
 					<VenueCard
 						{id}
 						{name}
@@ -120,7 +130,7 @@
 						{email}
 						{website}
 						{info}
-						on:edit={() => findItemById(id)}
+						on:edit={() => redirectToEdit(id, name)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
