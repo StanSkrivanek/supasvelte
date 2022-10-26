@@ -58,12 +58,7 @@
 	<div class="dash-header">
 		<h1>Update course</h1>
 	</div>
-	<!-- <section class="dash-page-header-btn__w">
-		<div class="btn-form-xxl">
-			<h2>Update course</h2>
-			<p>update course in database</p>
-		</div>
-	</section> -->
+
 	<section>
 		<form method="POST" action="?/update" use:enhance>
 			<label for="title">Course Title</label>
