@@ -95,7 +95,7 @@
 				name="info"
 				id="info"
 				rows="20"
-
+				
 				placeholder="Short overview"
 			/>
 			<div class="form-btns__w">

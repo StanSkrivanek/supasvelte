@@ -1,33 +1,16 @@
 <script>
+		import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/supabase/supabaseClient';
+	// import { supabase } from '$lib/supabase/supabaseClient';
 	import Editor from '$components/editor/Editor.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 
 	// rteOutput() and values are passed to the Editor component
 	let rteOutput;
-	// valueas are passed to the SelectFromDb component and processed in rteOutput()
-	let values = {
-		organization: '',
-		title: '',
-		type: '',
-		excerpt: '',
-		content: null
-	};
+	
 
-	async function handleSubmit() {
-		// save data in db table `courses`
-		await supabase.from('courses').insert({
-			organization: values.organization,
-			title: values.title,
-			type: values.type,
-			excerpt: values.excerpt,
-			content: await rteOutput()
-		});
-		// redirect to dashboard Courses
-		// console.log(values.title);
-		goto('/dashboard/courses');
-	}
+
+
 		function cancel() {
 		goto('/dashboard/courses');
 	}
@@ -37,20 +20,15 @@
 	<div class="dash-header">
 		<h1>Register a new course</h1>
 	</div>
-	<!-- <section class="dash-page-header-btn__w"> -->
-		<!-- <div class="btn-form-xxl">
-			<h2>Register a new course</h2>
-			<p>register new course to database</p>
-		</div> -->
-	<!-- </section> -->
+
 	<section>
-		<form on:submit|preventDefault={handleSubmit} method="POST">
+		<form method="POST" action="?/add" use:enhance>
 			<label for="title">Organization</label>
 			<input
 				type="text"
 				name="organization"
 				id="organization"
-				bind:value={values.organization}
+				
 				placeholder="organization name"
 			/>
 			<label for="title">Course Title</label>
@@ -58,16 +36,17 @@
 				type="text"
 				name="title"
 				id="title"
-				bind:value={values.title}
+
 				placeholder="Course title"
 			/>
 
 			<SelectFromDb
 				db_table={'tb_crs_types'}
 				tb_col={'course_type'}
-				bind:selectedListOption={values.type }
-			/>
-
+				value = SelectFromDb
+				/>
+				<!-- bind:selectedListOption={values.type } -->
+				
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max400 characters)</span></label
 			>
@@ -75,7 +54,7 @@
 				name="excerpt"
 				id="excerpt"
 				rows="5"
-				bind:value={values.excerpt}
+				
 				placeholder="type your content here"
 			/>
 			<!-- EDITOR -->

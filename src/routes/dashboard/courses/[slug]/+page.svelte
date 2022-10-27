@@ -7,6 +7,9 @@
 	export let data;
 	let { course } = data;
 	let { id, title, type, organization, excerpt, content } = course[0];
+	console.log('🚀 ~ file: +page.svelte ~ line 10 ~ content', content)
+
+	
 	// get data from localStorage
 	// const courseDetailsData = JSON.parse(localStorage.getItem('itemData')) || [];
 
@@ -85,7 +88,8 @@
 			/>
 
 			<label for="content">Course content</label>
-			<!-- <Update bind:rteOutput /> -->
+			<!-- TODO: get and update RTE data -->
+			<!-- <Update {content} /> -->
 			<input type="hidden" hidden name="id" value={id} />
 			<div class="form-btns__w">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
@@ -96,9 +100,6 @@
 </article>
 
 <style>
-	/* .dash-page-header-btn__w {
-		border-bottom: #ccc 1px solid;
-	} */
 
 	.dash-header {
 		display: flex;

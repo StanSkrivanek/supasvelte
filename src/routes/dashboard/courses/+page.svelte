@@ -14,7 +14,7 @@
 
 	let showModal = false;
 	let itemId = 0;
-	let target = null;
+	let itemTarget = null;
 
 	function toggleModal() {
 		showModal = !showModal;
@@ -22,14 +22,13 @@
 	// find course id to be late used for delete from modal
 	function openDeleteConfirmModal(e) {
 		toggleModal();
-		target = e.target.parentElement;
-		itemId = target.id;
+		itemTarget = e.target.closest('.db-item');
+		itemId = itemTarget.id;
 	}
 	// apply delete from modal
 	async function deleteItemById() {
 		await supabase.from('courses').delete().match({ id: itemId });
-		// objAry = objAry.filter((item) => item.id !== itemId);
-		target.remove();
+		itemTarget.remove();
 	}
 
 	function redirectToEdit(id, name) {

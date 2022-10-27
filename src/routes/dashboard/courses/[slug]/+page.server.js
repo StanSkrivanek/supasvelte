@@ -7,6 +7,8 @@ export const actions = {
 		const fd = await request.formData();
 
 		const { id, title, type, organization, excerpt, content } = Object.fromEntries([...fd]);
+	
+
 
 		const { error: err } = await supabase
 			.from('courses')

@@ -25,11 +25,4 @@ export function formatPhoneNumber(phoneNumberString) {
 	}
 	return null;
 }
-// --------------------------------------------------
-// Path: src/lib/utils/helperFunctions.js
-// `ObjAry` is an array of rows from a supabase table
-//searchTerm is user input
-//
-// objAry = data form fuzzy store
 
-// --------------------------------------------------
