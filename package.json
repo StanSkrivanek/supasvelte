@@ -37,8 +37,10 @@
 		"@editorjs/table": "^2.0.4",
 		"@editorjs/underline": "^1.0.0",
 		"@supabase/supabase-js": "2.0.0-rc.10",
+		"@tinymce/tinymce-svelte": "^1.0.0",
 		"cl-editor": "^2.3.0",
 		"lexical": "^0.5.0",
-		"svelte-editorjs": "^0.1.0"
+		"svelte-editorjs": "^0.1.0",
+		"tinymce": "^6.2.0"
 	}
 }

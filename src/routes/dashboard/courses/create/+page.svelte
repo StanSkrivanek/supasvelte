@@ -2,12 +2,68 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { dbTableOpt } from '$lib/stores/store.js';
-	import Editor from '$components/editor/Editor.svelte';
+	// import Editor from '$components/editor/Editor.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
+	import Editor from '@tinymce/tinymce-svelte';
+	const tinyMceApi = import.meta.env.VITE_TINYMCE_API_KEY;
+	
+	let tmceContent = '';
+	$: console.log('values: ', tmceContent, tmceContent.length);
+	
+	let conf = {
+		plugins: 'lists autoresize image',
+		toolbar: [
+			{ name: 'history', items: ['undo', 'redo'] },
+			{ name: 'styles', items: ['h2', 'h3', 'forecolor'] },
+			{ name: 'image', items: ['image'] }
+			// { name: "formatting", items: ["bold", "italic", "underline"] },
+			// {
+			//   name: "alignment",
+			//   items: ["alignleft", "aligncenter", "alignright", "alignjustify"],
+			// },
+			// { name: "lists", items: ["bullist", "numlist"] },
+			// { name: "indentation", items: ["outdent", "indent"] },
+		],
+		image_title: true,
+		automatic_uploads: true,
+		file_picker_types: 'image',
+		file_picker_callback: (cb, value, meta) => {
+			const input = document.createElement('input');
+			input.setAttribute('type', 'file');
+			input.setAttribute('accept', 'image/*');
 
+			input.addEventListener('change', (e) => {
+				const file = e.target.files[0];
+
+				const reader = new FileReader();
+				reader.addEventListener('load', () => {
+					/*
+          Note: Now we need to register the blob in TinyMCEs image blob
+          registry. In the next release this part hopefully won't be
+          necessary, as we are looking to handle it internally.
+        */
+			//  TODO: use crypto to generate uuid
+			
+					const id = 'blobid' + crypto.randomUUID();
+					console.log("id",id);
+					// const id = 'blobid' + new Date().getTime();
+					const blobCache = tinymce.activeEditor.editorUpload.blobCache;
+					const base64 = reader.result.split(',')[1];
+					const blobInfo = blobCache.create(id, file, base64);
+					blobCache.add(blobInfo);
+
+					/* call the callback and populate the Title field with the file name */
+					cb(blobInfo.blobUri(), { title: file.name });
+				});
+				reader.readAsDataURL(file);
+			});
+
+			input.click();
+		}
+	};
 	// rteOutput() and values are passed to the Editor component
 	let rteOutput;
-$: console.log($dbTableOpt);
+	$: console.log($dbTableOpt);
 
 	function cancel() {
 		goto('/dashboard/courses');
@@ -37,6 +93,17 @@ $: console.log($dbTableOpt);
 			<!-- <label for="content">Course content</label> -->
 			<!-- <Editor padding={80} bind:rteOutput /> -->
 
+			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent}/>
+			<!-- bind:value={$note.value} -->
+			<!-- <Editor
+				apiKey={tinyMceApi}
+				{conf}
+				{value}
+				on:input={(e) => {
+					console.log(e);
+					value = e.detail.value;
+				}}
+			/> -->
 			<div class="btns__c">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">save</button>
