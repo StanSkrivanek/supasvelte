@@ -40,8 +40,12 @@ none for now
 
 [ ] how Editor JS adding image paths to JSON to be able delete ALL images on delete course
 
-- find suitable RTE for Sveltekit
+- find suitable RTE for Sveltekit (Quill, TinyMCE, Slate, ProseMirror, etc.)
 - opt1: [cl-editor](https://github.com/nenadpnc/cl-editor)
 - opt2: [tailwind-editor](https://github.com/fouita/tailwind-editor)
 - execCommands: [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
 - cdp: [execCommands browser Support](https://codepen.io/stan65/pen/OJZxYNv)
+
+
+[] check courses options as it returns first value _(short courses)_ when no value is selected
+
