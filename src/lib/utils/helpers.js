@@ -4,11 +4,6 @@ export function sortById(array, order) {
 	} else if (order === 'desc') {
 		return array.sort((a, b) => b.id - a.id);
 	}
-
-	// return array.sort((a, b) => {
-	// 	if (order === 'desc') return b.order_num - a.order_num;
-	// 	return a.order_num - b.order_num;
-	// });
 }
 // delete `getData` after refactoring
 export function getData(data) {

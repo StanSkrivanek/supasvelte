@@ -1,17 +1,15 @@
 <script>
-		import { enhance } from '$app/forms';
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	// import { supabase } from '$lib/supabase/supabaseClient';
+	import { dbTableOpt } from '$lib/stores/store.js';
 	import Editor from '$components/editor/Editor.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 
 	// rteOutput() and values are passed to the Editor component
 	let rteOutput;
-	
+$: console.log($dbTableOpt);
 
-
-
-		function cancel() {
+	function cancel() {
 		goto('/dashboard/courses');
 	}
 </script>
@@ -24,43 +22,20 @@
 	<section>
 		<form method="POST" action="?/add" use:enhance>
 			<label for="title">Organization</label>
-			<input
-				type="text"
-				name="organization"
-				id="organization"
-				
-				placeholder="organization name"
-			/>
+			<input type="text" name="organization" id="organization" placeholder="organization name" />
 			<label for="title">Course Title</label>
-			<input
-				type="text"
-				name="title"
-				id="title"
+			<input type="text" name="title" id="title" placeholder="Course title" />
+			<SelectFromDb db_table={'tb_crs_types'} tb_col={'course_type'} />
 
-				placeholder="Course title"
-			/>
+			<!-- bind:selectedListOption={values.type } -->
 
-			<SelectFromDb
-				db_table={'tb_crs_types'}
-				tb_col={'course_type'}
-				value = SelectFromDb
-				/>
-				<!-- bind:selectedListOption={values.type } -->
-				
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max400 characters)</span></label
 			>
-			<textarea
-				name="excerpt"
-				id="excerpt"
-				rows="5"
-				
-				placeholder="type your content here"
-			/>
+			<textarea name="excerpt" id="excerpt" rows="5" placeholder="type your content here" />
 			<!-- EDITOR -->
-			<label for="content">Course content</label>
-
-			<Editor padding={80} bind:rteOutput />
+			<!-- <label for="content">Course content</label> -->
+			<!-- <Editor padding={80} bind:rteOutput /> -->
 
 			<div class="btns__c">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
@@ -71,12 +46,11 @@
 </article>
 
 <style>
-
 	/* .dash-page-header-btn__w {
 		border-bottom: #ccc 1px solid;
 	} */
 	section {
-		padding: 1rem ;
+		padding: 1rem;
 	}
 	form {
 		display: flex;
@@ -102,8 +76,7 @@
 		overflow-y: scroll;
 		border-radius: 0.25rem;
 	}
-button:last-child {
-    margin-left: 0.5rem;
-  }
-
+	button:last-child {
+		margin-left: 0.5rem;
+	}
 </style>

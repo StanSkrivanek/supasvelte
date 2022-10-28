@@ -64,8 +64,6 @@
 
 	<section>
 		<form method="POST" action="?/update" use:enhance>
-			<label for="title">Course Title</label>
-			<input type="text" name="title" id="title" value={title || ''} placeholder="Course title" />
 			<label for="title">Organization</label>
 			<input
 				type="text"
@@ -74,6 +72,8 @@
 				value={organization || ''}
 				placeholder="organization name"
 			/>
+			<label for="title">Course Title</label>
+			<input type="text" name="title" id="title" value={title || ''} placeholder="Course title" />
 			<SelectFromDb db_table={'tb_crs_types'} tb_col={'course_type'} selectedListOption={type} />
 
 			<label for="excerpt"

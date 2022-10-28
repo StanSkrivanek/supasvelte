@@ -30,7 +30,6 @@
 	// apply delete from modal
 	async function deleteItemById() {
 		await supabase.from('venues').delete().match({ id: itemId });
-		objAry = objAry.filter((item) => item.id !== itemId);
 		itemTarget.remove();
 	}
 
