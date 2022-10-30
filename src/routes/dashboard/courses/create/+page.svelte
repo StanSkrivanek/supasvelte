@@ -6,21 +6,27 @@
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	import Editor from '@tinymce/tinymce-svelte';
 	const tinyMceApi = import.meta.env.VITE_TINYMCE_API_KEY;
-	
+
 	let tmceContent = '';
+	$: tmceContent = tmceContent;
 	$: console.log('values: ', tmceContent, tmceContent.length);
-	
+	function getImgSource() {
+		// console.log('tmceContent', tmceContent);
+		Editor.uploadImages()
+		// const img = tmceContent.querySelector('img');
+		// console.log('img: ', img);
+	}
 	let conf = {
 		plugins: 'lists autoresize image',
 		toolbar: [
 			{ name: 'history', items: ['undo', 'redo'] },
 			{ name: 'styles', items: ['h2', 'h3', 'forecolor'] },
-			{ name: 'image', items: ['image'] }
+			{ name: 'image', items: ['image'] },
 			// { name: "formatting", items: ["bold", "italic", "underline"] },
-			// {
-			//   name: "alignment",
-			//   items: ["alignleft", "aligncenter", "alignright", "alignjustify"],
-			// },
+			{
+				name: 'alignment',
+				items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify']
+			}
 			// { name: "lists", items: ["bullist", "numlist"] },
 			// { name: "indentation", items: ["outdent", "indent"] },
 		],
@@ -42,10 +48,9 @@
           registry. In the next release this part hopefully won't be
           necessary, as we are looking to handle it internally.
         */
-			//  TODO: use crypto to generate uuid
-			
+					//  TODO: use crypto to generate uuid
+
 					const id = 'blobid' + crypto.randomUUID();
-					console.log("id",id);
 					// const id = 'blobid' + new Date().getTime();
 					const blobCache = tinymce.activeEditor.editorUpload.blobCache;
 					const base64 = reader.result.split(',')[1];
@@ -55,15 +60,17 @@
 					/* call the callback and populate the Title field with the file name */
 					cb(blobInfo.blobUri(), { title: file.name });
 				});
+				
 				reader.readAsDataURL(file);
+
 			});
 
 			input.click();
 		}
 	};
 	// rteOutput() and values are passed to the Editor component
-	let rteOutput;
-	$: console.log($dbTableOpt);
+	// let rteOutput;
+	// $: console.log($dbTableOpt);
 
 	function cancel() {
 		goto('/dashboard/courses');
@@ -76,7 +83,7 @@
 	</div>
 
 	<section>
-		<form method="POST" action="?/add" use:enhance>
+		<form method="POST" action="?/add" use:enhance={getImgSource}>
 			<label for="title">Organization</label>
 			<input type="text" name="organization" id="organization" placeholder="organization name" />
 			<label for="title">Course Title</label>
@@ -92,8 +99,8 @@
 			<!-- EDITOR -->
 			<!-- <label for="content">Course content</label> -->
 			<!-- <Editor padding={80} bind:rteOutput /> -->
-
-			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent}/>
+			<label for="content">Course Content</label>
+			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent} name="content" />
 			<!-- bind:value={$note.value} -->
 			<!-- <Editor
 				apiKey={tinyMceApi}
