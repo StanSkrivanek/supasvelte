@@ -61,7 +61,7 @@
 	function handleSubmit({ data }) {
 		// if user has uploaded a new avatar
 		if (avatarFile !== undefined && avatarFile !== null) {
-			console.log(avatarFile);
+			// console.log(avatarFile);
 			// Upload it to DB
 			const { error } = supabase.storage
 				.from('images')

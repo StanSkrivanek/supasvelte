@@ -6,22 +6,19 @@
 	// import Editor from '$components/editor/Editor.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	import Editor from '@tinymce/tinymce-svelte';
-	import { update_await_block_branch } from 'svelte/internal';
 	const tinyMceApi = import.meta.env.VITE_TINYMCE_API_KEY;
 
 	// let tmceContent = '';
 	$: tmceContent = '';
 	let rteImgs = [];
-	// $: console.log('rteImgs', rteImgs);
-	// $: console.log('values: ', tmceContent, tmceContent.length);
 
-	async function setImgUrl({ data }) {
-		console.log('data', ...data);
+	function setImgUrl({data}) {
+		console.log('data', data);
 		// console.log(rteImgs);
 		if (rteImgs.length > 0) {
 			for (let img of rteImgs) {
 				//Store img in DB
-				const { error } = await supabase.storage
+				const { data, error } = supabase.storage
 					.from('images')
 					.upload(`rte/course/${img.title}`, img.blob, {
 						cacheControl: '3600',
@@ -30,7 +27,7 @@
 				if (error) console.log('Error storing file: ', error.message);
 				else console.log('File successfully stored in Bucket!');
 				// GET img URL from DB
-				const publicURL = await supabase.storage
+				const publicURL = supabase.storage
 					.from('images')
 					.getPublicUrl(`rte/course/${img.title}`).data.publicUrl;
 
@@ -44,11 +41,15 @@
 					// replace src with DB URL
 					if (title === img.title) {
 						tmceContent = tmceContent.replace(src, publicURL);
+						// console.log('🚀 ~ file: +page.svelte ~ line 44 ~ setImgUrl ~ tmceContent', tmceContent)
+
 					}
 				}
 			}
+			data.set('content', tmceContent);
+			console.log('🚀 ~ file: +page.svelte ~ line 50 ~ setImgUrl ~ tmceContent', tmceContent)
+			
 		}
-		update();
 	}
 	let conf = {
 		plugins: 'lists autoresize image table',
@@ -79,7 +80,7 @@
 			input.addEventListener('change', (e) => {
 				const file = e.target.files[0];
 				rteImgs.push({ title: file.name, blob: file });
-				// console.log(rteImgs);
+				console.log(rteImgs);
 				const reader = new FileReader();
 				reader.addEventListener('load', () => {
 					const id = 'blobid' + crypto.randomUUID();
@@ -123,8 +124,9 @@
 			<textarea name="excerpt" id="excerpt" rows="5" placeholder="type your content here" />
 
 			<label for="content">Course Content</label>
-			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent} />
-			<textarea name="content" bind:value={tmceContent} />
+			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent}/>
+			<textarea name="content" value="" />
+			<!-- <textarea name="content"  /> -->
 			<!-- bind:value={$note.value} -->
 			<!-- <Editor
 				apiKey={tinyMceApi}
