@@ -1,62 +1,28 @@
 <script>
-	import { enhance, applyAction } from '$app/forms';
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/supabase/supabaseClient';
 	import { dbTableOpt } from '$lib/stores/store.js';
 	// import Editor from '$components/editor/Editor.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	import Editor from '@tinymce/tinymce-svelte';
-	import { update_await_block_branch } from 'svelte/internal';
 	const tinyMceApi = import.meta.env.VITE_TINYMCE_API_KEY;
 
-	// let tmceContent = '';
-	$: tmceContent = '';
-	let rteImgs = [];
-	// $: console.log('rteImgs', rteImgs);
-	// $: console.log('values: ', tmceContent, tmceContent.length);
-
-	async function setImgUrl({ data }) {
-		console.log('data', ...data);
-		// console.log(rteImgs);
-		if (rteImgs.length > 0) {
-			for (let img of rteImgs) {
-				//Store img in DB
-				const { error } = await supabase.storage
-					.from('images')
-					.upload(`rte/course/${img.title}`, img.blob, {
-						cacheControl: '3600',
-						upsert: false
-					});
-				if (error) console.log('Error storing file: ', error.message);
-				else console.log('File successfully stored in Bucket!');
-				// GET img URL from DB
-				const publicURL = await supabase.storage
-					.from('images')
-					.getPublicUrl(`rte/course/${img.title}`).data.publicUrl;
-
-				// find all images in tmceContent
-				const imgTags = tmceContent.match(/<img[^>]*>/g);
-				// Replace img src with DB URL
-				for (let tag of imgTags) {
-					// find title and src in tag
-					const title = tag.match(/title="([^"]*)"/)[1];
-					const src = tag.match(/src="([^"]*)"/)[1];
-					// replace src with DB URL
-					if (title === img.title) {
-						tmceContent = tmceContent.replace(src, publicURL);
-					}
-				}
-			}
-		}
-		update();
+	let tmceContent = '';
+	let text = '';
+	$: tmceContent = tmceContent;
+	$: console.log('tinyContent: ', tmceContent,);
+	function getImgSource() {
+		console.log('tmceContent', tmceContent);
+		// Editor.uploadImages()
+		// const img = tmceContent.querySelector('img');
+		// console.log('img: ', img);
 	}
 	let conf = {
-		plugins: 'lists autoresize image table',
+		plugins: 'lists autoresize image',
 		toolbar: [
 			{ name: 'history', items: ['undo', 'redo'] },
 			{ name: 'styles', items: ['h2', 'h3', 'forecolor'] },
 			{ name: 'image', items: ['image'] },
-			{ name: 'table', items: ['table'] },
 			// { name: "formatting", items: ["bold", "italic", "underline"] },
 			{
 				name: 'alignment',
@@ -65,38 +31,48 @@
 			// { name: "lists", items: ["bullist", "numlist"] },
 			// { name: "indentation", items: ["outdent", "indent"] },
 		],
-		toolbar_sticky: true,
 		image_title: true,
 		automatic_uploads: true,
-		// quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
-		table_toolbar:
-			'tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
 		file_picker_types: 'image',
 		file_picker_callback: (cb, value, meta) => {
 			const input = document.createElement('input');
 			input.setAttribute('type', 'file');
 			input.setAttribute('accept', 'image/*');
+
 			input.addEventListener('change', (e) => {
 				const file = e.target.files[0];
-				rteImgs.push({ title: file.name, blob: file });
-				// console.log(rteImgs);
+
 				const reader = new FileReader();
 				reader.addEventListener('load', () => {
+					/*
+          Note: Now we need to register the blob in TinyMCEs image blob
+          registry. In the next release this part hopefully won't be
+          necessary, as we are looking to handle it internally.
+        */
+					//  TODO: use crypto to generate uuid
+
 					const id = 'blobid' + crypto.randomUUID();
+					// const id = 'blobid' + new Date().getTime();
 					const blobCache = tinymce.activeEditor.editorUpload.blobCache;
 					const base64 = reader.result.split(',')[1];
 					const blobInfo = blobCache.create(id, file, base64);
 					blobCache.add(blobInfo);
+
 					/* call the callback and populate the Title field with the file name */
 					cb(blobInfo.blobUri(), { title: file.name });
 				});
-
+				
 				reader.readAsDataURL(file);
+
 			});
 
 			input.click();
 		}
 	};
+	// rteOutput() and values are passed to the Editor component
+	// let rteOutput;
+	// $: console.log($dbTableOpt);
+
 	function cancel() {
 		goto('/dashboard/courses');
 	}
@@ -108,7 +84,7 @@
 	</div>
 
 	<section>
-		<form method="POST" action="?/add" use:enhance={setImgUrl}>
+		<form method="POST" action="?/add" use:enhance={getImgSource}>
 			<label for="title">Organization</label>
 			<input type="text" name="organization" id="organization" placeholder="organization name" />
 			<label for="title">Course Title</label>
@@ -121,10 +97,12 @@
 				>Course short introduction <span> (excerpt should have max400 characters)</span></label
 			>
 			<textarea name="excerpt" id="excerpt" rows="5" placeholder="type your content here" />
-
+			<!-- EDITOR -->
+			<!-- <label for="content">Course content</label> -->
+			<!-- <Editor padding={80} bind:rteOutput /> -->
 			<label for="content">Course Content</label>
-			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent} />
-			<textarea name="content" bind:value={tmceContent} />
+			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent} name="content" />
+			<textarea bind:value={tmceContent}></textarea>
 			<!-- bind:value={$note.value} -->
 			<!-- <Editor
 				apiKey={tinyMceApi}
@@ -140,6 +118,8 @@
 				<button class="info">save</button>
 			</div>
 		</form>
+		<!-- <div>{@html tmceContent}</div> -->
+		<!-- <div>{text}</div> -->
 	</section>
 </article>
 
