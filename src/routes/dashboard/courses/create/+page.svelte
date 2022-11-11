@@ -125,7 +125,7 @@
 
 			<label for="content">Course Content</label>
 			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent}/>
-			<textarea name="content" value="" />
+			<textarea class="hidden" name="content" vbind:value={tmceContent} />
 			<!-- <textarea name="content"  /> -->
 			<!-- bind:value={$note.value} -->
 			<!-- <Editor
@@ -178,5 +178,11 @@
 	}
 	button:last-child {
 		margin-left: 0.5rem;
+	}
+		.hidden {
+		display: none;
+	}
+	.btns__c{
+		margin-top: 1rem;
 	}
 </style>

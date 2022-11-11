@@ -1,4 +1,4 @@
-// import { redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import { supabase } from '$lib/supabase/supabaseClient';
 
 /** @type {import('./$types').Actions} */
@@ -17,7 +17,7 @@ export const actions = {
 		});
 
 		if (err) return { status: 500, body: { error: err.message } };
-		// throw redirect(307, '/dashboard/courses');
-		return { success: true };
+		throw redirect(307, '/dashboard/courses');
+		// return { success: true };
 	}
 };
