@@ -1,6 +1,6 @@
 <script>
-	export let width = 100,
-		height = 100;
+	export let width = 20,
+		height = 20;
 </script>
 
 <svg {width} {height} fill="none" viewBox="0 0 256 256"
@@ -9,13 +9,13 @@
 		cy="96"
 		r="64"
 		fill="none"
-		stroke="#99a3ba"
+		stroke="#ffffff"
 		stroke-miterlimit="10"
 		stroke-width="16"
 	/><path
 		d="M31,216a112,112,0,0,1,194,0"
 		fill="none"
-		stroke="#99a3ba"
+		stroke="#ffffff"
 		stroke-linecap="round"
 		stroke-linejoin="round"
 		stroke-width="16"

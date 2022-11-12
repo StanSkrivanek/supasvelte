@@ -27,14 +27,15 @@ none for now
 
 - [ x ] update course type in DB from Select option
 - [ ] ~~`fuzzy search` functionality to `type` and `organisation` input field to be able find type faster and add new if non existent~~
-[ x ] show avatar when uploaded into DB
-[ x ] add delete option under preview to delete image and update db with null
-[ x ] save image url in db on submit, delete image on cancel??, delete image on delete instructor
+      [ x ] show avatar when uploaded into DB
+      [ x ] add delete option under preview to delete image and update db with null
+      [ x ] save image url in db on submit, delete image on cancel??, delete image on delete instructor
 
-[ ] Custom Select need more love ;) 
+[ ] Custom Select need more love ;)
 [ ] add error msg when image with identical name exists in DB
 [ ] Image server side Validation with - Multer
-[ ] resize images _(before storing in DB)_ with JIMP and store them with UUID as name + extension 
+[ ] resize images _(before storing in DB)_ with JIMP and store them with UUID as name + extension
+
   <!-- [ ] add error msg when image is not uploaded
   [ ] add error msg when image is not uploaded -->
 
@@ -46,6 +47,20 @@ none for now
 - execCommands: [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
 - cdp: [execCommands browser Support](https://codepen.io/stan65/pen/OJZxYNv)
 
-
 [] check courses options as it returns first value _(short courses)_ when no value is selected
 
+**IDEAS**
+
+**DELETE IMAGE from DB**
+On update init store find and store all img's urls in variable array and on save compare with new img's urls and delete old ones from DB.
+
+**DELETE COURSE and ALL IMAGES from DB**
+On course delete remove all images from DB. What about images that are used in other courses?
+
+**GALLERY**
+[ ] create gallery page with all images from DB
+
+[ ] add filter to show unused images in gallery to be able to delete them from DB, 
+
+
+[ ] add images to course from gallery?.

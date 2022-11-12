@@ -11,6 +11,8 @@
 	import CourseIcn from '$components/icons/CourseIcn.svelte';
 	import CalendarIcn from '$components/icons/CalendarIcn.svelte';
 	import OrganizationIcn from '$components/icons/OrganizationIcn.svelte';
+	import ImageIcn from '$components/icons/ImageIcn.svelte';
+	import AvatarIcn from '$components/icons/AvatarIcn.svelte';
 </script>
 
 <nav>
@@ -24,7 +26,8 @@
 		<li><OrganizationIcn /><a href="/dashboard/organizations">Organizations</a></li>
 		<li><InstructorIcn /><a href="/dashboard/instructors">Instructors</a></li>
 		<!-- <li><InstructorIcn /><a href="/dashboard/tests/contacts">test/Contacts</a></li> -->
-		<li><InstructorIcn /><a href="/dashboard/contacts">Contacts</a></li>
+		<li><AvatarIcn /><a href="/dashboard/contacts">Contacts</a></li>
+		<li><ImageIcn /><a href="/dashboard/gallery">Gallery</a></li>
 		<li class="nav-divider" />
 		<li><SettingsIcn /><a href="/dashboard/settings"> Page Settings</a></li>
 	</ul>

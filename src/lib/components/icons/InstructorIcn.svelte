@@ -1,22 +1,22 @@
-<script >
-	export let width = 16, height = 16;
+<script>
+	export let width = 20,
+		height = 20;
 </script>
 
-<svg {width} {height}  fill="none" viewBox="0 0 256 256">
-  <circle
-		cx="128"
-		cy="96"
-		r="64"
-		fill="none"
-		stroke="#ffffff"
-		stroke-miterlimit="10"
-		stroke-width="12"
-	/><path
-		d="M31,216a112,112,0,0,1,194,0"
+<svg {width} {height} fill="none" viewBox="0 0 256 256">
+	<path
+		d="M128,88a32,32,0,0,1,32-32h64a8,8,0,0,1,8,8V192a8,8,0,0,1-8,8H160a32,32,0,0,0-32,32"
 		fill="none"
 		stroke="#ffffff"
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		stroke-width="12"
+		stroke-width="16"
+	/><path
+		d="M24,192a8,8,0,0,0,8,8H96a32,32,0,0,1,32,32V88A32,32,0,0,0,96,56H32a8,8,0,0,0-8,8Z"
+		fill="none"
+		stroke="#ffffff"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		stroke-width="16"
 	/></svg
 >
