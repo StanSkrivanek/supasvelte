@@ -5,6 +5,7 @@ import { supabase } from '$lib/supabase/supabaseClient';
 export const GET = async () => {
 	const { data, error } = await supabase.from('courses').select('*');
 
+
 	if (error) return { status: 500, body: { error: error.message } };
 	return new Response(JSON.stringify(data), { status: 200 });
 };

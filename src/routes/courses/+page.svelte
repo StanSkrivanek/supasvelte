@@ -7,12 +7,24 @@
 	import Button from '$lib/components/shared/ui/Button.svelte';
 
 	export let data;
+	console.log('🚀 ~ file: +page.svelte ~ line 10 ~ data', data)
 
-	let objAry = getData(data);
+
+	let {courses} = data;
 
 	// sort courses by ID  temporarry solution
 	//TODO: SORT BY: time createdAt
-	let sortedCourse = sortById(objAry, 'asc');
+	let sortedCourse = sortById(courses, 'asc');
+	
+	function redirect(e) {
+		// const title = e.target.closest("h2").innerText;
+		const id = e.target.closest('.card').id;
+		localStorage.setItem('currentItemId', e.target.closest('.card').id);
+		// // slugify name
+		const slug = courses[0].title.split(' ').join('-').toLowerCase();
+
+		goto(`/courses/${slug}`);
+	}
 </script>
 
 <div class="hero">
@@ -32,11 +44,7 @@
 			<div class="card_content">
 				<p class="card_excerpt">{course.excerpt}</p>
 				<div class="card_footer">
-					<Button
-						btColor="dark"
-						caption="More Info"
-						on:click={() => goto(`/courses/${course.id}`)}
-					/>
+					<Button btColor="dark" caption="More Info" on:click={(e) => redirect(e)} />
 				</div>
 			</div>
 		</div>
@@ -49,7 +57,7 @@
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 		gap: 1rem;
 	}
-		.hero {
+	.hero {
 		display: grid;
 		grid-template-columns: 0.25fr minmax(1fr, 1440px) 0.25fr;
 		grid-template-areas: '. content .';

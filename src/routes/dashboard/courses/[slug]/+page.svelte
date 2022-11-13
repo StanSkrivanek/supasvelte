@@ -2,7 +2,6 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
-	// import Update from '$components/editor/Update.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	import Editor from '@tinymce/tinymce-svelte';
 	const tinyMceApi = import.meta.env.VITE_TINYMCE_API_KEY;
@@ -81,7 +80,7 @@
 			input.addEventListener('change', (e) => {
 				const file = e.target.files[0];
 				rteImgs.push({ title: file.name, blob: file });
-				console.log(rteImgs);
+				// console.log(rteImgs);
 				const reader = new FileReader();
 				reader.addEventListener('load', () => {
 					const id = 'blobid' + crypto.randomUUID();

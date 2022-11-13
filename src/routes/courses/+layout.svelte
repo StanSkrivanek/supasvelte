@@ -4,7 +4,7 @@
 </script>
 
 <!-- HOMEPAGE -->
-<!-- <div> -->
-	<!-- Homepage Content is poulated via <slot />-->
+<div>
+	<!-- Content is poulated via <slot />-->
 	<slot/>
-<!-- </div> -->
+</div>

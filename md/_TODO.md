@@ -58,9 +58,10 @@ On update init store find and store all img's urls in variable array and on save
 On course delete remove all images from DB. What about images that are used in other courses?
 
 **GALLERY**
+ISSUE: when we delete image from gallery it is deleted from DB but not from course content
+[ ] create gallery page with images from DB `images/rte/course`
 [ ] create gallery page with all images from DB
 
-[ ] add filter to show unused images in gallery to be able to delete them from DB, 
-
+[ ] add filter to show unused images in gallery to be able to delete them from DB,
 
 [ ] add images to course from gallery?.
