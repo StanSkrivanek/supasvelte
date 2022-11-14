@@ -56,15 +56,17 @@
 		toolbar: [
 			{ name: 'history', items: ['undo', 'redo'] },
 			{ name: 'styles', items: ['h2', 'h3', 'forecolor'] },
+			{ name: 'bullets', items: ['bullist', 'numlist'] },
 			{ name: 'image', items: ['image'] },
 			{ name: 'table', items: ['table'] },
-			// { name: "formatting", items: ["bold", "italic", "underline"] },
+			{ name: 'formatting', items: ['bold', 'italic', 'underline'] },
 			{
 				name: 'alignment',
 				items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify']
-			}
-			// { name: "lists", items: ["bullist", "numlist"] },
-			// { name: "indentation", items: ["outdent", "indent"] },
+			},
+			{ name: 'indentation', items: ['outdent', 'indent'] },
+			{ name: 'links', items: ['link', 'unlink'] },
+			{ name: 'tools', items: ['removeformat'] },
 		],
 		toolbar_sticky: true,
 		image_title: true,
@@ -165,7 +167,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		max-width: 45rem;
+		max-width: 60rem;
 	}
 	button:last-child {
 		margin-left: 0.5rem;

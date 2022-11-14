@@ -1,21 +1,18 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { sortById } from '$lib/utils/helpers.js';
-	import { getData } from '$lib/utils/helpers.js';
-
-	import Tag from '$lib/components/shared/ui/Tag.svelte';
+	// import Tag from '$lib/components/shared/ui/Tag.svelte';
 	import Button from '$lib/components/shared/ui/Button.svelte';
 
 	export let data;
-	console.log('🚀 ~ file: +page.svelte ~ line 10 ~ data', data)
+	console.log('🚀 ~ file: +page.svelte ~ line 10 ~ data', data);
 
-
-	let {courses} = data;
+	let { courses } = data;
 
 	// sort courses by ID  temporarry solution
 	//TODO: SORT BY: time createdAt
 	let sortedCourse = sortById(courses, 'asc');
-	
+
 	function redirect(e) {
 		// const title = e.target.closest("h2").innerText;
 		const id = e.target.closest('.card').id;
@@ -54,7 +51,7 @@
 <style>
 	.courses {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 1rem;
 	}
 	.hero {

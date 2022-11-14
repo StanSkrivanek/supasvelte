@@ -12,7 +12,7 @@
 	$: tmceContent = '';
 	let rteImgs = [];
 
-	function setImgUrl({data}) {
+	function setImgUrl({ data }) {
 		console.log('data', data);
 		// console.log(rteImgs);
 		if (rteImgs.length > 0) {
@@ -27,9 +27,8 @@
 				if (error) console.log('Error storing file: ', error.message);
 				else console.log('File successfully stored in Bucket!');
 				// GET img URL from DB
-				const publicURL = supabase.storage
-					.from('images')
-					.getPublicUrl(`rte/course/${img.title}`).data.publicUrl;
+				const publicURL = supabase.storage.from('images').getPublicUrl(`rte/course/${img.title}`)
+					.data.publicUrl;
 
 				// find all images in tmceContent
 				const imgTags = tmceContent.match(/<img[^>]*>/g);
@@ -42,13 +41,11 @@
 					if (title === img.title) {
 						tmceContent = tmceContent.replace(src, publicURL);
 						// console.log('🚀 ~ file: +page.svelte ~ line 44 ~ setImgUrl ~ tmceContent', tmceContent)
-
 					}
 				}
 			}
 			data.set('content', tmceContent);
-			console.log('🚀 ~ file: +page.svelte ~ line 50 ~ setImgUrl ~ tmceContent', tmceContent)
-			
+			console.log('🚀 ~ file: +page.svelte ~ line 50 ~ setImgUrl ~ tmceContent', tmceContent);
 		}
 	}
 	let conf = {
@@ -58,17 +55,22 @@
 			{ name: 'styles', items: ['h2', 'h3', 'forecolor'] },
 			{ name: 'image', items: ['image'] },
 			{ name: 'table', items: ['table'] },
-			// { name: "formatting", items: ["bold", "italic", "underline"] },
+			{ name: 'formatting', items: ['bold', 'italic', 'underline'] },
 			{
 				name: 'alignment',
 				items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify']
-			}
-			// { name: "lists", items: ["bullist", "numlist"] },
-			// { name: "indentation", items: ["outdent", "indent"] },
+			},
+			{ name: 'indentation', items: ['outdent', 'indent'] },
+			{ name: 'bullets', items: ['bullist', 'numlist'] },
+			{ name: 'links', items: ['link', 'unlink'] },
+			{ name: 'tools', items: ['removeformat'] },
+			{ name: "lists", items: ["bullist", "numlist"] },
+			{ name: "indentation", items: ["outdent", "indent"] },
 		],
 		toolbar_sticky: true,
 		image_title: true,
 		automatic_uploads: true,
+		// content_style: 'body { line-height: 2; }',
 		// quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
 		table_toolbar:
 			'tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
@@ -124,7 +126,7 @@
 			<textarea name="excerpt" id="excerpt" rows="5" placeholder="type your content here" />
 
 			<label for="content">Course Content</label>
-			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent}/>
+			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent} />
 			<textarea class="hidden" name="content" vbind:value={tmceContent} />
 			<!-- <textarea name="content"  /> -->
 			<!-- bind:value={$note.value} -->
@@ -179,10 +181,10 @@
 	button:last-child {
 		margin-left: 0.5rem;
 	}
-		.hidden {
+	.hidden {
 		display: none;
 	}
-	.btns__c{
+	.btns__c {
 		margin-top: 1rem;
 	}
 </style>

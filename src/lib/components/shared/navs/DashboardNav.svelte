@@ -19,16 +19,21 @@
 	<ul>
 		<li><HomeIcn /><a href="/">Home</a></li>
 		<li><PostIcn /><a href="/dashboard/post">Post</a></li>
-		<li><CalendarIcn /><a href="/dashboard/open">Open Courses</a></li>
-		<li class="nav-divider" />
-		<li><CourseIcn /><a href="/dashboard/courses">Courses</a></li>
-		<li><VenueIcn /><a href="/dashboard/venues">Venues</a></li>
-		<li><OrganizationIcn /><a href="/dashboard/organizations">Organizations</a></li>
-		<li><InstructorIcn /><a href="/dashboard/instructors">Instructors</a></li>
-		<!-- <li><InstructorIcn /><a href="/dashboard/tests/contacts">test/Contacts</a></li> -->
-		<li><AvatarIcn /><a href="/dashboard/contacts">Contacts</a></li>
+		<li><CalendarIcn /><a href="/dashboard/open">Open Course</a></li>
+	</ul>
+	<ul>
+		<!-- <li class="nav-divider" /> -->
+		<p>Resgister</p>
+		<li><CourseIcn /><a href="/dashboard/courses">Course</a></li>
+		<li><VenueIcn /><a href="/dashboard/venues">Venue</a></li>
+		<li><OrganizationIcn /><a href="/dashboard/organizations">Organization</a></li>
+		<li><InstructorIcn /><a href="/dashboard/instructors">Instructor</a></li>
+		<li><AvatarIcn /><a href="/dashboard/contacts">Contact</a></li>
+	</ul>
+	<ul>
+		<!-- <li class="nav-divider" /> -->
+		<p>Other</p>
 		<li><ImageIcn /><a href="/dashboard/gallery">Gallery</a></li>
-		<li class="nav-divider" />
 		<li><SettingsIcn /><a href="/dashboard/settings"> Page Settings</a></li>
 	</ul>
 </nav>
@@ -64,6 +69,17 @@
 
 	ul li:hover a {
 		opacity: 1;
+	}
+	p {
+		font-size: 0.8rem;
+		letter-spacing: 0.05rem;
+		text-decoration: none;
+		color: rgb(255, 255, 255);
+		opacity: 0.7;
+		padding: 0.25rem 0.5rem;
+		margin-bottom: 0.25rem;
+		background-color: rgb(176, 137, 254);
+		text-transform: uppercase;
 	}
 	.nav-divider {
 		margin: 1rem 0;

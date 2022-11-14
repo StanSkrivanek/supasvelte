@@ -61,7 +61,7 @@
 body {
 	font-family: 'MainRegular', sans-serif;
 	font-size: 16px;
-	line-height: 1;
+	line-height: 1.4;
 	color: var(--col-text-main);
 	background-color: var(--col-bg-main);
 	-webkit-font-smoothing: antialiased;
@@ -76,6 +76,12 @@ h5,
 h6 {
 	font-family: 'MainSemiBold', sans-serif;
 	color: var(--col-text-main-darkpurple);
+	margin-bottom: 0.5rem;
+}
+p{
+	margin-bottom: 1rem;
+	font-family: 'MainRegular', sans-serif;
+	color: var(--col-text-main);
 }
 a {
 	text-decoration: none;
@@ -131,6 +137,10 @@ button:disabled {
 	background-color: #ccc;
 	color: #fff;
 	pointer-events: none;
+}
+img {
+	max-width: 100%;
+	height: auto;
 }
 .btns__c {
 	text-align: end;
