@@ -25,7 +25,7 @@
 		isOpen: false
 	};
 	async function handleSubmit() {
-		getType().then(async (type) => {
+		getType().then( async (type) => {
 			// save data in db table `opencourses`
 			await supabase
 				.from('opencourses')
@@ -54,6 +54,7 @@
 					}
 				});
 		});
+
 	}
 
 	async function getType() {
@@ -62,13 +63,13 @@
 		if (error) console.log('error', error);
 		let type = data[0].type;
 
-		return (values.type = type);
+		return values.type = type;
 	}
 
 	function isActive() {
 		values.isOpen = !values.isOpen;
 		// add checked attribute if is_open is true
-		if (is_open) {
+		if (values.isOpen) {
 			document.getElementById('isOpen').setAttribute('checked', 'checked');
 		} else {
 			document.getElementById('isOpen').removeAttribute('checked');
@@ -91,7 +92,7 @@
 					label="Course"
 					db_table={'courses'}
 					tb_col={'title'}
-					bind:selectedListOption={values.title}
+					bind:selectedListOption={values.course}
 				/>
 				<SelectFromDb
 					label="Venue"
