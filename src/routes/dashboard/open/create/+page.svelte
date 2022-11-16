@@ -9,7 +9,7 @@
 	// export let data;
 
 	let values = {
-		course: '',
+		title: '',
 		type: '',
 		venue: '',
 		groupNo: '',
@@ -30,7 +30,7 @@
 			await supabase
 				.from('opencourses')
 				.insert({
-					course: values.course,
+					title: values.title,
 					type: type,
 					venue: values.venue,
 					group: values.groupNo,
@@ -58,7 +58,7 @@
 	}
 
 	async function getType() {
-		let courseTitle = values.course;
+		let courseTitle = values.title;
 		let { data, error } = await supabase.from('courses').select('type').eq('title', courseTitle);
 		if (error) console.log('error', error);
 		let type = data[0].type;

@@ -5,7 +5,7 @@
 	import Button from '$lib/components/shared/ui/Button.svelte';
 
 	export let data;
-	console.log('🚀 ~ file: +page.svelte ~ line 10 ~ data', data);
+	// console.log('🚀 ~ file: +page.svelte ~ line 10 ~ data', data);
 
 	let { courses } = data;
 

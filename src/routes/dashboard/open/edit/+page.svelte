@@ -6,10 +6,12 @@
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
 	let dbRowData = courseDetailsData.data[0];
+	console.log('🚀 ~ file: +page.svelte ~ line 9 ~ dbRowData', dbRowData);
 
 	let elmId = dbRowData.id;
+
 	let values = {
-		course: '',
+		title: '',
 		type: '',
 		venue: '',
 		groupNo: '',
@@ -24,7 +26,8 @@
 		applyWillClose: '',
 		isOpen: false
 	};
-	values.course = dbRowData.course;
+
+	values.title = dbRowData.title;
 	values.type = dbRowData.type;
 	values.venue = dbRowData.venue;
 	values.groupNo = dbRowData.group;
@@ -45,7 +48,7 @@
 			await supabase
 				.from('opencourses')
 				.update({
-					course: values.course,
+					title: values.title,
 					type: type,
 					venue: values.venue,
 					group: values.groupNo,
@@ -72,7 +75,8 @@
 	}
 
 	async function getType() {
-		let courseTitle = values.course;
+		let courseTitle = values.title;
+		console.log('🚀 ~ file: +page.svelte ~ line 82 ~ getType ~ courseTitle', courseTitle);
 
 		let { data, error } = await supabase.from('courses').select('type').eq('title', courseTitle);
 		if (error) console.log('error', error);
@@ -101,7 +105,7 @@
 					label="Course"
 					db_table={'courses'}
 					tb_col={'title'}
-					bind:selectedListOption={values.course}
+					bind:selectedListOption={values.title}
 				/>
 				<SelectFromDb
 					label="Venue"

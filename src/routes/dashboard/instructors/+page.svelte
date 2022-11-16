@@ -10,7 +10,7 @@
 
 	export let data;
 	let { instructors } = data;
-	console.log('🚀 ~ file: +page.svelte ~ line 14 ~ instructors', instructors)
+	// console.log('🚀 ~ file: +page.svelte ~ line 14 ~ instructors', instructors)
 
 	let sorted = sortById(instructors, 'asc');
 

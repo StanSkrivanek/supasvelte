@@ -19,7 +19,7 @@
 
 	const handleFilesUpload = async (e) => {
 		avatarFile = e.target.files[0];
-		console.log('🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile', avatarFile);
+		// console.log('🚀 ~ file: +page.svelte ~ line 25 ~ handleFilesUpload ~ avatarFile', avatarFile);
 		checkForDuplicates(avatarFile.name);
 		e.target.value = '';
 		$hasNoAvatarImg = false;

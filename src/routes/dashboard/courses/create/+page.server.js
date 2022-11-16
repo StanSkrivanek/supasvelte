@@ -6,7 +6,7 @@ export const actions = {
 	add: async ({ request }) => {
 		const fd = await request.formData();
 		const {  title, type, organization, excerpt, content } = Object.fromEntries([...fd]);
-		console.log('🚀 ~ file: +page.server.js ~ line 11 ~ add: ~ content', content)
+		// console.log('🚀 ~ file: +page.server.js ~ line 11 ~ add: ~ content', content)
 		const { error: err } = await supabase.from('courses').insert({
 			title: title,
 			type: type,

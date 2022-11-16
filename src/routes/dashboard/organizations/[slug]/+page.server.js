@@ -5,7 +5,7 @@ import { supabase } from '$lib/supabase/supabaseClient';
 export const actions = {
 	update: async ({ request }) => {
 		const fd = await request.formData();
-		console.log('🚀 ~ file: +page.server.js ~ line 10 ~ update: ~ id', [...fd]);
+		// console.log('🚀 ~ file: +page.server.js ~ line 10 ~ update: ~ id', [...fd]);
 
 		const { id, name, adr_1, adr_2, city, eircode, phone, email, website, contact, info } =
 			Object.fromEntries([...fd]);

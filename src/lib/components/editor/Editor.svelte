@@ -82,11 +82,11 @@
 					],
 					uploader: {
 						async uploadByFile(file) {
-							console.log(file);
+							// console.log(file);
 
 							// check if image exists in the database already
 							const { data, error } = await supabase.storage.from('images').list('rte', file.name);
-							console.log(data);
+							// console.log(data);
 
 							// a. send alert
 							// a. opt1 - return the url if it does

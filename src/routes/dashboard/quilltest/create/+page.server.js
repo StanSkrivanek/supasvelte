@@ -5,7 +5,7 @@ import { supabase } from '$lib/supabase/supabaseClient';
 export const actions = {
 	add: async ({ request }) => {
 		const fd = await request.formData();
-		console.log('🚀 ~ file: +page.server.js ~ line 10 ~ add: ~ [...fd]', [...fd])
+		// console.log('🚀 ~ file: +page.server.js ~ line 10 ~ add: ~ [...fd]', [...fd])
 
 		const {  title, type, organization, excerpt, content } = Object.fromEntries([...fd]);
 

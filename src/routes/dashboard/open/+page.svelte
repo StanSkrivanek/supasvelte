@@ -11,6 +11,8 @@
 	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
+	console.log('🚀 ~ file: +page.svelte ~ line 14 ~ data', data)
+
 
 	let objAry = getData(data);
 	let sorted = sortById(objAry, 'asc');
@@ -93,7 +95,7 @@
 				{#each filteredItems as item (item.id)}
 					<OpenCoursePrev
 						id={item.id}
-						course={item.course}
+						course={item.title}
 						type={item.type}
 						venue={item.venue}
 						group={item.group}
@@ -110,7 +112,7 @@
 				{#each sorted as item (item.id)}
 					<OpenCoursePrev
 						id={item.id}
-						course={item.course}
+						course={item.title}
 						type={item.type}
 						venue={item.venue}
 						group={item.group}

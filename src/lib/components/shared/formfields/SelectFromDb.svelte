@@ -65,7 +65,7 @@
 			{/each}
 		</select>
 		<div class="styled-select" on:click|preventDefault={showOptions} >
-			{selectedListOption || 'please select type'}
+			{selectedListOption || 'select one'}
 		</div>
 		<ul class="options" class:is-hidden={!isActive}>
 			{#each responseData as opt}

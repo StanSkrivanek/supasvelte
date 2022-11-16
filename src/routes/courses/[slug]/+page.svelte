@@ -1,7 +1,7 @@
 <script>
 	// import { getData } from '$lib/utils/helpers.js';
 
-	import OpenCourseFull from "../../../lib/components/cards/OpenCourseFull.svelte";
+	import OpenCourseFull from "$lib/components/cards/OpenCourseFull.svelte";
 
 	export let data;
 	let { course } = data;
@@ -28,10 +28,17 @@
 <style>
 	header {
 		display: grid;
-		grid-template-columns: 0.25fr 1fr 0.25fr;
+		grid-template-columns: minmax(20px, 0.25fr) minmax(1fr, 2fr) minmax(20px, 0.25fr);
+		grid-template-rows: 1fr;
+		grid-template-areas: ". hero .";
 		gap: .5rem;
 		padding: 2rem;
-		min-height: 30rem;
+		min-height: 40rem;
+		background-image: linear-gradient(to bottom, hsla(257, 100%, 70%, 0.345), hsla(280, 39%, 9%, 0.516)),url("https://yomarqknqlmdtqiqfxfm.supabase.co/storage/v1/object/public/images/course_img/img-demo-1-800x572.jpg?t=2022-11-14T13%3A41%3A00.926Z");
+		 background-position: center center;
+		 background-repeat: no-repeat;
+		 background-size: cover;
+		 background-position: 0% 0%;
 	}
 	main {
 		display: grid;
@@ -50,7 +57,8 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: flex-start;
-		grid-column: 2 / 3;
+		grid-area: hero;
+		color: white;
 	}
 	.course-organizer {
 		font-size: 1rem;
@@ -63,6 +71,7 @@
 		font-weight: 500;
 		color: var(--col-text-main);
 		line-height: 1;
+				color: white;
 	}
 	.course-type {
 		font-size: 1rem;

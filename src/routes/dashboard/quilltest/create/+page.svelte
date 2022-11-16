@@ -12,7 +12,7 @@
 	$: tmceContent = tmceContent;
 	$: console.log('tinyContent: ', tmceContent,);
 	function getImgSource() {
-		console.log('tmceContent', tmceContent);
+		// console.log('tmceContent', tmceContent);
 		// Editor.uploadImages()
 		// const img = tmceContent.querySelector('img');
 		// console.log('img: ', img);

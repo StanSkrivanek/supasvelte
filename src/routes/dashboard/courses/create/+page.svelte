@@ -13,7 +13,7 @@
 	let rteImgs = [];
 
 	function setImgUrl({ data }) {
-		console.log('data', data);
+		// console.log('data', data);
 		// console.log(rteImgs);
 		if (rteImgs.length > 0) {
 			for (let img of rteImgs) {
@@ -45,7 +45,7 @@
 				}
 			}
 			data.set('content', tmceContent);
-			console.log('🚀 ~ file: +page.svelte ~ line 50 ~ setImgUrl ~ tmceContent', tmceContent);
+			// console.log('🚀 ~ file: +page.svelte ~ line 50 ~ setImgUrl ~ tmceContent', tmceContent);
 		}
 	}
 	let conf = {
@@ -82,7 +82,7 @@
 			input.addEventListener('change', (e) => {
 				const file = e.target.files[0];
 				rteImgs.push({ title: file.name, blob: file });
-				console.log(rteImgs);
+				// console.log(rteImgs);
 				const reader = new FileReader();
 				reader.addEventListener('load', () => {
 					const id = 'blobid' + crypto.randomUUID();

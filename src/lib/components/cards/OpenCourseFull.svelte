@@ -2,13 +2,13 @@
 	import { onMount } from 'svelte';
 	onMount(() => {
 		const [...sbCard] = document.querySelectorAll('.sbc-card');
-		// console.log('🚀 ~ file: OpenCourse.svelte ~ line 3 ~ sbCard', sbCard);
+
 
 		sbCard.forEach((el) => {
 			const sbcMid = el.querySelector('.sbc-mid__c');
-			console.log('🚀 ~ file: OpenCourse.svelte ~ line 9 ~ sbCard.forEach ~ sbcMid', sbcMid);
+
 			const cta = el.querySelector('.sbc-cta-text');
-			console.log('🚀 ~ file: OpenCourse.svelte ~ line 11 ~ sbCard.forEach ~ cta', cta);
+
 
 			let sbcMidHeight = sbcMid.clientHeight;
 

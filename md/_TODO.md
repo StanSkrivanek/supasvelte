@@ -2,6 +2,13 @@
 
 ---
 
+`gallery`
+
+[ ] add option to upload images to gallery
+[ ] add filter to show only UNUSED images
+[ ] add warning modal if deleting image that is used in website ( add info where is used)
+[ ] when image is deleted from gallery make sure that all links are deleted
+
 `dashboard/courses`
 **issues note:**
 
@@ -22,7 +29,9 @@
 
 `dashboard/courses/create`
 **issues note:**
-none for now
+[ ] add option for header image upload (choose from DB)
+[ ] add option for course image upload
+[ ] add option for course video upload
 **improvements**
 
 - [ x ] update course type in DB from Select option

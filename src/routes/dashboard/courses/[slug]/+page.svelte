@@ -12,10 +12,10 @@
 
 	let { course } = data;
 	let { id, title, type, organization, excerpt, content } = course[0];
-	console.log('🚀 ~ file: +page.svelte ~ line 10 ~ content', content);
+	// console.log('🚀 ~ file: +page.svelte ~ line 10 ~ content', content);
 
 	function setImgUrl({ data }) {
-		console.log('data', data);
+		// console.log('data', data);
 		// console.log(rteImgs);
 		if (rteImgs.length > 0) {
 			for (let img of rteImgs) {
@@ -47,7 +47,7 @@
 				}
 			}
 			data.set('content', tmceContent);
-			console.log('🚀 ~ file: +page.svelte ~ line 50 ~ setImgUrl ~ tmceContent', tmceContent);
+			// console.log('🚀 ~ file: +page.svelte ~ line 50 ~ setImgUrl ~ tmceContent', tmceContent);
 		}
 	}
 
