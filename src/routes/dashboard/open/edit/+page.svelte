@@ -6,10 +6,9 @@
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
 	let dbRowData = courseDetailsData.data[0];
-	console.log('🚀 ~ file: +page.svelte ~ line 9 ~ dbRowData', dbRowData);
 
 	let elmId = dbRowData.id;
-
+	let checked = dbRowData.is_open;
 	let values = {
 		title: '',
 		type: '',
@@ -76,7 +75,7 @@
 
 	async function getType() {
 		let courseTitle = values.title;
-		console.log('🚀 ~ file: +page.svelte ~ line 82 ~ getType ~ courseTitle', courseTitle);
+
 
 		let { data, error } = await supabase.from('courses').select('type').eq('title', courseTitle);
 		if (error) console.log('error', error);
@@ -86,6 +85,7 @@
 
 	function isActive() {
 		values.isOpen = !values.isOpen;
+		checked = values.isOpen;
 	}
 	function cancel() {
 		goto('/dashboard/open');
@@ -200,7 +200,7 @@
 			</div>
 			<div class="form-2col-section">
 				<div class="form-select__w">
-					<SwitchRoundy label={'Show on website'} on:click={isActive} />
+					<SwitchRoundy label={'Show on website'} bind:checked={checked} on:click={isActive} />
 				</div>
 			</div>
 			<div class="btns__c">

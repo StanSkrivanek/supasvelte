@@ -1,10 +1,11 @@
 <script>
 	export let label;
+	export let checked
 </script>
 
 <div class="form-select__w">
 	<label for="isOpen">{label}</label>
-	<input type="checkbox" name="isOpen" id="isOpen" on:click />
+	<input type="checkbox" name="isOpen" id="isOpen" {checked} on:click />
 </div>
 
 <style>
