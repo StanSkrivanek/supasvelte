@@ -2,7 +2,7 @@
 	import { enhance, applyAction } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
-	import { dbTableOpt } from '$lib/stores/store.js';
+	// import { dbTableOpt } from '$lib/stores/store.js';
 	// import Editor from '$components/editor/Editor.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
 	import Editor from '@tinymce/tinymce-svelte';

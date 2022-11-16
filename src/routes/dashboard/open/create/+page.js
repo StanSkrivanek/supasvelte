@@ -1,4 +1,4 @@
-export const ssr = false;
+// export const ssr = false;
 
 // import { supabase } from '$lib/supabase/supabaseClient';
 
