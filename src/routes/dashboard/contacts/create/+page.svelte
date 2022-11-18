@@ -4,7 +4,7 @@
 </script>
 
 <section>
-	<form method="POST" action="?/add" use:enhance>
+	<form method="POST" action="/?add" use:enhance>
 		<div class="form-info">
 			<div class="form-contact">
 				<label for="name">Contact Name</label>

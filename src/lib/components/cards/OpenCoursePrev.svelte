@@ -3,7 +3,7 @@
 	const dispatch = createEventDispatcher();
 
 	export let id;
-	export let course;
+	export let title;
 	export let type;
 	export let venue;
 	export let group;
@@ -21,7 +21,7 @@
 
 <div class="db-item" {id}>
 	<p>{id}</p>
-	<h2>{course}</h2>
+	<h2>{title}</h2>
 	<div class="dsb-venue--body">
 		<div class="">
 			<p>Type: <span>{type}</span></p>

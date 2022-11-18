@@ -3,90 +3,33 @@
 	import { supabase } from '$lib/supabase/supabaseClient';
 	import { goto } from '$app/navigation';
 	import SwitchRoundy from '$lib/components/shared/formfields/SwitchRoundy.svelte';
-	// import { getData } from '$lib/utils/helpers.js';
-	// import { dbTableOpt } from '$lib/stores/store.js';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
+	let checked = false;
 
-	// export let data;
-
-	// let values = {
-	// 	title: '',
-	// 	type: '',
-	// 	venue: '',
-	// 	groupNo: '',
-	// 	weekday: '',
-	// 	date_in: '',
-	// 	date_end: '',
-	// 	time_in: '',
-	// 	time_end: '',
-	// 	price: '',
-	// 	formAttachment: '',
-	// 	applyWillOpen: '',
-	// 	applyWillClose: '',
-	// 	isOpen: false
-	// };
-	async function handleSubmit() {
-	// 	getType().then( async (type) => {
-	// 		// save data in db table `opencourses`
-	// 		await supabase
-	// 			.from('opencourses')
-	// 			.insert({
-	// 				title: values.title,
-	// 				type: type,
-	// 				venue: values.venue,
-	// 				group: values.groupNo,
-	// 				weekday: values.weekday,
-	// 				date_in: values.date_in,
-	// 				date_end: values.date_end,
-	// 				time_in: values.time_in,
-	// 				time_end: values.time_end,
-	// 				price: values.price,
-	// 				attachment: values.formAttachment,
-	// 				apply_open: values.applyWillOpen,
-	// 				apply_close: values.applyWillClose,
-	// 				is_open: values.isOpen
-	// 			})
-	// 			// .eq('id', elmId)
-	// 			.then((res) => {
-	// 				if (res.error) {
-	// 					console.log(res.error);
-	// 				} else {
-	// 					goto('/dashboard/open');
-	// 				}
-	// 			});
-	// 	});
-
+	//about-section
+	function cancel() {
+		goto('/dashboard/open');
 	}
-
-	// async function getType() {
-	// 	let courseTitle = values.title;
-	// 	let { data, error } = await supabase.from('courses').select('type').eq('title', courseTitle);
-	// 	if (error) console.log('error', error);
-	// 	let type = data[0].type;
-
-	// 	return (values.type = type);
-	// }
-
-	// function isActive() {
-	// 	values.isOpen = !values.isOpen;
-	// }
-	// function cancel() {
-	// 	goto('/dashboard/open');
-	// }
 </script>
 
 <article>
 	<div class="dash-header">
-		<h1>New Open Course</h1>
+		<h1>Open New Course</h1>
+		<!-- <p>open course for registration</p> -->
 	</div>
 	<section>
-		<form method="POST" action="/?add" id="open-course" use:enhance={handleSubmit}>
-			<!-- <form on:submit|preventDefault={handleSubmit} action="dashboard/open" method="POST"> -->
+		<form method="POST" action="?/create" use:enhance>
 			<div class="form-2col-section">
-				<SelectFromDb label="Course" db_table={'courses'} tb_col={'title'} />
-				<!-- bind:selectedListOption={values.title} -->
-				<SelectFromDb label="Venue" db_table={'venues'} tb_col={'name'} />
-				<!-- bind:selectedListOption={values.venue} -->
+				<SelectFromDb
+					name={'title'}
+					label="Course"
+					db_table={'courses'}
+					tb_col={'title'}
+					/>
+					<!-- on:change={(e)=>getCourseType(e)} -->
+				<SelectFromDb name={'venue'} label="Venue" db_table={'venues'} tb_col={'name'} />
+				<!-- <input type="hidden" name="coursetype" bind:value={courseType} /> -->
+				<input type="hidden" name="coursetype" value />
 			</div>
 			<div class="form-2col-section">
 				<div class="form-select__w">
@@ -130,11 +73,6 @@
 				<div class="form-select__w">
 					<label for="time-end">End Time</label>
 					<input type="time" name="time-end" id="time-end" />
-
-					<!-- <div class="form-select__w">
-        <label for="time-end">Duration</label>
-        <input type="time" name="time-end" id="time-end" />
-      </div> -->
 				</div>
 			</div>
 			<div class="form-2col-section">
@@ -159,15 +97,15 @@
 			</div>
 			<div class="form-2col-section">
 				<div class="form-select__w">
-					<SwitchRoundy label={'Show on website'} on:click={isActive} />
+					<SwitchRoundy label={'Show on website'} bind:checked />
 				</div>
 			</div>
 			<div class="btns__c">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">save</button>
 			</div>
-			<!-- <pre>{JSON.stringify(values, null, 2)}</pre> -->
 		</form>
+		<!-- <pre>{JSON.stringify(values, null, 2)}</pre> -->
 	</section>
 </article>
 

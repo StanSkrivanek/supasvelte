@@ -8,7 +8,6 @@
 	import Editor from '@tinymce/tinymce-svelte';
 	const tinyMceApi = import.meta.env.VITE_TINYMCE_API_KEY;
 
-	// let tmceContent = '';
 	$: tmceContent = '';
 	let rteImgs = [];
 
@@ -45,7 +44,6 @@
 				}
 			}
 			data.set('content', tmceContent);
-			// console.log('🚀 ~ file: +page.svelte ~ line 50 ~ setImgUrl ~ tmceContent', tmceContent);
 		}
 	}
 	let conf = {
@@ -64,8 +62,8 @@
 			{ name: 'bullets', items: ['bullist', 'numlist'] },
 			{ name: 'links', items: ['link', 'unlink'] },
 			{ name: 'tools', items: ['removeformat'] },
-			{ name: "lists", items: ["bullist", "numlist"] },
-			{ name: "indentation", items: ["outdent", "indent"] },
+			{ name: 'lists', items: ['bullist', 'numlist'] },
+			{ name: 'indentation', items: ['outdent', 'indent'] }
 		],
 		toolbar_sticky: true,
 		image_title: true,
@@ -116,9 +114,7 @@
 			<input type="text" name="organization" id="organization" placeholder="organization name" />
 			<label for="title">Course Title</label>
 			<input type="text" name="title" id="title" placeholder="Course title" />
-			<SelectFromDb db_table={'tb_crs_types'} tb_col={'course_type'} />
-
-			<!-- bind:selectedListOption={values.type } -->
+			<SelectFromDb name={'type'} label="Course Type" db_table={'tb_crs_types'} tb_col={'course_type'} />
 
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max400 characters)</span></label
@@ -128,17 +124,6 @@
 			<label for="content">Course Content</label>
 			<Editor apiKey={tinyMceApi} {conf} bind:value={tmceContent} />
 			<textarea class="hidden" name="content" vbind:value={tmceContent} />
-			<!-- <textarea name="content"  /> -->
-			<!-- bind:value={$note.value} -->
-			<!-- <Editor
-				apiKey={tinyMceApi}
-				{conf}
-				{value}
-				on:input={(e) => {
-					console.log(e);
-					value = e.detail.value;
-				}}
-			/> -->
 			<div class="btns__c">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">save</button>

@@ -122,7 +122,7 @@
 			/>
 			<label for="title">Course Title</label>
 			<input type="text" name="title" id="title" value={title || ''} placeholder="Course title" />
-			<SelectFromDb db_table={'tb_crs_types'} tb_col={'course_type'} selectedListOption={type} />
+			<SelectFromDb name={'type'} label="Course Type" db_table={'tb_crs_types'} tb_col={'course_type'} selectedListOption={type} />
 
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max320 characters)</span></label

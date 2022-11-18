@@ -1,9 +1,9 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/supabaseClient';
-	import { getData } from '$lib/utils/helpers.js';
+	// import { getData } from '$lib/utils/helpers.js';
+	// import { sortById } from '$lib/utils/helpers.js';
 	import { itemData } from '$lib/stores/store.js';
-	import { sortById } from '$lib/utils/helpers.js';
 	import Modal from '$lib/components/shared/modals/Modal.svelte';
 	import OpenCoursePrev from '$lib/components/cards/OpenCoursePrev.svelte';
 	import DeleteConfirm from '$lib/components/shared/modals/DeleteConfirm.svelte';
@@ -11,11 +11,11 @@
 	import Plus from '$lib/components/icons/Plus.svelte';
 
 	export let data;
-	console.log('🚀 ~ file: +page.svelte ~ line 14 ~ data', data)
+	// console.log('🚀 ~ file: +page.svelte ~ line 14 ~ data', data)
 
-
-	let objAry = getData(data);
-	let sorted = sortById(objAry, 'asc');
+	// let objAry = getData(data);
+	let { openCourse } = data;
+	// let sorted = sortById(objAry, 'asc');
 	let showModal = false;
 	let cId = 0;
 	let target = null;
@@ -33,7 +33,7 @@
 	// apply delete from modal
 	async function deleteItemById() {
 		await supabase.from('opencourses').delete().match({ id: cId });
-		objAry = objAry.filter((item) => item.id !== cId);
+		openCourse = openCourse.filter((item) => item.id !== cId);
 		target.remove();
 	}
 
@@ -92,36 +92,36 @@
 					<p>No results found</p>
 				</div>
 			{:else if filteredItems.length > 0}
-				{#each filteredItems as item (item.id)}
+				{#each openCourse as { id, title, type, venue, group, weekday, date_in, time_in, apply_open, is_open }}
 					<OpenCoursePrev
-						id={item.id}
-						course={item.title}
-						type={item.type}
-						venue={item.venue}
-						group={item.group}
-						weekday={item.weekday}
-						date_in={item.date_in}
-						time_in={item.time_in}
-						apply_open={item.apply_open}
-						is_open={item.is_open}
-						on:edit={() => findItemById(item.id)}
+						{id}
+						{title}
+						{type}
+						{venue}
+						{group}
+						{weekday}
+						{date_in}
+						{time_in}
+						{apply_open}
+						{is_open}
+						on:edit={() => findItemById(id)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}
 			{:else}
-				{#each sorted as item (item.id)}
+				{#each openCourse as { id, title, type, venue, group, weekday, date_in, time_in, apply_open, is_open }}
 					<OpenCoursePrev
-						id={item.id}
-						course={item.title}
-						type={item.type}
-						venue={item.venue}
-						group={item.group}
-						weekday={item.weekday}
-						date_in={item.date_in}
-						time_in={item.time_in}
-						apply_open={item.apply_open}
-						is_open={item.is_open}
-						on:edit={() => findItemById(item.id)}
+						{id}
+						{title}
+						{type}
+						{venue}
+						{group}
+						{weekday}
+						{date_in}
+						{time_in}
+						{apply_open}
+						{is_open}
+						on:edit={() => findItemById(id)}
 						on:click={openDeleteConfirmModal}
 					/>
 				{/each}

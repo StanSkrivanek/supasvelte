@@ -1,13 +1,13 @@
 import { supabase } from '$lib/supabase/supabaseClient';
 
 export async function load() {
-	const { data, error } = await supabase.from('opencourses').select('*');
+	const { data: openCourse, error } = await supabase.from('opencourses').select('*');
 
 	// if (error) {
 	// 	console.log(error);
 	// }
 	if (error) return { status: 500, body: { error: error.message } };
-	return { data };
+	return { openCourse };
 }
 
 // export async function post(request) {

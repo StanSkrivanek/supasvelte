@@ -5,11 +5,11 @@
 	export let db_table = '';
 	export let tb_col = '';
 	export let label = '';
-	
+	export let name = '';
+
 	let responseData = [];
 	// SELECT
 	export let selectedListOption = '';
-
 
 	let isActive = false;
 
@@ -24,18 +24,11 @@
 	getDbTableData(db_table).then((data) => {
 		// assign data to `dbTableOpt` store
 		responseData = $dbTableOpt = data.map((item) => item[tb_col]);
-
-		
 	});
 
 	// SELECT
 	function showOptions() {
 		isActive = !isActive;
-		// if (isActive) {
-		// 	console.log('show');
-		// } else {
-		// 	console.log('hide');
-		// }
 	}
 
 	function handleList(evt) {
@@ -47,7 +40,7 @@
 
 	// update select option in original select
 	function upadeOriginSelect() {
-		let originOpts = document.querySelectorAll('#type-select option');
+		let originOpts = document.querySelectorAll('#select option');
 		originOpts.forEach((opt) => {
 			if (opt.value === selectedListOption) {
 				opt.selected = true;
@@ -56,16 +49,16 @@
 	}
 </script>
 
-<div class="form-select__w" >
-	<label for="type-select">{label}</label>
+<div class="form-select__w">
+	<label for="select">{label}</label>
 	<div class="custom-select">
-		<select name="type" id="type-select" class="is-hidden"  >
+		<select {name} id="select" class="is-hidden">
 			{#each responseData as opt}
 				<option value={opt} on:change>{opt}</option>
 			{/each}
 		</select>
-		<div class="styled-select" on:click|preventDefault={showOptions} >
-			{selectedListOption || 'select one'}
+		<div class="styled-select" on:click|preventDefault={showOptions}>
+			{selectedListOption || 'select'}
 		</div>
 		<ul class="options" class:is-hidden={!isActive}>
 			{#each responseData as opt}
@@ -109,7 +102,7 @@
 		color: white;
 	}
 	.form-select__w {
-			margin-bottom: 1rem;
+		margin-bottom: 1rem;
 	}
 	.custom-select {
 		position: relative;
