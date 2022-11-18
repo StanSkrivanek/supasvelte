@@ -33,7 +33,7 @@
 			<p>Start on: <span>{date_in}</span></p>
 			<p>Time: <span>{time_in}</span></p>
 			<p>Apply from: <span>{apply_open}</span></p>
-			<p>Is Open: <span>{is_open?"Yes":"No"}</span></p>
+			<p>Shown on web: <span>{is_open?"Yes":"No"}</span></p>
 		</div>
 	</div>
 	<!-- <div class="dsb-venue--body">
