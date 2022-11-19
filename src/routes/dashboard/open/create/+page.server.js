@@ -19,8 +19,9 @@ export const actions = {
 			attachment,
 			apply_open,
 			apply_close,
-			isOpen
+			is_open
 		} = Object.fromEntries([...fd]);
+		console.log('🚀 ~ file: +page.server.js ~ line 24 ~ create: ~ [...fd]', [...fd]);
 
 		// get course type from db based on course title
 		let coursetype = '';
@@ -48,7 +49,7 @@ export const actions = {
 			attachment: attachment,
 			apply_open: apply_open || 'not set',
 			apply_close: apply_close || 'not set',
-			is_open: isOpen
+			is_open: is_open
 		});
 
 		if (err) return { status: 500, body: { error: err.message } };

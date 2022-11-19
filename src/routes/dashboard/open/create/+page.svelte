@@ -1,10 +1,11 @@
 <script>
 	import { enhance } from '$app/forms';
-	import { supabase } from '$lib/supabase/supabaseClient';
 	import { goto } from '$app/navigation';
 	import SwitchRoundy from '$lib/components/shared/formfields/SwitchRoundy.svelte';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
-	let checked = false;
+	let yes = false;
+	console.log('🚀 ~ file: +page.svelte ~ line 8 ~ yes', yes)
+
 
 	//about-section
 	function cancel() {
@@ -20,15 +21,8 @@
 	<section>
 		<form method="POST" action="?/create" use:enhance>
 			<div class="form-2col-section">
-				<SelectFromDb
-					name={'title'}
-					label="Course"
-					db_table={'courses'}
-					tb_col={'title'}
-					/>
-					<!-- on:change={(e)=>getCourseType(e)} -->
+				<SelectFromDb name={'title'} label="Course" db_table={'courses'} tb_col={'title'} />
 				<SelectFromDb name={'venue'} label="Venue" db_table={'venues'} tb_col={'name'} />
-				<!-- <input type="hidden" name="coursetype" bind:value={courseType} /> -->
 				<input type="hidden" name="coursetype" value />
 			</div>
 			<div class="form-2col-section">
@@ -97,7 +91,7 @@
 			</div>
 			<div class="form-2col-section">
 				<div class="form-select__w">
-					<SwitchRoundy label={'Show on website'} bind:checked />
+					<SwitchRoundy label={'Show on website'} bind:checked={yes} />
 				</div>
 			</div>
 			<div class="btns__c">
@@ -105,7 +99,6 @@
 				<button class="info">save</button>
 			</div>
 		</form>
-		<!-- <pre>{JSON.stringify(values, null, 2)}</pre> -->
 	</section>
 </article>
 

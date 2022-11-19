@@ -1,91 +1,34 @@
 <script>
-	import { supabase } from '$lib/supabase/supabaseClient';
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import SwitchRoundy from '$lib/components/shared/formfields/SwitchRoundy.svelte';
-	// import { getData } from '$lib/utils/helpers.js';
 	import SelectFromDb from '$lib/components/shared/formfields/SelectFromDb.svelte';
-	const courseDetailsData = JSON.parse(localStorage.getItem('itemData'));
-	let dbRowData = courseDetailsData.data[0];
-
-	let elmId = dbRowData.id;
-	let checked = dbRowData.is_open;
-	let values = {
-		title: '',
-		type: '',
-		venue: '',
-		groupNo: '',
-		weekday: '',
-		date_in: '',
-		date_end: '',
-		time_in: '',
-		time_end: '',
-		price: '',
-		formAttachment: '',
-		applyWillOpen: '',
-		applyWillClose: '',
-		isOpen: false
-	};
-
-	values.title = dbRowData.title;
-	values.type = dbRowData.type;
-	values.venue = dbRowData.venue;
-	values.groupNo = dbRowData.group;
-	values.weekday = dbRowData.weekday;
-	values.date_in = dbRowData.date_in;
-	values.date_end = dbRowData.date_end;
-	values.time_in = dbRowData.time_in;
-	values.time_end = dbRowData.time_end;
-	values.price = dbRowData.price;
-	values.formAttachment = dbRowData.attachment;
-	values.applyWillOpen = dbRowData.apply_open;
-	values.applyWillClose = dbRowData.apply_close;
-	values.isOpen = dbRowData.is_open;
-
-	async function handleSubmit() {
-		getType().then(async (type) => {
-			// save data in db table `opencourses`
-			await supabase
-				.from('opencourses')
-				.update({
-					title: values.title,
-					type: type,
-					venue: values.venue,
-					group: values.groupNo,
-					weekday: values.weekday,
-					date_in: values.date_in,
-					date_end: values.date_end,
-					time_in: values.time_in,
-					time_end: values.time_end,
-					price: values.price,
-					attachment: values.formAttachment,
-					apply_open: values.applyWillOpen,
-					apply_close: values.applyWillClose,
-					is_open: values.isOpen
-				})
-				.eq('id', elmId)
-				.then((res) => {
-					if (res.error) {
-						console.log(res.error);
-					} else {
-						goto('/dashboard/open');
-					}
-				});
-		});
+	export let data;
+	const { course } = data;
+	// let checked = course[0].is_open;
+	let {
+		id,
+		title,
+		venue,
+		group,
+		weekday,
+		date_in,
+		date_end,
+		time_in,
+		time_end,
+		price,
+		attachment,
+		apply_open,
+		apply_close,
+		is_open
+	} = course[0];
+	// change state of switch
+	function iscourseopen() {
+		is_open = !is_open;
 	}
-
-	async function getType() {
-		let courseTitle = values.title;
-
-
-		let { data, error } = await supabase.from('courses').select('type').eq('title', courseTitle);
-		if (error) console.log('error', error);
-		let type = data[0].type;
-		return (values.type = type);
-	}
-
-	function isActive() {
-		values.isOpen = !values.isOpen;
-		checked = values.isOpen;
+	// update switch state in form on save
+	function handleSubmit({ data }) {
+		data.set('isOpen', is_open);
 	}
 	function cancel() {
 		goto('/dashboard/open');
@@ -97,27 +40,28 @@
 		<h1>Update Open Course</h1>
 	</div>
 	<section>
-		<form on:submit|preventDefault={handleSubmit} action="" id="open-course" method="POST">
-			<!-- <form on:submit|preventDefault={handleSubmit} action="dashboard/open" method="POST"> -->
-			<!-- <form on:submit|preventDefault={handleSubmit} method="POST"> -->
+		<form method="POST" action="?/update" use:enhance={handleSubmit}>
+			<input type="hidden" hidden name="id" value={id} />
 			<div class="form-2col-section">
 				<SelectFromDb
+					name={'title'}
 					label="Course"
 					db_table={'courses'}
 					tb_col={'title'}
-					bind:selectedListOption={values.title}
+					selectedListOption={title}
 				/>
 				<SelectFromDb
+					name={'venue'}
 					label="Venue"
 					db_table={'venues'}
 					tb_col={'name'}
-					bind:selectedListOption={values.venue}
+					selectedListOption={venue}
 				/>
 			</div>
 			<div class="form-2col-section">
 				<div class="form-select__w">
 					<label for="group">Group</label>
-					<select name="group" id="group" bind:value={values.groupNo}>
+					<select name="group" id="group" value={group}>
 						<option value="">Select group</option>
 						<option value="1">1</option>
 						<option value="2">2</option>
@@ -126,7 +70,7 @@
 				</div>
 				<div class="form-select__w">
 					<label for="weekday">Week Day</label>
-					<select name="weekday" id="weekday" bind:value={values.weekday}>
+					<select name="weekday" id="weekday" value={weekday}>
 						<option value="">Select day</option>
 						<option value="Monday">Monday</option>
 						<option value="Tuesday">Tuesday</option>
@@ -141,73 +85,52 @@
 			<div class="form-2col-section">
 				<div class="form-select__w">
 					<label for="date-in">Starts Date</label>
-					<input type="date" name="date-in" id="date-in" bind:value={values.date_in} />
+					<input type="date" name="date-in" id="date-in" value={date_in} />
 				</div>
 				<div class="form-select__w">
 					<label for="date-end">Ends Date</label>
-					<input type="date" name="date-end" id="date-end" bind:value={values.date_end} />
+					<input type="date" name="date-end" id="date-end" value={date_end} />
 				</div>
 			</div>
 			<div class="form-2col-section">
 				<div class="form-select__w">
 					<label for="time-in">Start Time</label>
-					<input type="time" name="time-in" id="time-in" bind:value={values.time_in} />
+					<input type="time" name="time-in" id="time-in" value={time_in} />
 				</div>
 				<div class="form-select__w">
 					<label for="time-end">End Time</label>
-					<input type="time" name="time-end" id="time-end" bind:value={values.time_end} />
-
-					<!-- <div class="form-select__w">
-        <label for="time-end">Duration</label>
-        <input type="time" name="time-end" id="time-end" />
-      </div> -->
+					<input type="time" name="time-end" id="time-end" value={time_end} />
 				</div>
 			</div>
 			<div class="form-2col-section">
 				<div class="form-select__w">
 					<label for="price">Price</label>
-					<input type="number" name="price" id="price" bind:value={values.price} />
+					<input type="number" name="price" id="price" value={price} />
 				</div>
 				<div class="form-select__w">
 					<label for="formAttachment">Form Attachment</label>
-					<input
-						type="file"
-						name="formAttachment"
-						id="formAttachment"
-						bind:value={values.formAttachment}
-					/>
+					<input type="file" name="formAttachment" id="formAttachment" value={attachment} />
 				</div>
 			</div>
 			<div class="form-2col-section">
 				<div class="form-select__w">
 					<label for="applyWillOpen">Apply Will Open</label>
-					<input
-						type="date"
-						name="applyWillOpen"
-						id="applyWillOpen"
-						bind:value={values.applyWillOpen}
-					/>
+					<input type="date" name="applyWillOpen" id="applyWillOpen" value={apply_open} />
 				</div>
 				<div class="form-select__w">
 					<label for="applyWillClose">Apply Will Close</label>
-					<input
-						type="date"
-						name="applyWillClose"
-						id="applyWillClose"
-						bind:value={values.applyWillClose}
-					/>
+					<input type="date" name="applyWillClose" id="applyWillClose" value={apply_close} />
 				</div>
 			</div>
 			<div class="form-2col-section">
 				<div class="form-select__w">
-					<SwitchRoundy label={'Show on website'} bind:checked={checked} on:click={isActive} />
+					<SwitchRoundy bind:checked={is_open} label={'Show on website'} on:click={iscourseopen} />
 				</div>
 			</div>
 			<div class="btns__c">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">save</button>
 			</div>
-			<pre>{JSON.stringify(values, null, 2)}</pre>
 		</form>
 	</section>
 </article>

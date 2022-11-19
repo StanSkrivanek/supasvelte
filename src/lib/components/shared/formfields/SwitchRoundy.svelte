@@ -9,19 +9,6 @@
 </div>
 
 <style>
-	/* .form-select__w {
-		display: flex;
-		flex-direction: column;
-    align-items: center;
-    justify-content: center;
-		margin-bottom: 1rem;
-	} */
-	/* @media (prefers-color-scheme: dark) {
-  body {
-    background-color: #0e0e0e;
-    color: #ffffff;
-  }
-} */
 
 	input[type='checkbox'] {
 		/* Add if not using autoprefixer */

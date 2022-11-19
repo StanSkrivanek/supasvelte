@@ -39,6 +39,7 @@
 
 	async function findItemById(id) {
 		$itemData = await supabase.from('opencourses').select('*').match({ id: id });
+		localStorage.setItem('currentItemId', id);
 		localStorage.setItem('itemData', JSON.stringify($itemData));
 		goto('/dashboard/open/edit');
 	}

@@ -66,7 +66,7 @@
 			},
 			{ name: 'indentation', items: ['outdent', 'indent'] },
 			{ name: 'links', items: ['link', 'unlink'] },
-			{ name: 'tools', items: ['removeformat'] },
+			{ name: 'tools', items: ['removeformat'] }
 		],
 		toolbar_sticky: true,
 		image_title: true,
@@ -112,6 +112,7 @@
 
 	<section>
 		<form method="POST" action="?/update" use:enhance={setImgUrl}>
+			<input type="hidden" hidden name="id" value={id} />
 			<label for="title">Organization</label>
 			<input
 				type="text"
@@ -122,7 +123,13 @@
 			/>
 			<label for="title">Course Title</label>
 			<input type="text" name="title" id="title" value={title || ''} placeholder="Course title" />
-			<SelectFromDb name={'type'} label="Course Type" db_table={'tb_crs_types'} tb_col={'course_type'} selectedListOption={type} />
+			<SelectFromDb
+				name={'type'}
+				label="Course Type"
+				db_table={'tb_crs_types'}
+				tb_col={'course_type'}
+				selectedListOption={type}
+			/>
 
 			<label for="excerpt"
 				>Course short introduction <span> (excerpt should have max320 characters)</span></label
@@ -140,7 +147,6 @@
 			<label for="content">Course Content</label>
 			<Editor apiKey={tinyMceApi} {conf} bind:value={content} />
 			<textarea class="hidden" name="content" bind:value={tmceContent} />
-			<input type="hidden" hidden name="id" value={id} />
 			<div class="form-btns__w">
 				<button type="button" class="danger" on:click={cancel}>cancel</button>
 				<button class="info">save</button>
@@ -178,7 +184,7 @@
 	.hidden {
 		display: none;
 	}
-		.form-btns__w{
+	.form-btns__w {
 		margin-top: 1rem;
 	}
 </style>
